@@ -11,7 +11,10 @@ package com.erpsystem.domain;
  */
 public class Test {
 
-    public void show() {
-        
+    public void show(){
+
+
+
+
     }
 }
