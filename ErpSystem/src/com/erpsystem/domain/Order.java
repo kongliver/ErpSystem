@@ -21,7 +21,7 @@ package com.erpsystem.domain;
  */
 public class Order {
 	/** 客户的订单号唯一标识主键id   采用201809300001格式*/
-	private Integer orderNum;
+	private Long orderNum;
 	
 	/** 订单所包含的商品名称*/
 	private Integer goodsName;
@@ -49,7 +49,7 @@ public class Order {
 	private Integer cId;
 
 	
-	
+
 	
 	@Override
 	public String toString() {
@@ -58,11 +58,11 @@ public class Order {
 				+ orderType + ", cId=" + cId + "]";
 	}
 
-	public Integer getOrderNum() {
+	public Long getOrderNum() {
 		return orderNum;
 	}
 
-	public void setOrderNum(Integer orderNum) {
+	public void setOrderNum(Long orderNum) {
 		this.orderNum = orderNum;
 	}
 
