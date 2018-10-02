@@ -40,7 +40,7 @@ public interface IOrderDao {
 	 * @param id
 	 * @return
 	 */
-	Order finById(Integer id) throws SQLException;
+	Order finById(Long id) throws SQLException;
 
 	/**
 	 * 查询最大的订单号
@@ -48,5 +48,7 @@ public interface IOrderDao {
 	 * @throws SQLException
 	 */
 	String findMaxKey() throws SQLException;
+
+	void save(Order order) throws SQLException;
 
 }

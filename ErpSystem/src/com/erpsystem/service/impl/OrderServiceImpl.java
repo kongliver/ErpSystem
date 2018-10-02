@@ -55,7 +55,7 @@ public class OrderServiceImpl implements IOrderService {
 
 
 	@Override
-	public Order findById(Integer id) throws SQLException {
+	public Order findById(Long id) throws SQLException {
 		return dao.finById(id);
 	}
 
@@ -72,7 +72,7 @@ public class OrderServiceImpl implements IOrderService {
 		Long Key = OrderPrimaryKey.getOrderPrimarKey(date, maxKey);
 		order.setOrderNum(Key);
 		 
-//		dao.save(order);
+		dao.save(order);
 	}
 	
 	
