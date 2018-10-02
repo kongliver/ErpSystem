@@ -25,7 +25,7 @@ public class OrderDaoImpl implements IOrderDao {
 	@Override
 	public Integer findCount() throws SQLException {
 		String sql = "select count(*) from `order`";
-		Long count = (Long)qr.query(sql, new ScalarHandler());
+		Long count = (Long)qr.query(sql, new ScalarHandler<>());
 		return count.intValue();
 	}
 
