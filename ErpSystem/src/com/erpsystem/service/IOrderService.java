@@ -33,7 +33,7 @@ public interface IOrderService {
 	 * @return
 	 * @throws SQLException
 	 */
-	public Order findById(Integer id) throws SQLException;
+	public Order findById(Long id) throws SQLException;
 	
 	/**
 	 * 插入一条订单
