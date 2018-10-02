@@ -17,9 +17,7 @@ public class DruidConnection {
     private Connection connection = null;
 
     //私有构造函数,防止实例化对象
-    private DruidConnection() {
-
-    }
+    private DruidConnection() {}
 
 
     static {
