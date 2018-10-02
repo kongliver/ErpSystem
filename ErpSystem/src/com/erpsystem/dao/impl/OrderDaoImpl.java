@@ -42,8 +42,8 @@ public class OrderDaoImpl implements IOrderDao {
 	}
 
 	@Override
-	public Order finById(Integer id) throws SQLException {
-		String sql = "select * from `order` where orderName = ?";
+	public Order finById(Long id) throws SQLException {
+		String sql = "select * from `order` where orderNum=?";
 		return qr.query(sql, new BeanHandler<>(Order.class), id);
 	}
 
@@ -52,6 +52,14 @@ public class OrderDaoImpl implements IOrderDao {
 		String sql = "select max(o.orderNum) from `order` o";
 		Long num = qr.query(sql, new ScalarHandler<>());
 		return String.valueOf(num);
+	}
+
+	@Override
+	public void save(Order order) throws SQLException {
+		String sql = "insert into `order` values(?,?,?,?,?,?,?,?)";
+		Object[] obj = new Object[] {order.getOrderNum(), order.getGoodsName(), order.getGoodsCount(), order.getGoodsPrice(),
+				order.getBeginTime(), order.getEndTime(), order.getOrderType(), order.getcId()};
+		qr.update(sql, obj);
 	}
 
 }

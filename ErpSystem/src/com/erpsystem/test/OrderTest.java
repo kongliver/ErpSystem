@@ -38,7 +38,7 @@ public class OrderTest {
 	
 	@Test 
 	public void findByIdTest() throws SQLException {
-		Order ordeer = dao.finById(11);
+		Order ordeer = dao.finById(2018100100001L);
 		System.out.println(ordeer);
 	}
 	
