@@ -10,7 +10,7 @@ import java.util.Date;
  * @时间 2018-10-01 10:34
  * @地点 成都
  */
-public class OrderPrimaryKey {
+public class PrimaryKeyUtil {
 
 	/**
 	 * 传入当前时间，以及在数据库中的最大订单号，比较是否 是同一天，如果不是使用新时间的日期，如果是同一天使用数据的日期，并且订单号 + 1
@@ -36,5 +36,21 @@ public class OrderPrimaryKey {
 			return Long.valueOf(newDateStr + "00001");
 		}
 	}
-
+	
+	/**
+	 * 生成库存品主键，找出已有的库存品编号前四位的最大值，在最大值的基础上+1，如果没有则当前主键前四位为0001
+	 * @param psid 已有库存品的编号集合
+	 * @param productName 库存品名缩写
+	 * @return 生成的主键
+	 */
+	public static String getProductStockPK(String maxPsid, String productName) {
+	    Integer id = null;
+	    if (maxPsid == null) {
+            id = 1;
+        } else {
+            id = Integer.valueOf(maxPsid.substring(0, 4)) + 1;
+        }
+	    return String.format("%04d", id) + productName;
+	}
+	
 }

@@ -11,7 +11,7 @@ import com.erpsystem.dao.impl.OrderDaoImpl;
 import com.erpsystem.domain.Order;
 import com.erpsystem.service.IOrderService;
 import com.erpsystem.service.impl.OrderServiceImpl;
-import com.erpsystem.utils.OrderPrimaryKey;
+import com.erpsystem.utils.PrimaryKeyUtil;
 
 /**
  * @功能 用来测试订单的所有方法
@@ -45,7 +45,7 @@ public class OrderTest {
 	@Test
 	public void getOrderNum() {
 		System.out.println(
-		OrderPrimaryKey.getOrderPrimarKey(new Date(), "2018100100001"));
+		PrimaryKeyUtil.getOrderPrimarKey(new Date(), "2018100100001"));
 	}
 	
 	@Test
