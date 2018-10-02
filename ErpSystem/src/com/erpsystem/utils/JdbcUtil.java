@@ -3,6 +3,8 @@ package com.erpsystem.utils;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Properties;
 
 import javax.sql.DataSource;
@@ -24,6 +26,7 @@ public class JdbcUtil {
 
     private static DataSource ds = null;
     private static Properties prop = null;
+    private static Connection conn = null;
     
     static {
         // 1. 加载配置文件
@@ -50,6 +53,15 @@ public class JdbcUtil {
             e.printStackTrace();
         }
         return ds;
+    }
+    
+    public static Connection getConn() {
+        try {
+            conn = ds.getConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return conn;
     }
     
     /**

@@ -10,7 +10,7 @@ import com.erpsystem.dao.impl.OrderDaoImpl;
 import com.erpsystem.domain.Order;
 import com.erpsystem.domain.PageBean;
 import com.erpsystem.service.IOrderService;
-import com.erpsystem.utils.OrderPrimaryKey;
+import com.erpsystem.utils.PrimaryKeyUtil;
 
 /**
  * @功能 为订单提供服务的实现类
@@ -69,7 +69,7 @@ public class OrderServiceImpl implements IOrderService {
 		String newDateStr = df.format(date).toString();
 		order.setBeginTime(newDateStr);
 		
-		Long Key = OrderPrimaryKey.getOrderPrimarKey(date, maxKey);
+		Long Key = PrimaryKeyUtil.getOrderPrimarKey(date, maxKey);
 		order.setOrderNum(Key);
 		 
 		dao.save(order);
