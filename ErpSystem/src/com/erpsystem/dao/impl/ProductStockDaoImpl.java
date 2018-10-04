@@ -12,6 +12,7 @@ import org.apache.commons.dbutils.handlers.ScalarHandler;
 import com.erpsystem.dao.IProductStockDao;
 import com.erpsystem.domain.ProductStock;
 import com.erpsystem.utils.JdbcUtil;
+import com.erpsystem.utils.PrimaryKeyUtil;
 
 /**
  * 
@@ -36,7 +37,8 @@ public class ProductStockDaoImpl implements IProductStockDao {
     public void save(ProductStock ps) throws SQLException {
         QueryRunner qr = new QueryRunner();
         String sql = "insert into product_stock values(?, ?, ?, ?, ?)";
-        Object params[] = {ps.getPsid(), ps.getProductName(), ps.getProductCount(), ps.getRepertoryNum(), ps.getProductType()};
+        Object params[] = {PrimaryKeyUtil.getProductStockPK(this.getMaxPsid(), ps.getProductName()), 
+                ps.getProductName(), ps.getProductCount(), ps.getRepertoryNum(), ps.getProductType()};
         qr.update(conn, sql, params);
     }
 

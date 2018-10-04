@@ -1,10 +1,16 @@
 package com.erpsystem.dao.impl;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.handlers.BeanListHandler;
+
 import com.erpsystem.dao.IChangeStockListDao;
 import com.erpsystem.domain.ChangeStockList;
+import com.erpsystem.utils.CommonUtil;
+import com.erpsystem.utils.JdbcUtil;
 
 /**
  * 
@@ -16,35 +22,49 @@ import com.erpsystem.domain.ChangeStockList;
  *
  */
 public class ChangeStockListDaoImpl implements IChangeStockListDao {
+    private Connection conn = null;
+    
+    public ChangeStockListDaoImpl() {}
+
+    public ChangeStockListDaoImpl(Connection conn) {
+        this.conn = conn;
+    }
 
     @Override
     public void save(ChangeStockList csl) throws SQLException {
-        // TODO Auto-generated method stub
-        
+        QueryRunner qr = new QueryRunner();
+        String sql = "insert into change_stock_list values(?, ?, ?, ?, ?, ?)";
+        Object params[] = {CommonUtil.getUUID(), csl.getPsid(), csl.getChangeCount(), csl.getOprTime(), 
+                csl.getOprPerson(), csl.getOprType()};
+        qr.update(conn, sql, params);
     }
 
     @Override
     public List<ChangeStockList> getList() throws SQLException {
-        // TODO Auto-generated method stub
-        return null;
+        QueryRunner qr = JdbcUtil.getQueryRunner();
+        String sql = "select * from change_stock_list";
+        return qr.query(sql, new BeanListHandler<ChangeStockList>(ChangeStockList.class));
     }
 
     @Override
     public List<ChangeStockList> getByPsid(String psid) throws SQLException {
-        // TODO Auto-generated method stub
-        return null;
+        QueryRunner qr = JdbcUtil.getQueryRunner();
+        String sql = "select * from change_stock_list where psid = ?";
+        return qr.query(sql, new BeanListHandler<ChangeStockList>(ChangeStockList.class), psid);
     }
 
     @Override
     public List<ChangeStockList> getByOprType(Integer oprType) throws SQLException {
-        // TODO Auto-generated method stub
-        return null;
+        QueryRunner qr = JdbcUtil.getQueryRunner();
+        String sql = "select * from change_stock_list where oprType = ?";
+        return qr.query(sql, new BeanListHandler<ChangeStockList>(ChangeStockList.class), oprType);
     }
 
     @Override
     public List<ChangeStockList> getByOprTime(String oprTime) throws SQLException {
-        // TODO Auto-generated method stub
-        return null;
+        QueryRunner qr = JdbcUtil.getQueryRunner();
+        String sql = "select * from change_stock_list where oprTime = ?";
+        return qr.query(sql, new BeanListHandler<ChangeStockList>(ChangeStockList.class), oprTime);
     }
 
 }
