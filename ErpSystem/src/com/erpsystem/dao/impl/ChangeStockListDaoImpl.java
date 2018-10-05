@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
+import org.apache.commons.dbutils.handlers.ScalarHandler;
 
 import com.erpsystem.dao.IChangeStockListDao;
 import com.erpsystem.domain.ChangeStockList;
@@ -65,6 +66,20 @@ public class ChangeStockListDaoImpl implements IChangeStockListDao {
         QueryRunner qr = JdbcUtil.getQueryRunner();
         String sql = "select * from change_stock_list where oprTime = ?";
         return qr.query(sql, new BeanListHandler<ChangeStockList>(ChangeStockList.class), oprTime);
+    }
+
+    @Override
+    public Integer getCount() throws SQLException {
+        QueryRunner qr = JdbcUtil.getQueryRunner();
+        String sql = "select count(*) from change_stock_list";
+        return qr.query(sql, new ScalarHandler<>());
+    }
+
+    @Override
+    public List<ChangeStockList> getPageData(int index, int pageCount) throws SQLException {
+        QueryRunner qr = JdbcUtil.getQueryRunner();
+        String sql = "select * from change_stock_list limit ?, ?";
+        return qr.query(sql, new BeanListHandler<ChangeStockList>(ChangeStockList.class), index, pageCount);
     }
 
 }

@@ -34,27 +34,34 @@ public class ProductStockDaoImpl implements IProductStockDao {
     }
 
     @Override
-    public void save(ProductStock ps) throws SQLException {
-        QueryRunner qr = new QueryRunner();
+    public Integer save(ProductStock ps) throws SQLException {
+        QueryRunner qr = JdbcUtil.getQueryRunner();
         String sql = "insert into product_stock values(?, ?, ?, ?, ?)";
         Object params[] = {PrimaryKeyUtil.getProductStockPK(this.getMaxPsid(), ps.getProductName()), 
                 ps.getProductName(), ps.getProductCount(), ps.getRepertoryNum(), ps.getProductType()};
-        qr.update(conn, sql, params);
+        return qr.update(sql, params);
     }
 
     @Override
     public void update(ProductStock ps) throws SQLException {
-        QueryRunner qr = new QueryRunner();
+        QueryRunner qr = JdbcUtil.getQueryRunner();
         String sql = "update product_stock set productName = ?, repertoryNum = ?, productType = ? where psid = ?";
         Object params[] = {ps.getProductName(), ps.getRepertoryNum(), ps.getProductType(), ps.getPsid()};
-        qr.update(conn, sql, params);
+        qr.update(sql, params);
     }
 
     @Override
-    public void delete(String psid) throws SQLException {
+    public Integer updateCount(String psid, Integer newCount) throws SQLException {
         QueryRunner qr = new QueryRunner();
+        String sql = "update product_stock set productCount = ? where psid = ?";
+        return qr.update(conn, sql, newCount, psid);
+    }
+    
+    @Override
+    public void delete(String psid) throws SQLException {
+        QueryRunner qr = JdbcUtil.getQueryRunner();
         String sql = "delete from product_stock where psid = ?";
-        qr.update(conn, sql, psid);
+        qr.update(sql, psid);
     }
 
     @Override
