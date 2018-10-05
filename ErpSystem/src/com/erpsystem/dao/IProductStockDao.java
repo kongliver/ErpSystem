@@ -20,13 +20,20 @@ public interface IProductStockDao {
      * 保存库存品
      * @param ps 要保存的库存品
      */
-    void save(ProductStock ps) throws SQLException;
+    Integer save(ProductStock ps) throws SQLException;
     
     /**
      * 修改库存品信息
      * @param ps 要修改的库存品，只能修改物品名称、仓库编号和物品类型
      */
     void update(ProductStock ps) throws SQLException;
+    
+    /**
+     * 修改库存品数量
+     * @param changeCount 变化的数量
+     * @return 受影响的行数
+     */
+    Integer updateCount(String psid, Integer newCount) throws SQLException;
     
     /**
      * 通过编号删除库存品

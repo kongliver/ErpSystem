@@ -48,4 +48,18 @@ public interface IChangeStockListDao {
      * @return 异动记录集合
      */
     List<ChangeStockList> getByOprTime(String oprTime) throws SQLException;
+    
+    /**
+     * 查询总条数
+     * @return
+     */
+    Integer getCount() throws SQLException;
+    
+    /**
+     * 获取分页商品
+     * @param index 查询开始行数
+     * @param pageCount 一页显示行数
+     * @return 当页的所有商品
+     */
+    List<ChangeStockList> getPageData(int index, int pageCount) throws SQLException;
 }
