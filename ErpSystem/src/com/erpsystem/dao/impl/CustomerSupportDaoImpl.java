@@ -81,7 +81,7 @@ private QueryRunner qr = JdbcUtil.getQueryRunner();
 	@Override
 	public Long getTotalCount() throws SQLException {
 		String sql = "select count(1) from `customer_support_list`";
-		Long totalCount = (Long)qr.query(sql, new ScalarHandler());
+		Long totalCount = (Long)qr.query(sql, new ScalarHandler<>());
 		return totalCount;
 	}
 
