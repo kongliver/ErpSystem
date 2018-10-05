@@ -34,12 +34,12 @@ public class ProductStockDaoImpl implements IProductStockDao {
     }
 
     @Override
-    public Integer save(ProductStock ps) throws SQLException {
+    public void save(ProductStock ps) throws SQLException {
         QueryRunner qr = JdbcUtil.getQueryRunner();
         String sql = "insert into product_stock values(?, ?, ?, ?, ?)";
         Object params[] = {PrimaryKeyUtil.getProductStockPK(this.getMaxPsid(), ps.getProductName()), 
                 ps.getProductName(), ps.getProductCount(), ps.getRepertoryNum(), ps.getProductType()};
-        return qr.update(sql, params);
+        qr.update(sql, params);
     }
 
     @Override
@@ -104,6 +104,13 @@ public class ProductStockDaoImpl implements IProductStockDao {
         QueryRunner qr = JdbcUtil.getQueryRunner();
         String sql = "select * from product_stock limit ?, ?";
         return qr.query(sql, new BeanListHandler<ProductStock>(ProductStock.class), index, pageCount);
+    }
+
+    @Override
+    public ProductStock getByProductName(String productName) throws SQLException {
+        QueryRunner qr = JdbcUtil.getQueryRunner();
+        String sql = "select * from product_stock where productName = ?";
+        return qr.query(sql, new BeanHandler<ProductStock>(ProductStock.class), productName);
     }
 
 }

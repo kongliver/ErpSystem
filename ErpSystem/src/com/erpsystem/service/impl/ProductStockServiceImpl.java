@@ -13,6 +13,7 @@ import com.erpsystem.domain.ChangeStockList;
 import com.erpsystem.domain.PageBean;
 import com.erpsystem.domain.ProductStock;
 import com.erpsystem.service.IProductStockService;
+import com.erpsystem.utils.DateUtil;
 import com.erpsystem.utils.JdbcUtil;
 
 /**
@@ -29,11 +30,12 @@ public class ProductStockServiceImpl implements IProductStockService {
     private IProductStockDao productStockDao = new ProductStockDaoImpl();
 
     @Override
-    public void save(ProductStock productStock) throws SQLException, RuntimeException {
-        Integer row = productStockDao.save(productStock);
-        if (row <= 0) {
+    public void save(ProductStock productStock) throws RuntimeException, SQLException {
+        ProductStock ps = productStockDao.getByProductName(productStock.getProductName());
+        if (ps != null) {
             throw new RuntimeException("仓库中已经存在该名字的库存品，请勿重复添加");
         }
+        productStockDao.save(productStock);
     }
 
     @Override
@@ -86,18 +88,20 @@ public class ProductStockServiceImpl implements IProductStockService {
             }
         } else {
             conn.rollback();
+            throw new RuntimeException("只有入库和出库操作");
         }
         // 更新库存品数量
         psDao.updateCount(psid, newCount);
         // 新增库存异动记录
         csl.setPsid(psid);
         csl.setChangeCount(changeCount);
-        csl.setOprTime(String.valueOf(new Date()));
+        csl.setOprTime(DateUtil.formatTime(new Date()));
         csl.setOprPerson(oprPerson);
         csl.setOprType(oprType);
         cslDao.save(csl);
         // 提交事务
         conn.commit();
+        conn.close();
     }
 
     @Override
