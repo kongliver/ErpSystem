@@ -20,44 +20,53 @@ public class CustomerSupport {
 	private String handler;
 	
 	/** 处理时间 */
-	private String handleTime;
-	
+	private String handlerTime;
+
 	@Override
 	public String toString() {
 		return "CustomerSupport [csId=" + csId + ", orderNum=" + orderNum + ", problem=" + problem + ", handler="
-				+ handler + ", handleTime=" + handleTime + "]";
+				+ handler + ", handlerTime=" + handlerTime + "]";
 	}
-	
+
 	//setter and getter start
 	public String getCsId() {
 		return csId;
 	}
+
 	public void setCsId(String csId) {
 		this.csId = csId;
 	}
+
 	public Long getOrderNum() {
 		return orderNum;
 	}
+
 	public void setOrderNum(Long orderNum) {
 		this.orderNum = orderNum;
 	}
+
 	public String getProblem() {
 		return problem;
 	}
+
 	public void setProblem(String problem) {
 		this.problem = problem;
 	}
+
 	public String getHandler() {
 		return handler;
 	}
+
 	public void setHandler(String handler) {
 		this.handler = handler;
 	}
-	public String getHandleTime() {
-		return handleTime;
+
+	public String getHandlerTime() {
+		return handlerTime;
 	}
-	public void setHandleTime(String handleTime) {
-		this.handleTime = handleTime;
+
+	public void setHandlerTime(String handlerTime) {
+		this.handlerTime = handlerTime;
 	}
 	//setter and getter end
 	

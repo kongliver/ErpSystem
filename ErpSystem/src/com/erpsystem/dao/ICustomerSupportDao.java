@@ -2,6 +2,7 @@ package com.erpsystem.dao;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import com.erpsystem.domain.CustomerSupport;
 
@@ -37,11 +38,42 @@ public interface ICustomerSupportDao {
 	public List<CustomerSupport> getAllCusSup() throws SQLException;
 	
 	/**
-	 * 根据售后id来查询售后记录
+	 * 根据售后id来查询基本的售后记录
 	 * @param csId 传入售后id
 	 * @return 返回相应的CustomerSupport实体类
 	 */
-	public CustomerSupport getCupSupById(String csId) throws SQLException;
+	public CustomerSupport getCusSupById(String csId) throws SQLException;
+	
+	/**
+	 * 根据售后id查询更多售后详情（加上商品名称、数量、订货公司）
+	 * @param csId 售后id
+	 * @return 返回封装了相应售后数据的map集合
+	 */
+	public Map<String,Object> getMoreCusSupById(String csId) throws SQLException;
+	
+	/**
+	 * 售后模糊查询
+	 * @param orderNum 订单号
+	 * @param goodsName 商品名称
+	 * @param cusCompany 公司名
+	 * @return 返回封装了售后实体类的list集合
+	 */
+	public List<CustomerSupport> fuzzyQuery(String orderNum, String goodsName, String cusCompany) throws SQLException;
+	
+	/**
+	 * 获取分页数据
+	 * @param index 从第几条数据开始
+	 * @param currentCount 查多少条数据
+	 * @return 返回当前页的所有数据
+	 */
+	public List<CustomerSupport> getPageData(int index, int currentCount) throws SQLException;
+	
+	/**
+	 * 获取总共由多少条记录
+	 * @return 返回总记录条数
+	 * @throws SQLException
+	 */
+	public Long getTotalCount() throws SQLException;
 	
 	
 }
