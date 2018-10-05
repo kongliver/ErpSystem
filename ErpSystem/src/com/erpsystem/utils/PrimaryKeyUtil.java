@@ -48,7 +48,7 @@ public class PrimaryKeyUtil {
 	    if (maxPsid == null) {
             id = 1;
         } else {
-            id = Integer.valueOf(maxPsid.substring(0, 4)) + 1;
+            id = Integer.valueOf(maxPsid) + 1;
         }
 	    return String.format("%04d", id) + productName;
 	}
