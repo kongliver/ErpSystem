@@ -20,7 +20,7 @@ public interface IProductStockDao {
      * 保存库存品
      * @param ps 要保存的库存品
      */
-    Integer save(ProductStock ps) throws SQLException;
+    void save(ProductStock ps) throws SQLException;
     
     /**
      * 修改库存品信息
@@ -53,6 +53,13 @@ public interface IProductStockDao {
      * @return 查询到的库存品
      */
     ProductStock getById(String psid) throws SQLException;
+    
+    /**
+     * 通过名字获取库存品
+     * @param productName 要查询的库存品名字
+     * @return 查询到的库存品
+     */
+    ProductStock getByProductName(String productName) throws SQLException;
     
     /**
      * 通过库存品类别获取库存品

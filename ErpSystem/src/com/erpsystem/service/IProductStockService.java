@@ -21,7 +21,7 @@ public interface IProductStockService {
      * 新增库存品
      * @param productStock
      */
-    void save(ProductStock productStock) throws SQLException, RuntimeException;
+    void save(ProductStock productStock) throws RuntimeException, SQLException;
     
     /**
      * 更新库存品信息

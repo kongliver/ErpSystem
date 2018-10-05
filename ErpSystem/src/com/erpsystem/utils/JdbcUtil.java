@@ -57,7 +57,7 @@ public class JdbcUtil {
     
     public static Connection getConn() {
         try {
-            conn = ds.getConnection();
+            conn = JdbcUtil.getDataSource().getConnection();
         } catch (SQLException e) {
             e.printStackTrace();
         }
