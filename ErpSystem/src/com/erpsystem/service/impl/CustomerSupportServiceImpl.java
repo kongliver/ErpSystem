@@ -10,6 +10,7 @@ import com.erpsystem.dao.IOrderDao;
 import com.erpsystem.dao.impl.CustomerSupportDaoImpl;
 import com.erpsystem.dao.impl.OrderDaoImpl;
 import com.erpsystem.domain.CustomerSupport;
+import com.erpsystem.domain.Order;
 import com.erpsystem.domain.PageBean;
 import com.erpsystem.service.ICustomerSupportService;
 import com.erpsystem.service.IOrderService;
@@ -23,20 +24,19 @@ public class CustomerSupportServiceImpl implements ICustomerSupportService {
 	public void saveCusSup(CustomerSupport cusSup) throws SQLException {
 		Connection conn = JdbcUtil.getConn();
 		IOrderService orderService = new OrderServiceImpl();
-		
-
 		// 开启事务
 		conn.setAutoCommit(false);
 		
-		cusSupDao.saveCusSup(cusSup,conn);
-		//orderService.updateOrderStatu(cusSup.getOrderNum(),4);
+		Order order = orderService.findById(cusSup.getOrderNum());
 		
+		if(order == null) {
+			conn.rollback();
+			throw new RuntimeException("该订单不存在！");
+		}
+		cusSupDao.saveCusSup(cusSup,conn);
+		orderService.updateOrderStatu(cusSup.getOrderNum(), 4);
 		
 		conn.commit();
-			
-
-        
-		
 	}
 
 	@Override
