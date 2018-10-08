@@ -1,5 +1,6 @@
 package com.erpsystem.dao.impl;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
@@ -22,13 +23,20 @@ import com.erpsystem.utils.JdbcUtil;
  * @date 2018年10月2日下午5:27:46
  */
 public class CustomerSupportDaoImpl implements ICustomerSupportDao {
-private QueryRunner qr = JdbcUtil.getQueryRunner();
+	private QueryRunner qr = JdbcUtil.getQueryRunner();
+	private Connection conn = null;
+	
+	public CustomerSupportDaoImpl() {}
+	
+	public CustomerSupportDaoImpl(Connection conn) {
+		this.conn = conn;
+	}
 	
 	@Override
-	public void saveCusSup(CustomerSupport cusSupport) throws SQLException {
+	public void saveCusSup(CustomerSupport cusSupport,Connection conn) throws SQLException {
 		String sql = "insert into `customer_support_list` values(?,?,?,?,?)";
 		
-		qr.update(sql,CommonUtil.getUUID(),cusSupport.getOrderNum(),cusSupport.getProblem(),cusSupport.getHandler(),new Date());
+		qr.update(conn,sql,CommonUtil.getUUID(),cusSupport.getOrderNum(),cusSupport.getProblem(),cusSupport.getHandler(),new Date());
 		System.out.println("添加售后记录成功");
 	}
 
