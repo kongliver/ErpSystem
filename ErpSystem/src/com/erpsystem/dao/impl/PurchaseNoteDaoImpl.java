@@ -1,5 +1,7 @@
 package com.erpsystem.dao.impl;
-
+/**
+ *  采购单
+ */
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
@@ -17,19 +19,10 @@ import com.erpsystem.utils.DruidConnection;
 public class PurchaseNoteDaoImpl implements IPurchaseNoteDao {
 	QueryRunner qr = new QueryRunner(DruidConnection.getDataSource());
 	
-	@Override
-	public List<ProductStock> queryAllProduct() throws SQLException {
-		String sql = "select * from product_stock";
-		return qr.query(sql, new BeanListHandler<ProductStock>(ProductStock.class));
-	}
 
-	@Override
-	public ProductStock queryOneProduct(String psid) throws SQLException {
-		String sql = "select * from product_stock where psid = ?";
-		return qr.query(sql, new BeanHandler<ProductStock>(ProductStock.class), psid);
-	
-	}
-
+	/**
+	 * 添加采购单
+	 */
 	@Override
 	public int addTable(PurchaseNote purchaseNote) throws SQLException {
 		String sql = "insert into purchase_note values(?,?,?,?,?,?,?) ";
@@ -37,13 +30,17 @@ public class PurchaseNoteDaoImpl implements IPurchaseNoteDao {
 								 purchaseNote.getSid());
 		return num;
 	}
-	
+	/**
+	 * 删除采购单
+	 */
 	@Override
 	public int deleteTables(String pnid) throws SQLException {
 		String sql = "delete from purchase_note where pnid = ?";
 		return qr.update(sql,pnid);
 	}
-
+	/**
+	 * 修改采购单
+	 */
 	@Override
 	public int updateTable(PurchaseNote purchaseNote) throws SQLException {
 		String sql = "update purchase_note set psid = ?, purchaseCount = ? , purTotalMoney = ?,purchaseTime = ?,"
@@ -51,13 +48,17 @@ public class PurchaseNoteDaoImpl implements IPurchaseNoteDao {
 		return qr.update(sql, purchaseNote.getPsid() ,purchaseNote.getPurchaseCount(), purchaseNote.getPurTotalMoney(),purchaseNote.getPurchaseTime(),purchaseNote.getBuyer(),
 								 purchaseNote.getSid(), purchaseNote.getPnid());
 	}
-	
+	/**
+	 * 查询所有采购单
+	 */
 	@Override
 	public List<PurchaseNote> queryTable() throws SQLException {
 		String sql = "select * from purchase_note";
 		return qr.query(sql, new BeanListHandler<PurchaseNote>(PurchaseNote.class));
 	}
-
+	/**
+	 * 查询某一采购单
+	 */
 	@Override
 	public PurchaseNote getOne(String pnid) throws SQLException {
 		String sql = "select * from purchase_note where pnid = ?";

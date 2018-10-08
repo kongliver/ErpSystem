@@ -4,88 +4,63 @@ import java.sql.SQLException;
 import java.util.List;
 import com.erpsystem.dao.IPurchaseNoteDao;
 import com.erpsystem.dao.impl.PurchaseNoteDaoImpl;
-import com.erpsystem.domain.ProductStock;
 import com.erpsystem.domain.PurchaseNote;
+import com.erpsystem.service.impl.ProductStockServiceImpl;
 
 public class IPurchaseNoteService {
 	
 	IPurchaseNoteDao dao = new PurchaseNoteDaoImpl();
-//	²éÑ¯¿â´æÖĞµÄËùÓĞÎïÆ·
-	public List<ProductStock> queryAllProduct(){
-		List<ProductStock> list = null;
-		try {
-			list = dao.queryAllProduct();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return list;
-	}
-	
-//	²éÑ¯¿â´æÖĞµÄÖ¸¶¨ÎïÆ·
-	public ProductStock queryOneProduct(String psid) {
-		ProductStock productStock = null;
-		try {
-			productStock = dao.queryOneProduct(psid);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return productStock;
-	}
-	
-//	Ìí¼Ó²É¹ºµ¥£¨¿â´æÖĞ²É¹ºµ¥µÄÎïÆ·ĞèÒªÌí¼Ó½øÈ¥£©
-	public int addTable(PurchaseNote purchaseNote) {
+
+	/**
+	 *  æ·»åŠ é‡‡è´­å•
+	 * @throws SQLException 
+	 */
+	public int addTable(PurchaseNote purchaseNote) throws SQLException {
 		int num = 0;
-		try {
-			num = dao.addTable(purchaseNote);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		num = dao.addTable(purchaseNote);
+		IProductStockService service = new ProductStockServiceImpl();
+		service.changeStock( purchaseNote.getPsid(),  purchaseNote.getPurchaseCount(),  purchaseNote.getBuyer(),  1);
 		return num;	
 	}
 	
-//	É¾³ı²É¹ºµ¥
-	public int deleteTables(String pnid) {
+	/**
+	 *  åˆ é™¤é‡‡è´­å•
+	 * @throws SQLException 
+	 */
+	public int deleteTables(String pnid) throws SQLException {
 		int num = 0;
-		try {
-			num = dao.deleteTables(pnid);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		num = dao.deleteTables(pnid);
 		return num;
 	}
 	
-//	ĞŞ¸Ä²É¹ºµ¥
-	public int updateTable(PurchaseNote purchaseNote) {
+	/**
+	 *  ä¿®æ”¹é‡‡è´­å•
+	 * @throws SQLException 
+	 */
+	public int updateTable(PurchaseNote purchaseNote) throws SQLException {
 		int num = 0;
-		try {
-			num = dao.updateTable(purchaseNote);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		num = dao.updateTable(purchaseNote);
 		return num;
 	}
 	
 	
-//	²éÑ¯ËùÓĞ²É¹ºµ¥
-	public List<PurchaseNote> queryTable(){
+	/**
+	 *  æŸ¥è¯¢é‡‡è´­å•
+	 * @throws SQLException 
+	 */
+	public List<PurchaseNote> queryTable() throws SQLException{
 		List<PurchaseNote> list = null;
-		try {
-			list = dao.queryTable();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		list = dao.queryTable();
 		return list;
 	}
-//	²éÑ¯Ä³Ò»ÕÅ²É¹ºµ¥
-	public PurchaseNote getOne(String pnid) {
+	/**
+	 *  æŸ¥è¯¢æŸä¸€å¼ é‡‡è´­å•
+	 * @throws SQLException 
+	 */
+	public PurchaseNote getOne(String pnid) throws SQLException {
 		PurchaseNote purchaseNote = null;
-		try {
-			purchaseNote = dao.getOne(pnid);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		purchaseNote = dao.getOne(pnid);
 		return purchaseNote;
+	
 	}
-	
-	
 }

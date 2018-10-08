@@ -1,5 +1,7 @@
 package com.erpsystem.dao;
-
+/**
+ *  é‡‡è´­å•
+ */
 import java.sql.SQLException;
 import java.util.List;
 
@@ -8,44 +10,33 @@ import com.erpsystem.domain.PurchaseNote;
 
 public interface IPurchaseNoteDao {
 
-	/**
-	 * ²éÑ¯¿â´æÖĞµÄËùÓĞÎïÆ·
-	 * @throws SQLException 
-	 */
-	public List<ProductStock> queryAllProduct() throws SQLException;
-		
-	/**
-	 * ²éÑ¯¿â´æÖĞµÄÖ¸¶¨ÎïÆ·
-	 * @throws SQLException 
-	 */
-	public 	ProductStock queryOneProduct(String psid) throws SQLException;
 	
 	/**
-	 * Ìí¼Ó²É¹ºµ¥£¨¿â´æÖĞ²É¹ºµ¥µÄÎïÆ·ĞèÒªÌí¼Ó½øÈ¥£©
+	 * æ·»åŠ é‡‡è´­å•
 	 * @throws SQLException 
 	 */
 	public int addTable(PurchaseNote purchaseNote) throws SQLException;
 	
 	/**
-	 * É¾³ı²É¹ºµ¥
+	 * åˆ é™¤é‡‡è´­å•
 	 * @throws SQLException 
 	 */
 	public int deleteTables(String pnid) throws SQLException;
 	
 	/**
-	 * ĞŞ¸Ä²É¹ºµ¥
+	 * ä¿®æ”¹é‡‡è´­å•
 	 * @throws SQLException 
 	 */
 	public int updateTable(PurchaseNote purchaseNote) throws SQLException;
 	
 	/**
-	 * ²éÑ¯²É¹ºµ¥
+	 * æŸ¥è¯¢æ‰€æœ‰é‡‡è´­å•
 	 * @throws SQLException 
 	 */
 	public List<PurchaseNote> queryTable() throws SQLException;
 	
 	/**
-	 * ²éÑ¯Ä³Ò»ÕÅ²É¹ºµ¥
+	 * æŸ¥è¯¢æŸä¸€é‡‡è´­å•
 	 * @throws SQLException 
 	 */
 	public PurchaseNote getOne(String pnid) throws SQLException;
