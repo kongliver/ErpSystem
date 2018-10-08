@@ -1,8 +1,5 @@
 package com.erpsystem.domain;
 
-import lombok.Getter;
-import lombok.Setter;
-
 /**
  * 
  * @function   库存
@@ -17,7 +14,6 @@ import lombok.Setter;
   `repertoryNum` int(50) NOT NULL,
   `productType` tinyint(10) NOT NULL,
  */
-@Getter @Setter
 public class ProductStock {
 
     /** 库存编号 */
@@ -47,5 +43,37 @@ public class ProductStock {
         return "ProductStock [psid=" + psid + ", productName=" + productName + ", productCount=" + productCount
                 + ", repertoryNum=" + repertoryNum + ", productType=" + productType + "]";
     }
+    
+    public String getPsid() {
+        return psid;
+    }
+    public void setPsid(String psid) {
+        this.psid = psid;
+    }
+    public String getProductName() {
+        return productName;
+    }
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+    public Integer getProductCount() {
+        return productCount;
+    }
+    public void setProductCount(Integer productCount) {
+        this.productCount = productCount;
+    }
+    public Integer getRepertoryNum() {
+        return repertoryNum;
+    }
+    public void setRepertoryNum(Integer repertoryNum) {
+        this.repertoryNum = repertoryNum;
+    }
+    public Integer getProductType() {
+        return productType;
+    }
+    public void setProductType(Integer productType) {
+        this.productType = productType;
+    }
+    
    
 }

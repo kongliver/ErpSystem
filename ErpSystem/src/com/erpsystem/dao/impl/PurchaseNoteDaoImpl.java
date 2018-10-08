@@ -3,7 +3,6 @@ package com.erpsystem.dao.impl;
  *  采购单
  */
 import java.sql.SQLException;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.dbutils.QueryRunner;
@@ -11,7 +10,6 @@ import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 
 import com.erpsystem.dao.IPurchaseNoteDao;
-import com.erpsystem.domain.ProductStock;
 import com.erpsystem.domain.PurchaseNote;
 import com.erpsystem.utils.DruidConnection;
 
