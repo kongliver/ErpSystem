@@ -6,9 +6,12 @@ import java.util.Date;
 import java.util.List;
 
 import com.erpsystem.dao.IOrderDao;
+import com.erpsystem.dao.IProductStockDao;
 import com.erpsystem.dao.impl.OrderDaoImpl;
+import com.erpsystem.dao.impl.ProductStockDaoImpl;
 import com.erpsystem.domain.Order;
 import com.erpsystem.domain.PageBean;
+import com.erpsystem.domain.ProductStock;
 import com.erpsystem.service.IOrderService;
 import com.erpsystem.utils.PrimaryKeyUtil;
 
@@ -22,6 +25,7 @@ import com.erpsystem.utils.PrimaryKeyUtil;
 public class OrderServiceImpl implements IOrderService {
 	IOrderDao dao = new OrderDaoImpl();
 
+	IProductStockDao stockDao = new ProductStockDaoImpl();
 	
 	@Override
 	public PageBean<Order> findAll(Integer currentCount, Integer currentPage) throws SQLException {
@@ -74,6 +78,34 @@ public class OrderServiceImpl implements IOrderService {
 		 
 		dao.save(order);
 	}
+
+
+	@Override
+	public boolean outStock(Long orderNum) throws SQLException {
+		Order order = dao.finById(orderNum);
+		
+		ProductStock productStock = stockDao.getByProductName(order.getGoodsName());
+		
+		if(order.getGoodsCount() >= productStock.getProductCount()) {
+			productStock.setProductCount(productStock.getProductCount() - order.getGoodsCount());  //减少库存
+			stockDao.update(productStock);			//更新库存
+			updateOrderStatu(orderNum, 2);			//更改更新状态
+			return true;
+		}else {
+			return false;
+		}
+	}
+
+
+	@Override
+	public void updateOrderStatu(Long orderNum, Integer statusCode) throws SQLException {
+		dao.updateOrderStatu(orderNum, statusCode);
+	}
+
+
+
+
+	
 	
 	
 	

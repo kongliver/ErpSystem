@@ -1,21 +1,42 @@
 package com.erpsystem.service.impl;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
 import com.erpsystem.dao.ICustomerSupportDao;
+import com.erpsystem.dao.IOrderDao;
 import com.erpsystem.dao.impl.CustomerSupportDaoImpl;
+import com.erpsystem.dao.impl.OrderDaoImpl;
 import com.erpsystem.domain.CustomerSupport;
+import com.erpsystem.domain.Order;
 import com.erpsystem.domain.PageBean;
 import com.erpsystem.service.ICustomerSupportService;
+import com.erpsystem.service.IOrderService;
+import com.erpsystem.utils.JdbcUtil;
 
 public class CustomerSupportServiceImpl implements ICustomerSupportService {
 	private ICustomerSupportDao cusSupDao = new CustomerSupportDaoImpl();
 	
+	
 	@Override
 	public void saveCusSup(CustomerSupport cusSup) throws SQLException {
-		cusSupDao.saveCusSup(cusSup);
+		Connection conn = JdbcUtil.getConn();
+		IOrderService orderService = new OrderServiceImpl();
+		// 开启事务
+		conn.setAutoCommit(false);
+		
+		Order order = orderService.findById(cusSup.getOrderNum());
+		
+		if(order == null) {
+			conn.rollback();
+			throw new RuntimeException("该订单不存在！");
+		}
+		cusSupDao.saveCusSup(cusSup,conn);
+		orderService.updateOrderStatu(cusSup.getOrderNum(), 3);
+		
+		conn.commit();
 	}
 
 	@Override

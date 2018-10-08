@@ -1,10 +1,12 @@
 package com.erpsystem.dao;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
 import com.erpsystem.domain.CustomerSupport;
+
 
 /**
  * 
@@ -17,7 +19,7 @@ public interface ICustomerSupportDao {
 	 * 添加售后记录
 	 * @param cusSupport 传入售后记录的实体类
 	 */
-	public void saveCusSup(CustomerSupport cusSupport) throws SQLException;
+	public void saveCusSup(CustomerSupport cusSupport,Connection conn) throws SQLException;
 	
 	/**
 	 * 根据售后编号来删除相应售后记录

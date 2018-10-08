@@ -1,8 +1,5 @@
 package com.erpsystem.domain;
 
-import lombok.Getter;
-import lombok.Setter;
-
 /**
  * 
  * @function   库存异动类
@@ -18,7 +15,6 @@ import lombok.Setter;
   `oprPerson` varchar(50) NOT NULL,
   `oprType` tinyint(5) NOT NULL,
  */
-@Getter @Setter
 public class ChangeStockList {
 
     /** 库存异动记录编号，uuid */
@@ -50,6 +46,43 @@ public class ChangeStockList {
     public String toString() {
         return "ChangeStockList [chid=" + chid + ", psid=" + psid + ", changeCount=" + changeCount + ", oprTime="
                 + oprTime + ", oprPerson=" + oprPerson + ", oprType=" + oprType + "]";
+    }
+    
+    public String getChid() {
+        return chid;
+    }
+    public void setChid(String chid) {
+        this.chid = chid;
+    }
+    public String getPsid() {
+        return psid;
+    }
+    public void setPsid(String psid) {
+        this.psid = psid;
+    }
+    public Integer getChangeCount() {
+        return changeCount;
+    }
+    public void setChangeCount(Integer changeCount) {
+        this.changeCount = changeCount;
+    }
+    public String getOprTime() {
+        return oprTime;
+    }
+    public void setOprTime(String oprTime) {
+        this.oprTime = oprTime;
+    }
+    public String getOprPerson() {
+        return oprPerson;
+    }
+    public void setOprPerson(String oprPerson) {
+        this.oprPerson = oprPerson;
+    }
+    public Integer getOprType() {
+        return oprType;
+    }
+    public void setOprType(Integer oprType) {
+        this.oprType = oprType;
     }
     
 }
