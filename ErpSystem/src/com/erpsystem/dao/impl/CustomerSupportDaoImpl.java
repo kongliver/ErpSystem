@@ -33,7 +33,7 @@ public class CustomerSupportDaoImpl implements ICustomerSupportDao {
 	}
 	
 	@Override
-	public void saveCusSup(CustomerSupport cusSupport,Connection conn) throws SQLException {
+	public void saveCusSup(CustomerSupport cusSupport) throws SQLException {
 		String sql = "insert into `customer_support_list` values(?,?,?,?,?)";
 		
 		qr.update(conn,sql,CommonUtil.getUUID(),cusSupport.getOrderNum(),cusSupport.getProblem(),cusSupport.getHandler(),new Date());
