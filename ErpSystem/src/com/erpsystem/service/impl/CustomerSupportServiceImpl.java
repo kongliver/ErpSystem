@@ -34,7 +34,7 @@ public class CustomerSupportServiceImpl implements ICustomerSupportService {
 			throw new RuntimeException("该订单不存在！");
 		}
 		cusSupDao.saveCusSup(cusSup,conn);
-		orderService.updateOrderStatu(cusSup.getOrderNum(), 4);
+		orderService.updateOrderStatu(cusSup.getOrderNum(), 3);
 		
 		conn.commit();
 	}
