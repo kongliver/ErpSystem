@@ -5,7 +5,6 @@ package com.erpsystem.dao;
 import java.sql.SQLException;
 import java.util.List;
 
-import com.erpsystem.domain.ProductStock;
 import com.erpsystem.domain.PurchaseNote;
 
 public interface IPurchaseNoteDao {
