@@ -41,5 +41,21 @@ public interface IOrderService {
 	 * @throws SQLException
 	 */
 	public void insertOrder(Order order) throws SQLException;
+	
+	/**
+	 * 根据订单id完成出库的服务
+	 * @param orderNum 订单id 
+	 * @throws SQLException
+	 */
+	public boolean outStock(Long orderNum) throws SQLException;
+	
+	/**
+	 * 根据传入的订单号，修改订单状态
+	 * @param orderNum  订单id 
+	 * @param statusCode 状态码
+	 * @throws SQLException
+	 */
+	public void updateOrderStatu(Long orderNum, Integer statusCode)throws SQLException;
+	
 
 }

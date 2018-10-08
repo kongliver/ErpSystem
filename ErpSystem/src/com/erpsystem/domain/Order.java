@@ -24,7 +24,7 @@ public class Order {
 	private Long orderNum;
 	
 	/** 订单所包含的商品名称*/
-	private Integer goodsName;
+	private String goodsName;
 	
 	/** 订单包含的商品数量*/
 	private Integer goodsCount;
@@ -38,9 +38,8 @@ public class Order {
 	/** 交货时间*/
 	private String endTime;
 	
-	/** 订单的状态，1:刚的提交订单    2:材料欠缺采购中的订单   3:材料充足或者采购完成的订单  
-	 * 			4:加工状态的订单 	5:加工完成入库前的订单   6:完成入库，在库存中的订单
-	 * 			7:完成出库物流中的订单  8:客户签收完成的订单 9:有售后问题的订单  
+	/** 1:刚的提交订单   2:完成入库，在库存中的订单
+	 * 	3:完成出库订单   4: 有售后问题的订单
 	 * 
 	 **/	
 	private Integer orderType;
@@ -66,11 +65,13 @@ public class Order {
 		this.orderNum = orderNum;
 	}
 
-	public Integer getGoodsName() {
+
+
+	public String getGoodsName() {
 		return goodsName;
 	}
 
-	public void setGoodsName(Integer goodsName) {
+	public void setGoodsName(String goodsName) {
 		this.goodsName = goodsName;
 	}
 

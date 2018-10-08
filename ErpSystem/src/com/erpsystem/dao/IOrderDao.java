@@ -49,6 +49,20 @@ public interface IOrderDao {
 	 */
 	String findMaxKey() throws SQLException;
 
+	/**
+	 * 添加订单
+	 * @param order
+	 * @throws SQLException
+	 */
 	void save(Order order) throws SQLException;
+
+	/**
+	 * 修改订单状态码
+	 * @param orderNum
+	 * @param statusCode
+	 */
+	void updateOrderStatu(Long orderNum, Integer statusCode) throws SQLException;
+	
+
 
 }
