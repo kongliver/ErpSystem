@@ -38,8 +38,7 @@ public class Order {
 	/** 交货时间*/
 	private String endTime;
 	
-	/** 1:刚的提交订单   2:完成入库，在库存中的订单
-	 * 	3:完成出库订单   4: 有售后问题的订单
+	/** 1:刚的提交订单 2:完成出库订单   3: 有售后问题的订单
 	 * 
 	 **/	
 	private Integer orderType;
