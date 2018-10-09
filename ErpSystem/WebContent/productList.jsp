@@ -7,6 +7,7 @@
     <title>家具erp后台管理系统</title>
     <link rel="stylesheet" href="css/public.css"/>
     <link rel="stylesheet" href="css/style.css"/>
+    <link rel="stylesheet" href="css/pageStyle.css"/>
 </head>
 <body>
 <!--头部-->
@@ -95,19 +96,32 @@
     <div class="removerChid">
         <h2>提示</h2>
         <div class="removeMain">
-            <p>你确定要删除该订单吗？</p>
+            <p>你确定要删除该库存品吗？</p>
             <a href="#" id="yes">确定</a>
             <a href="#" id="no">取消</a>
         </div>
     </div>
 </div>
-
+    
     <footer class="footer">
+	    <!--分页-->
+	    <div id="page" class="page_div">aaa</div>
     </footer>
 
 <script src="js/jquery.js"></script>
+<script type="text/javascript" src="js/paging.js"></script>
 <script src="js/js.js"></script>
 <script src="js/time.js"></script>
+<script type="text/javascript">
+	$("#page").paging({
+	    pageNo: 1,
+	    totalPage: 3,
+	    totalSize: 5,
+	    callback: function(num) {
+	        $(window).attr('location', 'productList.jsp');
+	    }
+	});
+</script>
 
 </body>
 </html>
