@@ -78,7 +78,7 @@ public interface IProductStockDao {
      * 查询总条数
      * @return
      */
-    Integer getCount() throws SQLException;
+    Long getCount() throws SQLException;
     
     /**
      * 获取分页信息

@@ -110,8 +110,8 @@ public class ProductStockServiceImpl implements IProductStockService {
         // 设置当前页
         pageBean.setCurrentPage(currentPage);
         // 获取有多少条记录，从数据库当中查询
-        long totalCount = productStockDao.getCount();
-        pageBean.setTotalCount((int)totalCount);
+        Long totalCount = productStockDao.getCount();
+        pageBean.setTotalCount(totalCount.intValue());
         // 设置一页展示多少条数据
         int pageCount = 5;
         pageBean.setCurrentCount(pageCount);
