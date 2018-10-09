@@ -45,14 +45,11 @@
     <div class="right">
         <div class="location">
             <strong>你现在所在的位置是:</strong>
-            <span>客户管理页面 >> 客户修改页面</span>
+            <span>客户管理页面 >> 客户新增页面</span>
         </div>
         <div class="providerAdd">
-            <form action="${pageContext.request.contextPath }/CustomerServlet?method=update" method="post">
+            <form action="${pageContext.request.contextPath }/CustomerServlet?method=save" method="post">
             
-            	<input type="hidden" name="cid" value="${customer.cid}"> 
-            	
-            	
                 <!--div的class 为error是验证错误，ok是验证成功-->
                 <div class="">
                     <label for="providerId">公司名称：</label>
@@ -76,7 +73,7 @@
                     <span>*</span>
                 </div>
                 
-                <input type="submit" value="提交修改">
+                <input type="submit" value="提交新增">
             </form>
         </div>
 

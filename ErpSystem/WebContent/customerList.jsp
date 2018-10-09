@@ -46,14 +46,18 @@
                 <strong>你现在所在的位置是:</strong>
                 <span>客户管理页面</span>
             </div>
+            
+           <form action="${pageContext.request.contextPath }/CustomerServlet?method=list" method="post">
             <div class="search">
-                <span>公司名：</span>
-                <input type="text" placeholder="请输入客户的名称"/>
-                <span>联系电话：</span>
-                <input type="text" placeholder="请输入订单的编号"/>
-                <input type="button" value="查询"/>
-                <a href="customerAdd.jsp">添加客户</a>
+	            
+	                <span>公司名：</span>
+	                <input type="text" placeholder="请输入客户的名称" name="unmae"/>
+	                <span>联系电话：</span>
+	                <input type="text" placeholder="请输入订单的编号" name="orderNum"/>
+	                <input type="submit" value="查询"/>
+	   				 <input type="button" value="新增客户"  onclick="save()"/>
             </div>
+              <a href="customerAdd.jsp">添加客户</a>
             <!--账单表格 样式和供应商公用-->
             <table class="providerTable" cellpadding="0" cellspacing="0">
                 <tr class="firstTr">
@@ -65,6 +69,8 @@
                     <th width="30%">操作</th>
                 </tr>
                 <tr>
+                
+                
                     <td>9527</td>
                     <td>世尊</td>
                     <td>张洪刚</td>
@@ -72,26 +78,31 @@
                     <td>四川成都</td>                    
                     <td>
                         <a href="customerView.jsp"><img src="img/read.png" alt="查看" title="查看"/></a>
-                        <a href="customerUpdate.jsp"><img src="img/xiugai.png" alt="修改" title="修改"/></a>
+                        <a href="${pageContext.request.contextPath}/CustomerServlet?method=edit&cid=1"><img src="img/xiugai.png" alt="修改" title="修改"/></a>
                         <a href="#" class="removeBill"><img src="img/schu.png" alt="删除" title="删除"/></a>
                     </td>
+                    
+		                 <!--点击删除按钮后弹出的页面-->
+						<div class="zhezhao"></div>
+						<div class="remove" id="removeBi">
+						    <div class="removerChid">
+						        <h2>提示</h2>
+						        <div class="removeMain">
+						            <p>你确定要删除该订单吗？</p>
+						            <a href="${pageContext.request.contextPath}/CustomerServlet?method=delete&cid=1" id="yes">确定</a>
+						            <a href="#" id="no">取消</a>
+						        </div>
+						    </div>
+						</div>   
+                 
+                  
                 </tr>                
             </table>
+            </form>
         </div>
     </section>
 
-<!--点击删除按钮后弹出的页面-->
-<div class="zhezhao"></div>
-<div class="remove" id="removeBi">
-    <div class="removerChid">
-        <h2>提示</h2>
-        <div class="removeMain">
-            <p>你确定要删除该订单吗？</p>
-            <a href="#" id="yes">确定</a>
-            <a href="#" id="no">取消</a>
-        </div>
-    </div>
-</div>
+
 
     <footer class="footer">
     </footer>
