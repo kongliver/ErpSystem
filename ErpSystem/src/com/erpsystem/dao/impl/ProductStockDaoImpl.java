@@ -93,10 +93,10 @@ public class ProductStockDaoImpl implements IProductStockDao {
     }
 
     @Override
-    public Integer getCount() throws SQLException {
+    public Long getCount() throws SQLException {
         QueryRunner qr = JdbcUtil.getQueryRunner();
         String sql = "select count(*) from product_stock";
-        return qr.query(sql, new ScalarHandler<>());
+        return (Long)qr.query(sql, new ScalarHandler<>());
     }
 
     @Override
