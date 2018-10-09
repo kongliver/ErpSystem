@@ -26,8 +26,7 @@ public class PrimaryKeyUtil {
 
 		String dateMaxKey = maxKey.substring(0, 8); // 得到数据库订单号的日期
 
-		
-		if (newDateStr.equals(dateMaxKey)) {    //判断当前时间是否和 最大订单号日期相同
+		if (newDateStr.equals(dateMaxKey)) { // 判断当前时间是否和 最大订单号日期相同
 			Integer num = Integer.valueOf(maxKey.substring(8));
 			num++;
 			String str = String.format("%05d", num);
@@ -36,21 +35,33 @@ public class PrimaryKeyUtil {
 			return Long.valueOf(newDateStr + "00001");
 		}
 	}
-	
+
 	/**
 	 * 生成库存品主键，找出已有的库存品编号前四位的最大值，在最大值的基础上+1，如果没有则当前主键前四位为0001
-	 * @param psid 已有库存品的编号集合
+	 * 
+	 * @param psid        已有库存品的编号集合
 	 * @param productName 库存品名缩写
 	 * @return 生成的主键
 	 */
 	public static String getProductStockPK(String maxPsid, String productName) {
-	    Integer id = null;
-	    if (maxPsid == null) {
-            id = 1;
-        } else {
-            id = Integer.valueOf(maxPsid) + 1;
-        }
-	    return String.format("%04d", id) + productName;
+		Integer id = null;
+		if (maxPsid == null) {
+			id = 1;
+		} else {
+			id = Integer.valueOf(maxPsid) + 1;
+		}
+		return String.format("%04d", id) + productName;
 	}
-	
+
+	public static String getCustomerKey(String maxKey) {
+		System.out.println(maxKey);
+		Integer id = null;
+		if (maxKey == null || maxKey.equals("null")) {
+			id = 1; 
+		} else {
+			id = Integer.valueOf(maxKey) + 1;
+		}
+		return String.format("%04d", id);
+	}
+
 }
