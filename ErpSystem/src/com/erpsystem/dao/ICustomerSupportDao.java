@@ -67,14 +67,14 @@ public interface ICustomerSupportDao {
 	 * @param currentCount 查多少条数据
 	 * @return 返回当前页的所有数据
 	 */
-	public List<CustomerSupport> getPageData(int index, int currentCount) throws SQLException;
+	public List<CustomerSupport> getPageData(int index, int currentCount, String orderNum, String goodsName, String cusCompany) throws SQLException;
 	
 	/**
 	 * 获取总共由多少条记录
 	 * @return 返回总记录条数
 	 * @throws SQLException
 	 */
-	public Long getTotalCount() throws SQLException;
+	public Long getTotalCount(String orderNum, String goodsName, String cusCompany) throws SQLException;
 	
 	
 }

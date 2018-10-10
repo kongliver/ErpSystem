@@ -65,6 +65,6 @@ public interface ICustomerSupportService {
 	 * @return 当前分页的对象
 	 * @throws SQLException
 	 */
-	public PageBean<CustomerSupport> getPageBean(int currentPage,int currentCount) throws SQLException;
+	public PageBean<CustomerSupport> getPageBean(int currentPage,int currentCount,String orderNum, String goodsName, String cusCompany) throws SQLException;
 	
 }
