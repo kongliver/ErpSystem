@@ -48,45 +48,41 @@
             <span>供应商管理页面 >> 供应商添加页面</span>
         </div>
         <div class="providerAdd">
-            <form action="#">
+            <form action="${pageContext.request.contextPath }/SupplierServlet?method=addSupplier" method="post" id="add">
                 <!--div的class 为error是验证错误，ok是验证成功-->
-                <div class="">
-                    <label for="providerId">供应商编码：</label>
-                    <input type="text" name="providerId" id="providerId"/>
-                    <span>*请输入供应商编码</span>
-                </div>
+                
                 <div>
                     <label for="providerName">公司名称：</label>
-                    <input type="text" name="providerName" id="providerName"/>
-                    <span >*请输入公司名称</span>
+                    <input type="text" name="supCompany" id="providerName" value=${supplier.supCompany }>
+                    <span >*</span>
                 </div>
                 <div>
                     <label for="people">联系人：</label>
-                    <input type="text" name="people" id="people"/>
-                    <span>*请输入联系人</span>
+                    <input type="text" name="supContacts" id="people" value=${supplier.supContacts }>
+                    <span>*</span>
 
                 </div>
                 <div>
                     <label for="phone">联系电话：</label>
-                    <input type="text" name="phone" id="phone"/>
-                    <span>*请输入联系电话</span>
+                    <input type="text" name="supPhone" id="phone" value=${supplier.supPhone }>
+                    <span>*</span>
                 </div>
                 <div>
                     <label for="address">公司地址：</label>
-                    <input type="text" name="address" id="address"/>
+                    <input type="text" name="supAddress" id="address" value=${supplier.supAddress }>
                     <span></span>
                 </div>
                 
-                <div>
-                    <label for="describe">描述：</label>
-                    <input type="text" name="describe" id="describe"/>
-                </div>
-                <div class="providerAddBtn">
+                
+                 <div class="providerAddBtn">
                     <!--<a href="#">保存</a>-->
-                    <!--<a href="providerList.jsp">返回</a>-->
-                    <input type="button" value="保存" onclick="history.back(-1)"/>
+                    <!--<a href="billList.jsp">返回</a>-->
+                    <input type="button" value="提交" onclick="submitBtnClick3()" />
                     <input type="button" value="返回" onclick="history.back(-1)"/>
                 </div>
+                
+                <!-- <input type="button" value="提交新增"> -->
+                
             </form>
         </div>
 

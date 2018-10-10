@@ -30,12 +30,12 @@ public interface ISupplierDao {
 	 * 删除供应商
 	 * @throws SQLException
 	 */
-	public void deleteSupplier(String sId) throws SQLException;
+	public void deleteSupplier(String sid) throws SQLException;
 	/**
 	 * 根据供应商id来查询供应商
 	 * @throws SQLException
 	 */
-	public Supplier getById(String sId) throws SQLException;
+	public Supplier getById(String sid) throws SQLException;
 	/**
 	 * 根据公司名称查询供应商
 	 * @throws SQLException

@@ -58,3 +58,15 @@ function totwo(n){
     }
 }
 
+function submitBtnClick(){
+	document.getElementById("query").submit(); 
+}
+
+function submitBtnClick2(){
+	document.getElementById("tijiao").submit(); 
+}
+
+function submitBtnClick3(){
+	document.getElementById("add").submit(); 
+}
+
