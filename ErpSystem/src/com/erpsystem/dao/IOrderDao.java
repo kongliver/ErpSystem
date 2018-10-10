@@ -18,7 +18,8 @@ public interface IOrderDao {
 	 * 查询订单的 总条数
 	 * @return
 	 */
-	Integer findCount() throws SQLException;
+	Integer findCount(String cname, String orderNum,Integer orderType) throws SQLException;
+	Integer findCount(String cname, String orderNum) throws SQLException;
 
 	/**
 	 * 分页查询数据

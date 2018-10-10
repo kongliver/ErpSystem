@@ -3,12 +3,17 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<%
+    String path = request.getContextPath();
+    pageContext.setAttribute("path", path);
+%>
 <html>
 <head lang="en">
 <meta charset="UTF-8">
 <title>家具erp后台管理系统</title>
 <link rel="stylesheet" href="css/public.css" />
 <link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="${path }/css/pageStyle.css"/>
 </head>
 <body>
 	<!--头部-->
@@ -52,23 +57,23 @@
 
 
 
-		<form action="${pageContext.request.contextPath}/OrderServlet?method=list"  id="submit" method="post">
+<%-- 		<form action="${pageContext.request.contextPath}/OrderServlet?method=list"  id="submit" method="post"> --%>
 			<div class="search">
-				<span>客户名称：</span> <input type="text" name="cname" value="${cname }"/> 
+				<span>客户名称：</span> <input type="text" name="cname" value="${cname }" id="cname"/> 
 				
 				<span>订单编号：</span>
-				<input type="text" name="orderNum" value="${orderNum }"/> 
+				<input type="text" name="orderNum" value="${orderNum }" id="orderNum"/> 
 				
 				<span>订单状态：</span> 
 				<select
-					name="orderType">  
+					name="orderType" id="orderType">  
 					<option value="">--请选择--</option>
 					<option value="1" <c:if test="${orderType==1}">selected</c:if> >刚提交</option>
 					<option value="2" <c:if test="${orderType==2}">selected</c:if> >已完成入库</option>
 					<option value="3" <c:if test="${orderType==3}">selected</c:if> >已完成出库</option>
 					<option value="4" <c:if test="${orderType==4}">selected</c:if> >有问题的订单</option>
 				</select> 
-				<input type="button" value="查询"  onclick="submitBtnClick()"/> 
+				<input type="button" value="查询"  onclick="submitQuery()"/> 
 				
 				<a href="${pageContext.request.contextPath}/orderAdd.jsp">添加订单</a>
 			</div>
@@ -99,15 +104,10 @@
 						<td>${order.orderType }</td>
 						<td>${order.cId }</td>
 						
-						<td><a href="billView.jsp"><img src="img/read.png"
-								alt="查看" title="查看" /></a> 
-
+						<td><a href="${pageContext.request.contextPath}/CustomerSupportServlet?action=toSave&orderNum=${order.orderNum}"><img src="img/read.png"
+								alt="添加售后" title="添加售后" /></a> 
+				
 						</td>
-
-
-
-
-
 					</tr>
 				</c:forEach>
 
@@ -117,27 +117,42 @@
 
 			</table>
 	</div>
-	</form>
+
 
 	</section>
 
-	<!--点击删除按钮后弹出的页面-->
-	<div class="zhezhao"></div>
-	<div class="remove" id="removeBi">
-		<div class="removerChid">
-			<h2>提示</h2>
-			<div class="removeMain">
-				<p>你确定要删除该订单吗？</p>
-				<a href="#" id="yes">确定</a> <a href="#" id="no">取消</a>
-			</div>
-		</div>
-	</div>
 
-	<footer class="footer"> </footer>
+	<footer class="footer">
+		<!--分页-->
+		<div id="page" class="page_div">aaa</div>
+	</footer>
 
-	<script src="js/jquery.js"></script>
-	<script src="js/js.js"></script>
-	<script src="js/time.js"></script>
+<script src="js/jquery.js"></script>
+<script type="text/javascript" src="js/paging.js"></script>
+<script src="js/js.js"></script>
+<script src="js/time.js"></script>
 
+<script type="text/javascript">
+function submitQuery(){
+
+	var cname = $("#cname").val();
+	var orderNum = $("#orderNum").val();
+	var orderType = $("#orderType").val();
+	window.location="OrderServlet?method=list&cname="+cname+"&orderNum="+orderNum+"&orderType="+orderType;
+}
+
+var cname = $("#cname").val();
+var orderNum = $("#orderNum").val();
+var orderType = $("#orderType").val();
+
+$("#page").paging({
+    pageNo: ${pageBean.currentPage },
+    totalPage: ${pageBean.totalPage },
+    totalSize: ${pageBean.totalCount },
+    callback: function(num) {
+        $(window).attr('location', '${path }/OrderServlet?method=list&currentPage=' + num + "&cname="+cname+"&orderNum="+orderNum+"&orderType="+orderType);
+    }
+});
+</script>
 </body>
 </html>

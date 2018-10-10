@@ -22,12 +22,22 @@ import com.erpsystem.utils.DruidConnection;
 public class OrderDaoImpl implements IOrderDao {
 
 	@Override
-	public Integer findCount() throws SQLException {
+	public Integer findCount(String cname, String orderNum) throws SQLException {
 		QueryRunner qr = new QueryRunner(DruidConnection.getDataSource());
-		String sql = "select count(*) from `order`";
-		Long count = (Long) qr.query(sql, new ScalarHandler<>());
+		String sql = "select count(1) from `order` where cid in (select c.cid from `customer` c where c.cusCompany like ?) and orderNum != ? or orderNum = ?";
+		Long count = (Long) qr.query(sql, new ScalarHandler<>(), "%"+cname+"%", orderNum, orderNum);
 		return count.intValue();
-	}  
+	} 
+	
+	@Override
+	public Integer findCount(String cname, String orderNum, Integer orderType) throws SQLException {
+		
+		QueryRunner qr = new QueryRunner(DruidConnection.getDataSource());
+		String sql = "select count(*) from `order` where cid in (select c.cid from `customer` c where c.cusCompany like ?) and orderNum != ? or orderNum = ? and orderType = ?";
+		Long count = (Long) qr.query(sql, new ScalarHandler<>(), "%"+cname+"%", orderNum, orderNum, orderType);
+		return count.intValue();
+		
+	}
 
 	@Override
 	public List<Order> findPage(Integer orderType, Integer index, Integer currentCount) throws SQLException {
@@ -149,6 +159,10 @@ public class OrderDaoImpl implements IOrderDao {
 		String sql = "update `order` set orderType = ? where orderNum = ?";
 		qr.update(sql, statusCode, orderNum);
 	}
+
+
+
+	
 
 
 

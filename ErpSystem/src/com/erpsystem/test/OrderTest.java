@@ -23,12 +23,7 @@ import com.erpsystem.utils.PrimaryKeyUtil;
 public class OrderTest {
 	IOrderDao dao = new OrderDaoImpl();
 	IOrderService service = new OrderServiceImpl();
-	@Test
-	public void findCount() throws SQLException {
-		Integer findCount = dao.findCount();
-		System.out.println(findCount);
-	}
-	
+
 	
 	@Test
 	public void findPageTest() throws SQLException {

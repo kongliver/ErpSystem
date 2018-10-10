@@ -41,9 +41,14 @@ public class OrderServiceImpl implements IOrderService {
 		
 		//2、封装当前页
 		pageBean.setCurrentPage(currentPage);
-		
+		Integer totalCount = 0;
 		//3、封装总条数
-		Integer totalCount = dao.findCount();
+		if(orderType == 0) {
+			totalCount = dao.findCount(cname, orderNum);
+		}else {
+			totalCount = dao.findCount(cname, orderNum, orderType);
+		}
+		
 		pageBean.setTotalCount(totalCount);
 		//4、封装总页数
 		Integer totalPage =(int)Math.ceil(totalCount * 1.0 / currentCount);
@@ -79,7 +84,10 @@ public class OrderServiceImpl implements IOrderService {
 		}
 		for(int i = 0; i < pageList.size(); i++) {
 			Customer customer = customerDao.findById(pageList.get(i).getcId());
-			pageList.get(i).setcId(customer.getCusCompany());
+			if(customer != null) {
+				pageList.get(i).setcId(customer.getCusCompany());
+			}
+			
 			ProductStock stock = stockDao.getById(pageList.get(i).getGoodsName());
 			if(null != stock) {
 				pageList.get(i).setGoodsName(stock.getProductName());
