@@ -48,45 +48,52 @@
             <span>采购管理页面 >> 采购单添加页面</span>
         </div>
         <div class="providerAdd">
-            <form action="#">
+            <form action="<%=request.getContextPath() %>/PurchaseOrder?method=AddNote" method="post">
                 <!--div的class 为error是验证错误，ok是验证成功-->
-                <div class="">
-                    <label for="billId">物品编号：</label>
-                    <input type="text" name="billId" id="billId" required/>
-                    <span>*请输入物品编号</span>
+             <!--    <div class="">
+               
+                    <label for="billId">采购单编号：</label>
+                    <input type="text" name="cid" id="billId" required/>
+                    <span>*请输入采购单编号</span>
+                </div> -->
+                <div>
+                    <label for="billName">物品编号：</label>
+                    <input type="text" name="psid" id="billName" />
+                    <span >*请输入物品编号</span>
                 </div>
                 <div>
                     <label for="billName">采购数量：</label>
-                    <input type="text" name="billName" id="billName" required/>
+                    <input type="text" name="purchaseCount" id="billName" />
                     <span >*请输入采购数量</span>
                 </div>
-                <div>
+                
+                     <div>
                     <label for="billCom">材料单价：</label>
-                    <input type="text" name="billCom" id="billCom" required/>
+                    <input type="text" name="purTotalMoney" id="billCom" />
                     <span>*请输入材料单价</span>
 
                 </div>
+             <!--    <div>
+                    <label for="billCom">采购时间：</label>
+                    <input type="text" name="times"  id="billCom" />
+                    <span>*采购时间</span>
+
+                </div> -->
+                
                 <div>
                     <label for="billNum">采购人员：</label>
-                    <input type="text" name="billNum" id="billNum" required/>
+                    <input type="text" name="buyer" id="billNum" />
                     <span>*请输入采购人员</span>
                 </div>
                 <div>
                     <label for="money">供应商编号：</label>
-                    <input type="text" name="money" id="money" required/>
+                    <input type="text" name="sid" id="money" />
                     <span>*请输入供应商编号</span>
                 </div>
-               
-                <!--<div>
-                    <label >是否付款：</label>
-                    <input type="radio" name="zhifu"checked />未付款
-                    <input type="radio" name="zhifu"/>已付款
-                </div>-->
+             
                 <div class="providerAddBtn">
-                    <!--<a href="#">保存</a>-->
-                    <!--<a href="billList.jsp">返回</a>-->
-                    <input type="button" value="保存" onclick="history.back(-1)"/>
-                    <input type="button" value="返回" onclick="history.back(-1)"/>
+                    <input type="submit" style="width:70px; height:40px"  value="保存" />
+                    <input type="reset" style="width:70px; height:40px" value="返回" />
                 </div>
             </form>
         </div>

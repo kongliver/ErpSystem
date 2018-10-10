@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head lang="en">
@@ -7,6 +8,21 @@
     <title>家具erp后台管理系统</title>
     <link rel="stylesheet" href="css/public.css"/>
     <link rel="stylesheet" href="css/style.css"/>
+    <script>
+    	function dell(pid){
+    		if(confirm("确定删除?")){
+    			location.href="${pageContext.request.contextPath}/PurchaseOrder?method=DeleteNote&pid="+pid;
+    		}
+    		
+    	}
+    	
+    	function upde(pid){
+    		if(confirm("确定修改?")){
+    			location.href="${pageContext.request.contextPath}/PurchaseOrder?method=UpdateNoteID&pid="+pid;
+    		}
+    	}
+    
+    </script>
 </head>
 <body>
 <!--头部-->
@@ -46,17 +62,28 @@
                 <strong>你现在所在的位置是:</strong>
                 <span>采购单管理页面</span>
             </div>
-            <div class="search">
+            <div class="search" >
+            <form action="<%=request.getContextPath() %>/PurchaseOrder?method=QueryStock" method="post">
                 <span>库存物品编号：</span>
-                <input type="text" placeholder="请输入库存物品的编号"/>
+                <input type="text"  placeholder="请输入库存物品的编号" name="KuCun"/>
                 
                 <span>采购单编号：</span>
-                <input type="text" placeholder="请输入采购单的编号"/>
+                <input type="text" placeholder="请输入采购单的编号" name="purchaseOrder"/>
 
-                
-                <input type="button" value="查询"/>
-                <a href="purchaseAdd.jsp">添加采购单</a>
+                <input type="submit" style="width:275px"  value="查询"/>
+               
+              </form>  
             </div>
+            
+            <div class="search">
+            <form action="<%=request.getContextPath() %>/PurchaseOrder?method=QueryAllStock" method="post">
+          
+                <input type="submit" style="margin-left:587px; width:275px"  value="查询所有订单"/>
+                
+                 <a href="purchaseAdd.jsp">添加采购单</a>
+              </form>  
+            </div>
+            
             <!--账单表格 样式和供应商公用-->
             <table class="providerTable" cellpadding="0" cellspacing="0">
                 <tr class="firstTr">
@@ -70,41 +97,55 @@
                     
                     <th width="30%">操作</th>
                 </tr>
-                <tr>
-                    <td>213</td>
-                    <td>11</td>
-                    <td>1</td>
-                    <td>20.00</td>
-                    <td>2015-11-12</td>
-                    <td>张三</td>
-                    <td>1111</td>
+                
+                <c:if test="${not empty note }">
+                
+               
+	
+                    <td>${note.pnid }</td>
+                    <td>${note.psid }</td>
+                    <td>${note.purchaseCount }</td>
+                    <td>${note.purTotalMoney }</td>
+                    <td>${note.purchaseTime }</td>
+                    <td>${note.buyer }</td>
+                    <td>${note.sid }</td>
                     
                     <td>
-                        <a href="purchaseView.jsp"><img src="img/read.png" alt="查看" title="查看"/></a>
-                        <a href="purchaseUpdate.jsp"><img src="img/xiugai.png" alt="修改" title="修改"/></a>
-                        <a href="#" class="removeBill"><img src="img/schu.png" alt="删除" title="删除"/></a>
+                       <!--  <a href="purchaseView.jsp"><img src="img/read.png" alt="查看" title="查看"/></a> -->
+                        <a href="javascript:;" onclick="upde('${note.pnid }')" ><img src="img/xiugai.png" alt="修改" title="修改"/></a>
+                        <a href="javascript:;" onclick="dell('${note.pnid }')" ><img src="img/schu.png"   alt="删除" title="删除"/></a>
+               <%--   <a href="${pageContext.request.contextPath}/PurchaseOrder?method=DeleteNote&pid=${note.pnid }"><img src="img/schu.png" alt="删除" title="删除"/></a>  --%>
+                    </td>
+        	</c:if>
+        	 
+                <c:if test="${not empty list }">
+                	<c:forEach items="${list }" var="note">
+                	
+                	 <tr>
+                	<td>${note.pnid }</td>
+                    <td>${note.psid }</td>
+                    <td>${note.purchaseCount }</td>
+                    <td>${note.purTotalMoney }</td>
+                    <td>${note.purchaseTime }</td>
+                    <td>${note.buyer }</td>
+                    <td>${note.sid }</td>
+          
+                    <td>
+                       <!--  <a href="purchaseView.jsp"><img src="img/read.png" alt="查看" title="查看"/></a> -->
+                        <a href="javascript:;" onclick="upde('${note.pnid }')" ><img src="img/xiugai.png" alt="修改" title="修改"/></a>
+                      <!--   <a href="#" class="removeBill"><img src="img/schu.png" alt="删除" title="删除"/></a> -->
+                       <%-- <a href="${pageContext.request.contextPath}/PurchaseOrder?method=DeleteNote&pid=${note.pnid }"><img src="img/schu.png" alt="删除" title="删除"/></a>
+                  --%>
+                  <a href="javascript:;" onclick="dell('${note.pnid }')" ><img src="img/schu.png" alt="删除" title="删除"/></a>
                     </td>
                 </tr>
-                
+                	</c:forEach>
+                </c:if>
             </table>
         </div>
     </section>
 
-<!--点击删除按钮后弹出的页面-->
-<div class="zhezhao"></div>
-<div class="remove" id="removeBi">
-    <div class="removerChid">
-        <h2>提示</h2>
-        <div class="removeMain">
-            <p>你确定要删除该订单吗？</p>
-            <a href="#" id="yes">确定</a>
-            <a href="#" id="no">取消</a>
-        </div>
-    </div>
-</div>
 
-    <footer class="footer">
-    </footer>
 
 <script src="js/jquery.js"></script>
 <script src="js/js.js"></script>

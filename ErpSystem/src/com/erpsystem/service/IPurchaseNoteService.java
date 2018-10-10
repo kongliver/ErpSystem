@@ -53,6 +53,8 @@ public class IPurchaseNoteService {
 		list = dao.queryTable();
 		return list;
 	}
+	
+	
 	/**
 	 *  查询某一张采购单
 	 * @throws SQLException 
@@ -61,6 +63,12 @@ public class IPurchaseNoteService {
 		PurchaseNote purchaseNote = null;
 		purchaseNote = dao.getOne(pnid);
 		return purchaseNote;
-	
+		
+		
 	}
+	
+	
 }
+
+
+
