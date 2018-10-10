@@ -93,17 +93,17 @@ public class ProductStockDaoImpl implements IProductStockDao {
     }
 
     @Override
-    public Long getCount() throws SQLException {
+    public Long getCount(String psid, String productType) throws SQLException {
         QueryRunner qr = JdbcUtil.getQueryRunner();
-        String sql = "select count(*) from product_stock";
-        return (Long)qr.query(sql, new ScalarHandler<>());
+        String sql = "select count(*) from product_stock where psid like ? and productType like ?";
+        return (Long)qr.query(sql, new ScalarHandler<>(), "%" + psid + "%", "%" + productType + "%");
     }
 
     @Override
-    public List<ProductStock> getPageData(int index, int pageCount) throws SQLException {
+    public List<ProductStock> getPageData(int index, int pageCount, String psid, String productType) throws SQLException {
         QueryRunner qr = JdbcUtil.getQueryRunner();
-        String sql = "select * from product_stock limit ?, ?";
-        return qr.query(sql, new BeanListHandler<ProductStock>(ProductStock.class), index, pageCount);
+        String sql = "select * from product_stock where psid like ? and productType like ? limit ?, ?";
+        return qr.query(sql, new BeanListHandler<ProductStock>(ProductStock.class), "%" + psid + "%", "%" + productType + "%", index, pageCount);
     }
 
     @Override

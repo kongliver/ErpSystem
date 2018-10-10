@@ -43,13 +43,13 @@ public class ChangeStockListServiceImpl implements IChangeStockListService {
     }
 
     @Override
-    public PageBean<ChangeStockList> getPageBean(int currentPage) throws SQLException {
+    public PageBean<ChangeStockList> getPageBean(int currentPage, String psid, String oprType, String oprTime) throws SQLException {
         PageBean<ChangeStockList> pageBean = new PageBean<>();
         // 设置当前页
         pageBean.setCurrentPage(currentPage);
         // 获取有多少条记录，从数据库当中查询
-        long totalCount = changeStockListDao.getCount();
-        pageBean.setTotalCount((int)totalCount);
+        Long totalCount = changeStockListDao.getCount(psid, oprType, oprTime);
+        pageBean.setTotalCount(totalCount.intValue());
         // 设置一页展示多少条数据
         int pageCount = 5;
         pageBean.setCurrentCount(pageCount);
@@ -58,7 +58,7 @@ public class ChangeStockListServiceImpl implements IChangeStockListService {
         pageBean.setTotalPage((int)totalPage);
         // 当前页查询的角标
         int index = (pageBean.getCurrentPage() - 1) * pageBean.getCurrentCount();
-        List<ChangeStockList> changeStockList = changeStockListDao.getPageData(index, pageBean.getCurrentCount());
+        List<ChangeStockList> changeStockList = changeStockListDao.getPageData(index, pageBean.getCurrentCount(), psid, oprType, oprTime);
         pageBean.setList(changeStockList);
         return pageBean;
     }
