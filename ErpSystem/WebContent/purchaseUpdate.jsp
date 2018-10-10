@@ -7,6 +7,15 @@
     <title>家具erp后台管理系统</title>
     <link rel="stylesheet" href="css/public.css"/>
     <link rel="stylesheet" href="css/style.css"/>
+ 
+   <!--  <script>
+    	function upde(pid){
+    		if(confirm("确定保存?")){
+    			location.href="${pageContext.request.contextPath}/PurchaseOrder?method=UpdateNote";
+    		}
+    	}
+    </script> -->
+    
 </head>
 <body>
 <!--头部-->
@@ -48,45 +57,56 @@
             <span>采购管理页面 >> 采购单修改页面</span>
         </div>
         <div class="providerAdd">
-            <form action="#">
+            <form action="${pageContext.request.contextPath}/PurchaseOrder?method=UpdateNote" method="post">
+            
+      
                 <!--div的class 为error是验证错误，ok是验证成功-->
-                <div class="">
-                    <label for="providerId">物品编号：</label>
-                    <input type="text" name="providerId" id="providerId" placeholder="322"/>
-                    <span>*</span>
+ 
+               <div >
+                    <label for="providerName">采购单编号：</label>
+                    <input type="text" value="${note.pnid }" readonly="readonly"  name="pnid"/>
+                    <span ></span>
+                </div>  
+                
+                <div>
+                    <label for="providerName">物品编号：</label>
+                    <input type="text"  value="${note.psid }" name="psid"/>
+                    <span >*</span>
                 </div>
+                
                 <div>
                     <label for="providerName">采购数量：</label>
-                    <input type="text" name="providerName" id="providerName" placeholder="12"/>
+                    <input type="text" value="${note.purchaseCount }" name="purchaseCount"/>
                     <span >*</span>
                 </div>
                 <div>
                     <label for="people">材料单价：</label>
-                    <input type="text" name="people" id="people" placeholder="10.00"/>
+                    <input type="text"  value="${note.purTotalMoney }" name="purTotalMoney"/>
                     <span>*</span>
 
                 </div>
-                <div>
+              <%--   <div>
                     <label for="phone">采购时间：</label>
-                    <input type="text" name="phone" id="phone" placeholder="2015-11-12"/>
+                    <input type="text"  value="${note.purchaseTime }" name="purchaseTime"/>
                     <span>*</span>
-                </div>
+                </div> --%>
                 <div>
                     <label for="address">采购人员：</label>
-                    <input type="text" name="address" id="address" placeholder="李四"/>
+                    <input type="text" value="${note.buyer }" name="buyer"/>
                     <span>*</span>
                 </div>
+                
                 <div>
                     <label for="fax">供应商编号：</label>
-                    <input type="text" name="fax" id="fax" placeholder="222"/>
+                    <input type="text" value="${note.sid }" name="sid"/>
                     <span>*</span>
-                </div>
-                <
+           	   </div>
+                
                 <div class="providerAddBtn">
                     <!--<a href="#">保存</a>-->
                     <!--<a href="billList.jsp">返回</a>-->
-                    <input type="button" value="保存" onclick="history.back(-1)"/>
-                    <input type="button" value="返回" onclick="history.back(-1)"/>
+                    <input type="submit" value="保存" style="width:80px;height:40px;"/>
+                    <input type="reset" value="返回" style="width:80px;height:40px;"/>
                 </div>
             </form>
         </div>
