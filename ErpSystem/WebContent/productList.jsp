@@ -1,3 +1,4 @@
+<%@page import="com.erpsystem.domain.ProductStock"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -53,16 +54,21 @@
                 <span>库存管理页面</span>
             </div>
             <div class="search">
-                <span>物品编号：</span>
-                <input type="text" placeholder="请输入物品的编号"/>
+                <form id="productQuery" action="${path }/ProductStockServlet?action=getPageBean&currentPage=1" method="post" style="display: inline-block;">
+                    <span>物品编号：</span>
+	                <input type="text" name="psid" id="psid" placeholder="请输入物品的编号" value="${psid }"/>
+	                
+	                <span>物品类别：</span>
+	                <select name="productType" id="productType">
+	                   <option value="">--请选择 --</option>
+	                   <option value="1">原材料</option>
+	                   <option value="2">成品</option>
+	                </select>                
+	                <input type="button" value="查询" onclick="productQuery()"/>
+                </form>
                 
-                <span>物品类别：</span>
-                <input type="text" placeholder="请输入物品的类别"/>
-
-                
-
-                <input type="button" value="查询"/>
-                <a href="productAdd.jsp">新增库存</a>
+                <a href="productUpdateCount.jsp" style="margin: 10px 25px">成品入库</a>
+                <a href="productAdd.jsp" style="margin: 10px 25px">新增库存品</a>
             </div>
             <!--账单表格 样式和供应商公用-->
             <table class="providerTable" cellpadding="0" cellspacing="0">
@@ -76,39 +82,44 @@
                     
                     <th width="30%">操作</th>
                 </tr>
+             
                 <c:forEach items="${pageBean.list }" var="productStock" varStatus="status">
                     <tr>
 	                    <td>${productStock.psid }</td>
 	                    <td>${productStock.productName }</td>
 	                    <td>${productStock.productCount }</td>
-	                    <td>${productStock.productType }</td>
-	                    <td>${productStock.repertoryNum }</td>
-	                    
 	                    <td>
-	                        <a href="productUpdate.jsp"><img src="${path }/img/xiugai.png" alt="修改" title="修改"/></a>
-	                        <a href="#" class="removeBill"><img src="${path }/img/schu.png" alt="删除" title="删除"/></a>
+	                       <c:if test="${productStock.productType == 1 }">原材料</c:if>
+	                       <c:if test="${productStock.productType == 2 }">成品</c:if>
 	                    </td>
+	                    <td>${productStock.repertoryNum }</td>
+	                    <td>
+	                        <a href="${path }/ProductStockServlet?action=getById&psid=${productStock.psid }"><img src="${path }/img/xiugai.png" alt="修改" title="修改"/></a>
+	                        <a href='${path }/ProductStockServlet?action=delete&psid=${productStock.psid }' onclick="return confirm('是否确认删除？')" class="removeBill"><img src="${path }/img/schu.png" alt="删除" title="删除"/></a>
+	                    </td>	
+	                    
+	                    <!--点击删除按钮后弹出的页面-->
+				       <!-- <div class="zhezhao"></div> -->
+				       <%-- <div class="remove" id="removeBi">
+				           <div class="removerChid">
+				               <h2>提示</h2>
+				               <div class="removeMain">
+				                   <p>你确定要删除该库存品吗？</p>
+				                   <a href="${path }/ProductStockServlet?action=delete&psid=${psid }" id="yes">确定</a>
+				                   <a href="#" id="no">取消</a>
+				               </div>
+				           </div>
+				       </div> --%>                    
 	                </tr>
-                </c:forEach>
-                
-                
+	                
+			     </c:forEach>
             </table>
         </div>
         
     </section>
+    
+        
 
-<!--点击删除按钮后弹出的页面-->
-<div class="zhezhao"></div>
-<div class="remove" id="removeBi">
-    <div class="removerChid">
-        <h2>提示</h2>
-        <div class="removeMain">
-            <p>你确定要删除该库存品吗？</p>
-            <a href="#" id="yes">确定</a>
-            <a href="#" id="no">取消</a>
-        </div>
-    </div>
-</div>
     
     <footer class="footer">
 	    <!--分页-->
@@ -120,12 +131,22 @@
 <script src="${path }/js/js.js"></script>
 <script src="${path }/js/time.js"></script>
 <script type="text/javascript">
+
+function productQuery() {
+	$("#productQuery").submit();
+}
+
+$("#productType option[value=${productType }]").prop("selected", true);
+
+var psid = $("#psid").val();
+var productType = $("#productType").val()
+
 $("#page").paging({
     pageNo: ${pageBean.currentPage },
     totalPage: ${pageBean.totalPage },
     totalSize: ${pageBean.totalCount },
     callback: function(num) {
-        $(window).attr('location', '${path }/ProductStockServlet?action=getPageBean&currentPage=' + num);
+        $(window).attr('location', '${path }/ProductStockServlet?action=getPageBean&currentPage=' + num + '&psid=' + psid + '&productType=' + productType);
     }
 });
 </script>

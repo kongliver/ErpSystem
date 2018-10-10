@@ -49,5 +49,5 @@ public interface IChangeStockListService {
      * @param currentPage 当前页码
      * @return 封装好的分页对象
      */
-    PageBean<ChangeStockList> getPageBean(int currentPage) throws SQLException;
+    PageBean<ChangeStockList> getPageBean(int currentPage, String psid, String oprType, String oprTime) throws SQLException;
 }

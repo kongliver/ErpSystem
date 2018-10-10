@@ -105,12 +105,12 @@ public class ProductStockServiceImpl implements IProductStockService {
     }
 
     @Override
-    public PageBean<ProductStock> getPageBean(int currentPage) throws SQLException {
+    public PageBean<ProductStock> getPageBean(int currentPage, String psid, String productType) throws SQLException {
         PageBean<ProductStock> pageBean = new PageBean<>();
         // 设置当前页
         pageBean.setCurrentPage(currentPage);
         // 获取有多少条记录，从数据库当中查询
-        Long totalCount = productStockDao.getCount();
+        Long totalCount = productStockDao.getCount(psid, productType);
         pageBean.setTotalCount(totalCount.intValue());
         // 设置一页展示多少条数据
         int pageCount = 5;
@@ -120,9 +120,18 @@ public class ProductStockServiceImpl implements IProductStockService {
         pageBean.setTotalPage((int)totalPage);
         // 当前页查询的角标
         int index = (pageBean.getCurrentPage() - 1) * pageBean.getCurrentCount();
-        List<ProductStock> productStockList = productStockDao.getPageData(index, pageBean.getCurrentCount());
+        List<ProductStock> productStockList = productStockDao.getPageData(index, pageBean.getCurrentCount(), psid, productType);
         pageBean.setList(productStockList);
         return pageBean;
+    }
+
+    @Override
+    public ProductStock getByProductName(String productName) throws RuntimeException, SQLException {
+        ProductStock productStock = productStockDao.getByProductName(productName);
+        if (productStock == null) {
+            throw new RuntimeException("该库存品不存在");
+        }
+        return productStock;
     }
 
 }
