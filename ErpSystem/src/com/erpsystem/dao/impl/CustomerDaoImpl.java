@@ -31,27 +31,35 @@ public class CustomerDaoImpl implements ICustomerDao{
 	}
 
 	@Override
-	public List<Customer> findPage(Integer index, Integer size, String unmae, String orderNum) throws SQLException {
+	public List<Customer> findPage(Integer index, Integer size, String unmae, String phone) throws SQLException {
 		QueryRunner qr = new QueryRunner(DruidConnection.getDataSource());
-		String sql = "select * from `customer` where 1=1 and cusCompany LIKE ? and cOrderNum LIKE ? limit ?,?";
-		String cusCompany = "";
-		String cOrderNum = "";
-		
-		if(null != unmae && !"".equals(unmae.trim())) {		
-			cusCompany = "%" +unmae +"%";
-		}else {
-			cusCompany = "%%";
-		}
-		
-		if(null != orderNum && !"".equals(orderNum.trim())) {
-			cOrderNum = "%" + orderNum +"%";
-		}else {
-			cOrderNum = "%%";
-		}
-		
-		return qr.query(sql, new BeanListHandler<>(Customer.class), cusCompany, cOrderNum, index, size);
+		String sql = "select * from `customer` where 1=1 and cusCompany LIKE ? and cusPhone LIKE ? limit ?,?";
+		return qr.query(sql, new BeanListHandler<>(Customer.class), "%"+unmae+"%", "%"+phone+"%", index, size);
+	}
+	
+	@Override
+	public List<Customer> findPage(Integer index, Integer size, String phone) throws SQLException {
+		QueryRunner qr = new QueryRunner(DruidConnection.getDataSource());
+		String sql = "select * from `customer` where 1=1  and cusPhone LIKE ? limit ?,?";
+		return qr.query(sql, new BeanListHandler<>(Customer.class), "%"+phone+"%", index, size);
 	}
 
+	@Override
+	public List<Customer> findPage(Integer index, Integer size) throws SQLException {
+		QueryRunner qr = new QueryRunner(DruidConnection.getDataSource());
+		String sql = "select * from `customer` limit ?,?";
+		return qr.query(sql, new BeanListHandler<>(Customer.class), index, size);
+	}
+
+	@Override
+	public List<Customer> findPageByName(Integer index, Integer size, String unmae) throws SQLException {
+		QueryRunner qr = new QueryRunner(DruidConnection.getDataSource());
+		String sql = "select * from `customer` where 1=1  and cusCompany LIKE ? limit ?,?";
+		return qr.query(sql, new BeanListHandler<>(Customer.class), "%"+unmae+"%", index, size);
+	}
+
+	
+	
 	@Override
 	public void delete(String cid) throws SQLException {
 		QueryRunner qr = new QueryRunner(DruidConnection.getDataSource());
@@ -76,13 +84,7 @@ public class CustomerDaoImpl implements ICustomerDao{
 		qr.update(sql, customer.getCusCompany(), customer.getCusContacts(), customer.getCusPhone(), customer.getCusAddress(), customer.getCid());
 	}
 
-	@Override
-	public String findMaxKey() throws SQLException {
-		QueryRunner qr = new QueryRunner(DruidConnection.getDataSource());
-		String sql = "select max(c.cid) from `customer` c";
-		Long num = qr.query(sql, new ScalarHandler<>());
-		return String.valueOf(num);
-	}
+
 
 	@Override
 	public void save(Customer customer) throws SQLException {
@@ -91,5 +93,14 @@ public class CustomerDaoImpl implements ICustomerDao{
 		Object[] obj = new Object[] {customer.getCid(), customer.getCusCompany(), customer.getCusContacts(), customer.getCusPhone(), customer.getCusAddress(), customer.getcOrderNum()};
 		qr.update(sql, obj);
 	}
+
+	@Override
+	public List<Customer> findAll() throws SQLException {
+		QueryRunner qr = new QueryRunner(DruidConnection.getDataSource());
+		String sql = "select * from  `customer`";
+		return qr.query(sql, new BeanListHandler<>(Customer.class));
+	}
+
+
 	
 }

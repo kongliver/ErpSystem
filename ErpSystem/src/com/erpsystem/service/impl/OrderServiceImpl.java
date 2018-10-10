@@ -5,10 +5,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import com.erpsystem.dao.ICustomerDao;
 import com.erpsystem.dao.IOrderDao;
 import com.erpsystem.dao.IProductStockDao;
+import com.erpsystem.dao.impl.CustomerDaoImpl;
 import com.erpsystem.dao.impl.OrderDaoImpl;
 import com.erpsystem.dao.impl.ProductStockDaoImpl;
+import com.erpsystem.domain.Customer;
 import com.erpsystem.domain.Order;
 import com.erpsystem.domain.PageBean;
 import com.erpsystem.domain.ProductStock;
@@ -27,8 +30,10 @@ public class OrderServiceImpl implements IOrderService {
 
 	IProductStockDao stockDao = new ProductStockDaoImpl();
 	
+	ICustomerDao customerDao = new CustomerDaoImpl();
+	
 	@Override
-	public PageBean<Order> findAll(Integer currentCount, Integer currentPage) throws SQLException {
+	public PageBean<Order> findAll(String cname, String orderNum,Integer orderType, Integer currentCount, Integer currentPage) throws SQLException {
 		PageBean<Order> pageBean = new PageBean<>();    //创建分页需要的javabean
 		
 		//1、封装条数
@@ -46,7 +51,42 @@ public class OrderServiceImpl implements IOrderService {
 		
 		//5、封装当前页显示的订单
 		Integer index = (currentPage - 1) * currentCount;     //当前页 - 1 * 一页的条数  = 当前从多少条查询
-		List<Order> pageList = dao.findPage(index, currentCount);
+		
+		List<Order> pageList = null;
+		
+		if(orderType != 0) {
+			if(!"".equals(cname) && !"".equals(orderNum)) {
+				pageList = dao.findPage(cname, orderNum, orderType, index, currentCount);
+			}else if("".equals(cname) && "".equals(orderNum)) {
+				pageList = dao.findPage(orderType, index, currentCount);
+			}else if(!"".equals(cname) && "".equals(orderNum)) {
+				pageList = dao.findPage(cname, orderType, index, currentCount);
+			}else if("".equals(cname) && !"".equals(orderNum)) {
+				pageList = dao.findPageByorderNum(orderNum, orderType, index, currentCount);
+			}
+		}else {
+			
+			if(!"".equals(cname) && !"".equals(orderNum)) {
+				pageList = dao.findPage(cname, orderNum, index, currentCount);
+			}else if("".equals(cname) && "".equals(orderNum)) {
+				pageList = dao.findPage(index, currentCount);
+			}else if(!"".equals(cname) && "".equals(orderNum)) {
+				pageList = dao.findPage(cname ,index, currentCount);
+			}else if("".equals(cname) && !"".equals(orderNum)) {
+				pageList = dao.findPageByorderNum(orderNum, index, currentCount);
+			}
+			
+		}
+		for(int i = 0; i < pageList.size(); i++) {
+			Customer customer = customerDao.findById(pageList.get(i).getcId());
+			pageList.get(i).setcId(customer.getCusCompany());
+			ProductStock stock = stockDao.getById(pageList.get(i).getGoodsName());
+			if(null != stock) {
+				pageList.get(i).setGoodsName(stock.getProductName());
+			}
+			
+		}
+		
 		pageBean.setList(pageList);
 		return pageBean;
 	}
@@ -75,7 +115,7 @@ public class OrderServiceImpl implements IOrderService {
 		
 		Long Key = PrimaryKeyUtil.getOrderPrimarKey(date, maxKey);
 		order.setOrderNum(Key);
-		 
+		order.setOrderType(1);  //新的订单的状态
 		dao.save(order);
 	}
 

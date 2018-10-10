@@ -44,7 +44,7 @@ public class Order {
 	private Integer orderType;
 	
 	/** 订单属于那个客户的id*/
-	private Integer cId;
+	private String cId;
 
 	
 
@@ -114,14 +114,15 @@ public class Order {
 		this.orderType = orderType;
 	}
 
-	public Integer getcId() {
+	public String getcId() {
 		return cId;
 	}
 
-	public void setcId(Integer cId) {
+	public void setcId(String cId) {
 		this.cId = cId;
 	}
-	
+
+
 	
 	
 	

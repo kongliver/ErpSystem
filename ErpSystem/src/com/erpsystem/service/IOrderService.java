@@ -19,7 +19,7 @@ public interface IOrderService {
 	 * 用来查询所有订单的方法，包括分页，条件查询
 	 * @return
 	 */
-	PageBean<Order> findAll(Integer currentCount, Integer currentPage) throws SQLException;
+	PageBean<Order> findAll(String cname, String orderNum,Integer orderType, Integer currentCount, Integer currentPage) throws SQLException;
 	
 	/**
 	 * 查询全部订单

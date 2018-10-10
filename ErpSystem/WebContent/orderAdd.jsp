@@ -7,6 +7,40 @@
     <title>家具erp后台管理系统</title>
     <link rel="stylesheet" href="css/public.css"/>
     <link rel="stylesheet" href="css/style.css"/>
+    <script type="text/javascript" src="${pageContext.request.contextPath }/js/jquery.js"></script>>
+    
+    <script type="text/javascript">
+    $(function(){
+ 
+		$.post(	
+				"${pageContext.request.contextPath }/OrderServlet?method=findGoods",
+				{"dict_type_code":"001"},
+				function(data){
+					$(data).each(function(i, n){
+							$("#productNameItme").append("<option value='"+n.psid+"'>"+n.productName+"</option>");
+						});
+					},"json");
+		
+		$.post(	
+				"${pageContext.request.contextPath }/OrderServlet?method=findCustomer",
+				{"dict_type_code":"001"},
+				function(data){
+					$(data).each(function(i, n){
+							$("#customerItme").append("<option value='"+n.cid+"'>"+n.cusCompany+"</option>");
+						});
+					},"json");
+		
+	});
+    
+    
+    
+    
+    
+    
+    
+  	
+    
+    </script>
 </head>
 <body>
 <!--头部-->
@@ -48,54 +82,38 @@
             <span>订单管理页面 >> 订单添加页面</span>
         </div>
         <div class="providerAdd">
-            <form action="#">
+            <form action="${pageContext.request.contextPath }/OrderServlet?method=save" method="post">
                 <!--div的class 为error是验证错误，ok是验证成功-->
-                <div class="">
-                    <label for="billId">商品名称：</label>
-                    <input type="text" name="billId" id="billId" required/>
-                    <span>*请输入商品名称</span>
-                </div>
                 <div>
-                    <label for="billName">商品编号：</label>
-                    <input type="text" name="billName" id="billName" required/>
-                    <span >*请输入商品编号</span>
+                    <label >商品选择：</label>
+                    <select name="goodsName" id = "productNameItme">
+                        <option value="">--请选择--</option>
+                    </select>
                 </div>
+               
                 <div>
                     <label for="billCom">商品数量：</label>
-                    <input type="text" name="billCom" id="billCom" required/>
+                    <input type="text" name="goodsCount" id="billCom" />
                     <span>*请输入商品数量</span>
 
                 </div>
                 <div>
                     <label for="billNum">商品单价：</label>
-                    <input type="text" name="billNum" id="billNum" required/>
+                    <input type="text" name="goodsPrice" id="billNum" />
                     <span>*请输入大于0的正自然数，小数点后保留2位</span>
                 </div>
+              
                 <div>
-                    <label for="money">交货时间：</label>
-                    <input type="text" name="money" id="money" required/>
-                    <span>*请输入交货时间</span>
-                </div>
-                <div>
-                    <label >订单状态：</label>
-                    <select name="supplier" >
+                    <label >客户选择：</label>
+                    <select name="cId" id = "customerItme">
                         <option value="">--请选择--</option>
-                        <option value="">刚提交</option>
-                        <option value="">已完成入库</option>
-						<option value="">已完成出库</option>
-                    	<option value="">有问题的订单</option>
                     </select>
-                    <span>*请选择订单状态</span>
                 </div>
-                <!--<div>
-                    <label >是否付款：</label>
-                    <input type="radio" name="zhifu"checked />未付款
-                    <input type="radio" name="zhifu"/>已付款
-                </div>-->
+             
                 <div class="providerAddBtn">
                     <!--<a href="#">保存</a>-->
                     <!--<a href="billList.jsp">返回</a>-->
-                    <input type="button" value="保存" onclick="history.back(-1)"/>
+                    <input type="submit" value="保存" />
                     <input type="button" value="返回" onclick="history.back(-1)"/>
                 </div>
             </form>

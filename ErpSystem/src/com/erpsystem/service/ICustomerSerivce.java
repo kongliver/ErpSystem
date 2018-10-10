@@ -1,6 +1,7 @@
 package com.erpsystem.service;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import com.erpsystem.domain.Customer;
 import com.erpsystem.domain.PageBean;
@@ -19,8 +20,11 @@ public interface ICustomerSerivce {
 	 * @param unmae
 	 * @param orderNum
 	 */
-	PageBean<Customer> findAll(String unmae, String orderNum, Integer currentPage) throws SQLException ;
+	PageBean<Customer> findAll(String unmae, String phone, Integer currentPage) throws SQLException ;
 
+	
+	List<Customer> findAll() throws SQLException ;
+	
 	/**
 	 * 删除客户的服务
 	 * @param cid
@@ -49,4 +53,5 @@ public interface ICustomerSerivce {
 	 */
 	void save(Customer customer)throws SQLException;
 
+	
 }

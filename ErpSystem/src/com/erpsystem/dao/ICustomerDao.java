@@ -28,7 +28,13 @@ public interface ICustomerDao {
 	 * @return
 	 * @throws SQLException
 	 */
-	List<Customer> findPage(Integer index, Integer size, String unmae, String orderNum)throws SQLException;
+	List<Customer> findPage(Integer index, Integer size, String unmae, String phone)throws SQLException;
+	
+	List<Customer> findPage(Integer index, Integer size, String phone)throws SQLException;
+	
+	List<Customer> findPage(Integer index, Integer size)throws SQLException;
+	
+	List<Customer> findPageByName(Integer index, Integer size, String unmae)throws SQLException;
 
 	void delete(String cid) throws SQLException;
 
@@ -36,8 +42,8 @@ public interface ICustomerDao {
 
 	void update(Customer customer)throws SQLException;
 
-	String findMaxKey()throws SQLException;
-
 	void save(Customer customer)throws SQLException;
+
+	List<Customer> findAll()throws SQLException ;
 
 }

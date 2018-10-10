@@ -82,25 +82,36 @@ public class CustomerServlet extends HttpServlet {
 	
 	}
 
-	private void list(HttpServletRequest request, HttpServletResponse response) throws SQLException {
+	private void list(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
 		String unmae = request.getParameter("unmae");
-		String orderNum = request.getParameter("orderNum");
+		String phone = request.getParameter("phone");
 		
+		if(null == unmae) {
+			unmae = "";
+		}
+		if(null == phone) {
+			phone = "";
+		}
 		String currentPage = request.getParameter("currentPage");
 		
 		Integer currentPageInt = 1;
 		if(null != currentPage && currentPage.length() != 0) {
 			currentPageInt = Integer.valueOf(currentPage);
 		}
-		PageBean<Customer> pageBean = customerService.findAll(unmae, orderNum, currentPageInt);
+		PageBean<Customer> pageBean = customerService.findAll(unmae, phone, currentPageInt);
 		
 		request.setAttribute("pageBean", pageBean);
+		request.setAttribute("unmae", unmae);
+		request.setAttribute("phone", phone);
+		request.getRequestDispatcher("customerList.jsp").forward(request, response);
 	}
 	
-	private void delete(HttpServletRequest request, HttpServletResponse response) throws SQLException{
+	private void delete(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException{
+		
+		System.out.println(11);
 		String cid = request.getParameter("cid");
 		customerService.delete(cid);
-		
+		response.sendRedirect("CustomerServlet?method=list");
 	}
 	
 	/**
@@ -137,6 +148,7 @@ public class CustomerServlet extends HttpServlet {
 		Customer customer = new Customer();
 		BeanUtils.populate(customer, map);
 		customerService.save(customer);
+		response.sendRedirect("CustomerServlet?method=list");
 	}
 
 		

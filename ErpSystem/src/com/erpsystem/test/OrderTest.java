@@ -62,7 +62,7 @@ public class OrderTest {
 		order.setGoodsName("1");
 		order.setGoodsPrice(11.1);
 		order.setOrderType(1);
-		order.setcId(1);
+		order.setcId("1");
 		service.insertOrder(order);
 	}
 }

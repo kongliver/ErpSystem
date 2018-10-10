@@ -13,7 +13,7 @@ public class CustomerTest {
 	ICustomerSerivce customerService = new CustomerServiceImpl();
 	@Test
 	public void test() throws SQLException {
-		PageBean<Customer> findAll = customerService.findAll(null, "123", 1);
+		PageBean<Customer> findAll = customerService.findAll(null, null, 1);
 		
 		System.out.println(findAll.getList().get(0));
 	}

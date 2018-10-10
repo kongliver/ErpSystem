@@ -20,23 +20,98 @@ import com.erpsystem.utils.DruidConnection;
  * @地点 成都
  */
 public class OrderDaoImpl implements IOrderDao {
-	
-	
+
 	@Override
 	public Integer findCount() throws SQLException {
 		QueryRunner qr = new QueryRunner(DruidConnection.getDataSource());
 		String sql = "select count(*) from `order`";
-		Long count = (Long)qr.query(sql, new ScalarHandler<>());
+		Long count = (Long) qr.query(sql, new ScalarHandler<>());
 		return count.intValue();
+	}  
+
+	@Override
+	public List<Order> findPage(Integer orderType, Integer index, Integer currentCount) throws SQLException {
+		QueryRunner qr = new QueryRunner(DruidConnection.getDataSource());
+		String sql = "select * from `order` where orderType = ? limit ?,?";
+		return qr.query(sql, new BeanListHandler<>(Order.class), orderType, index, currentCount);
+	}
+
+	@Override
+	public List<Order> findPage(String cname, String orderNum, Integer orderType, Integer index, Integer currentCount)
+			throws SQLException {
+		QueryRunner qr = new QueryRunner(DruidConnection.getDataSource());
+
+		String sql = "select * from `order` where cid = (select c.cid from `customer` c where c.cusCompany like ?) and orderType = ? and orderNum = ? limit ?,?";
+
+		return qr.query(sql, new BeanListHandler<>(Order.class), "%"+cname+"%", orderType, orderNum, index, currentCount);
+	}
+
+	@Override
+	public List<Order> findPage(String cname, Integer orderType, Integer index, Integer currentCount) throws SQLException {
+		QueryRunner qr = new QueryRunner(DruidConnection.getDataSource());
+
+		String sql = "select * from `order` where cid = (select c.cid from `customer` c where c.cusCompany like ?) and orderType = ? limit ?,?";
+
+		return qr.query(sql, new BeanListHandler<>(Order.class), "%"+cname+"%", orderType, index, currentCount);
+
+	}
+
+	@Override
+	public List<Order> findPageByorderNum(String orderNum, Integer orderType, Integer index, Integer currentCount) throws SQLException{
+	QueryRunner qr = new QueryRunner(DruidConnection.getDataSource());
+
+	String sql = "select * from `order` where orderNum = ? and orderType = ? limit ?,?";
+
+	return qr.query(sql, new BeanListHandler<>(Order.class), orderNum, orderType, index, currentCount);
+
 	}
 
 	@Override
 	public List<Order> findPage(Integer index, Integer currentCount) throws SQLException {
 		QueryRunner qr = new QueryRunner(DruidConnection.getDataSource());
+
 		String sql = "select * from `order` limit ?,?";
-		return qr.query(sql, new BeanListHandler<>(Order.class), index, currentCount);
+
+		return qr.query(sql, new BeanListHandler<>(Order.class),index, currentCount);
+	}
+	
+	@Override
+	public List<Order> findPage(String cname, String orderNum, Integer index, Integer currentCount)
+			throws SQLException {
+		QueryRunner qr = new QueryRunner(DruidConnection.getDataSource());
+
+		String sql = "select * from `order` where cid = (select c.cid from `customer` c where c.cusCompany like ?) and orderNum = ? limit ?,?";
+	
+		return qr.query(sql, new BeanListHandler<>(Order.class),"%"+cname+"%", orderNum, index, currentCount);
+	
+	}
+	
+
+	@Override
+	public List<Order> findPage(String cname, Integer index, Integer currentCount) throws SQLException {
+		QueryRunner qr = new QueryRunner(DruidConnection.getDataSource());
+
+		String sql = "select * from `order` where cid = (select c.cid from `customer` c where c.cusCompany like ?) limit ?,?";
+	
+		return qr.query(sql, new BeanListHandler<>(Order.class),"%"+cname+"%", index, currentCount);
+		
+		
 	}
 
+	@Override
+	public List<Order> findPageByorderNum(String orderNum, Integer index, Integer currentCount) throws SQLException {
+		QueryRunner qr = new QueryRunner(DruidConnection.getDataSource());
+
+		String sql = "select * from `order` where orderNum = ?  limit ?,?";
+	
+		return qr.query(sql, new BeanListHandler<>(Order.class), orderNum, index, currentCount);
+	}
+
+	
+	
+	
+	
+	
 	@Override
 	public List<Order> findAll() throws SQLException {
 		QueryRunner qr = new QueryRunner(DruidConnection.getDataSource());
@@ -63,8 +138,8 @@ public class OrderDaoImpl implements IOrderDao {
 	public void save(Order order) throws SQLException {
 		QueryRunner qr = new QueryRunner(DruidConnection.getDataSource());
 		String sql = "insert into `order` values(?,?,?,?,?,?,?,?)";
-		Object[] obj = new Object[] {order.getOrderNum(), order.getGoodsName(), order.getGoodsCount(), order.getGoodsPrice(),
-				order.getBeginTime(), order.getEndTime(), order.getOrderType(), order.getcId()};
+		Object[] obj = new Object[] { order.getOrderNum(), order.getGoodsName(), order.getGoodsCount(),
+				order.getGoodsPrice(), order.getBeginTime(), order.getEndTime(), order.getOrderType(), order.getcId() };
 		qr.update(sql, obj);
 	}
 
@@ -74,5 +149,10 @@ public class OrderDaoImpl implements IOrderDao {
 		String sql = "update `order` set orderType = ? where orderNum = ?";
 		qr.update(sql, statusCode, orderNum);
 	}
+
+
+
+	
+
 
 }

@@ -9,6 +9,7 @@ import com.erpsystem.domain.Customer;
 import com.erpsystem.domain.Order;
 import com.erpsystem.domain.PageBean;
 import com.erpsystem.service.ICustomerSerivce;
+import com.erpsystem.utils.CommonUtil;
 import com.erpsystem.utils.PrimaryKeyUtil;
 
 /**
@@ -21,7 +22,7 @@ import com.erpsystem.utils.PrimaryKeyUtil;
 public class CustomerServiceImpl implements ICustomerSerivce{
 	ICustomerDao dao = new CustomerDaoImpl();
 	@Override
-	public PageBean<Customer> findAll(String unmae, String orderNum, Integer currentPage) throws SQLException {
+	public PageBean<Customer> findAll(String unmae, String phone, Integer currentPage) throws SQLException {
 		PageBean<Customer> pageBean = new PageBean<>();
 		
 		pageBean.setCurrentCount(10);
@@ -39,14 +40,30 @@ public class CustomerServiceImpl implements ICustomerSerivce{
 		pageBean.setTotalPage(totalPage);
 		
 		Integer index = (currentPage - 1) * 10;     //当前页 - 1 * 一页的条数  = 当前从多少条查询
+		List<Customer> pageList = null ;
 		
-		List<Customer> pageList = dao.findPage(index, 10, unmae, orderNum);
-		
+		if(!"".equals(phone.trim()) && !"".equals(unmae.trim())) {
+			 pageList = dao.findPage(index, 10, unmae, phone);
+		}else if("".equals(phone.trim()) && "".equals(unmae.trim())){
+			pageList = dao.findPage(index, 10);
+		}else if(!"".equals(phone.trim()) && "".equals(unmae.trim())) {
+			 pageList = dao.findPage(index, 10, phone);
+		}else if("".equals(phone.trim()) && !"".equals(unmae.trim())) {
+			pageList = dao.findPageByName(index, 10, unmae);
+		}
 		pageBean.setList(pageList);
-		
-		
 		return pageBean;
+		
 	}
+	
+	
+	@Override
+	public List<Customer> findAll() throws SQLException {
+		
+		return dao.findAll();
+	}
+	
+	
 	@Override
 	public void delete(String cid) throws SQLException {
 		dao.delete(cid);
@@ -61,12 +78,12 @@ public class CustomerServiceImpl implements ICustomerSerivce{
 	}
 	@Override
 	public void save(Customer customer) throws SQLException {
-		String maxKey = dao.findMaxKey();
-		maxKey = PrimaryKeyUtil.getCustomerKey(maxKey);
-		customer.setCid(maxKey);
+	
+		customer.setCid(CommonUtil.getUUID());
 		dao.save(customer);
 		
 	}
+
 
 	
 }

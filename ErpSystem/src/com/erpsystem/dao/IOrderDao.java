@@ -26,8 +26,21 @@ public interface IOrderDao {
 	 * @param currentCount  一页的条数
 	 * @return
 	 */
-	List<Order> findPage(Integer index, Integer currentCount) throws SQLException;
+	List<Order> findPage(String cname, String orderNum, Integer orderType, Integer index, Integer currentCount) throws SQLException;
 
+	List<Order> findPage(String cname, Integer orderType, Integer index, Integer currentCount) throws SQLException;
+	
+	List<Order> findPageByorderNum(String orderNum, Integer orderType, Integer index, Integer currentCount) throws SQLException;
+	
+	List<Order> findPage(Integer orderType, Integer index, Integer currentCount) throws SQLException;
+	
+	List<Order> findPage(Integer index, Integer currentCount) throws SQLException;
+	
+	List<Order> findPage(String cname, String orderNum, Integer index, Integer currentCount) throws SQLException;
+	
+	List<Order> findPage(String cname,  Integer index, Integer currentCount) throws SQLException;
+
+	List<Order> findPageByorderNum(String orderNum, Integer index, Integer currentCount) throws SQLException;
 	/**
 	 *  查询所有的订单
 	 * @return

@@ -58,3 +58,11 @@ function totwo(n){
     }
 }
 
+function save(){
+	window.location="customerSave.jsp";
+}
+
+function submitBtnClick(){
+	document.getElementById("submit").submit(); 
+}
+
