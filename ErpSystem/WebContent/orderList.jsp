@@ -76,7 +76,7 @@
 			</select> <input type="button" value="查询" onclick="submitQuery()" /> 
 			
 			
-			<a href="${pageContext.request.contextPath}/orderAdd.jsp" style="margin-top: 10px">添加订单</a>
+			<a style="margin-left: 25px;margin-right: 25px" href="${pageContext.request.contextPath}/orderAdd.jsp">添加订单</a>
 		</div>
 		<!--账单表格 样式和供应商公用-->
 		<table class="providerTable" cellpadding="0" cellspacing="0">
