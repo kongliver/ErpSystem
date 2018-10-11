@@ -25,6 +25,7 @@
     			location.href="${pageContext.request.contextPath}/PurchaseOrder?method=UpdateNoteID&pid="+pid;
     		}
     	}
+    	
     
     </script>
 </head>
@@ -50,7 +51,7 @@
                 <ul class="list">
 	                <li id="active"><a href="${pageContext.request.contextPath }/OrderServlet?method=list">订单管理</a></li>
 	                <li><a href="providerList.jsp">供应商管理</a></li>
-	                <li><a href="purchaseList.jsp">采购单管理</a></li>
+	                <li><a href="<%=request.getContextPath() %>/PurchaseOrder?method=QueryAllStock">采购单管理</a></li>
 	                <li><a href="${path }/ProductStockServlet?action=getPageBean&currentPage=1">库存管理</a></li>
 	                <li><a href="${path }/ChangeStockListServlet?action=getPageBean&currentPage=1">库存异动</a></li>
 	                <li><a href="${path }/CustomerSupportServlet?action=getPageBean&currentPage=1">售后记录</a></li>

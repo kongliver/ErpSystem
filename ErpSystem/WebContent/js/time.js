@@ -58,5 +58,8 @@ function totwo(n){
     }
 }
 
+function save(){ 
+	window.location="customerSave.jsp"; 
+} 
 
 

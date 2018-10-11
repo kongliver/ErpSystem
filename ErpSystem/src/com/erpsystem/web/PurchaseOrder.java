@@ -29,6 +29,9 @@ public class PurchaseOrder extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html;charset=UTF-8");
 		String methodName = request.getParameter("method");
 		if("QueryStock".equals(methodName)) {
 			QueryStock(request,response);
@@ -58,6 +61,7 @@ public class PurchaseOrder extends HttpServlet {
  * @throws IOException
  */
 	protected void QueryStock(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		HttpSession session = request.getSession();
 		String KuCun = request.getParameter("KuCun");
 		String purchaseOrder = request.getParameter("purchaseOrder");
@@ -90,6 +94,7 @@ public class PurchaseOrder extends HttpServlet {
 	 * @throws IOException
 	 */
 	protected void QueryAllStock(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	
 		HttpSession session = request.getSession();
 		IPurchaseNoteService service = new IPurchaseNoteService();
 		List<PurchaseNote> list = null;
@@ -120,8 +125,6 @@ public class PurchaseOrder extends HttpServlet {
 	 */
 	protected void AddNote(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		request.getParameter("UTF-8");
-		
 		Map<String, String[]> map = request.getParameterMap();
 		
 		PurchaseNote pur = new PurchaseNote();
@@ -142,6 +145,7 @@ public class PurchaseOrder extends HttpServlet {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		System.out.println(pur);
 		response.sendRedirect(request.getContextPath()+"/PurchaseOrder?method=QueryAllStock");
 	}	
 	/**
@@ -152,6 +156,7 @@ public class PurchaseOrder extends HttpServlet {
 	 * @throws IOException
 	 */
 	protected void DeleteNote(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		System.out.println("删掉");
 		IPurchaseNoteService service = new IPurchaseNoteService();
 		String pid = request.getParameter("pid");
@@ -176,7 +181,7 @@ public class PurchaseOrder extends HttpServlet {
 	 * @throws IOException
 	 */
 	protected void UpdateNoteID(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		
 		String pnid = request.getParameter("pid");
 		System.out.println(pnid);
 		IPurchaseNoteService service = new IPurchaseNoteService();
@@ -202,7 +207,6 @@ public class PurchaseOrder extends HttpServlet {
 	 */
 	protected void UpdateNote(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 //		
-		request.getParameter("UTF-8");
 		Map<String, String[]> map = request.getParameterMap();
 		
 		PurchaseNote pur = new PurchaseNote();

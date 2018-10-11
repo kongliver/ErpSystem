@@ -23,10 +23,10 @@ import com.erpsystem.utils.DruidConnection;
 public class CustomerDaoImpl implements ICustomerDao{
 
 	@Override
-	public Integer findCount() throws SQLException {
+	public Integer findCount(String unmae, String phone) throws SQLException {
 		QueryRunner qr = new QueryRunner(DruidConnection.getDataSource());
-		String sql = "select count(*) from `customer`";
-		Long count = (Long)qr.query(sql, new ScalarHandler<>());
+		String sql = "select count(1) from `customer` where cusCompany like ? and cusPhone like ?";
+		Long count = (Long)qr.query(sql, new ScalarHandler<>(), "%"+unmae+"%", "%"+phone+"%");
 		return count.intValue();
 	}
 
