@@ -81,6 +81,7 @@
         <div class="providerAdd">
             <form action="${pageContext.request.contextPath }/OrderServlet?method=save" method="post">
                 <!--div的class 为error是验证错误，ok是验证成功-->
+                <input type="hidden" name="oprPerson" value="${sessionScope.USER.nickName }">
                 <div>
                     <label >商品选择：</label>
                     <select name="goodsName" id = "productNameItme">

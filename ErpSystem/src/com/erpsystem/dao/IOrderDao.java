@@ -77,6 +77,6 @@ public interface IOrderDao {
 	 */
 	void updateOrderStatu(Long orderNum, Integer statusCode) throws SQLException;
 	
-
+	void updateEndTime(Long orderNum, String endTime) throws SQLException;
 
 }

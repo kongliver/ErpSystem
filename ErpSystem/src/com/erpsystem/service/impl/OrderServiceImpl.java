@@ -16,6 +16,8 @@ import com.erpsystem.domain.Order;
 import com.erpsystem.domain.PageBean;
 import com.erpsystem.domain.ProductStock;
 import com.erpsystem.service.IOrderService;
+import com.erpsystem.service.IProductStockService;
+import com.erpsystem.utils.DateUtil;
 import com.erpsystem.utils.PrimaryKeyUtil;
 
 /**
@@ -31,6 +33,8 @@ public class OrderServiceImpl implements IOrderService {
 	IProductStockDao stockDao = new ProductStockDaoImpl();
 
 	ICustomerDao customerDao = new CustomerDaoImpl();
+	
+	IProductStockService product = new ProductStockServiceImpl();
 
 	@Override
 	public PageBean<Order> findAll(String cname, String orderNum, Integer orderType, Integer currentCount,
@@ -111,9 +115,9 @@ public class OrderServiceImpl implements IOrderService {
 	public Order findById(Long id) throws SQLException {
 		return dao.finById(id);
 	}
-
+	
 	@Override
-	public void insertOrder(Order order) throws SQLException {
+	public boolean insertOrder(Order order, String oprPerson) throws SQLException {
 		Date date = new Date();
 		String maxKey = dao.findMaxKey();
 
@@ -123,20 +127,48 @@ public class OrderServiceImpl implements IOrderService {
 
 		Long Key = PrimaryKeyUtil.getOrderPrimarKey(date, maxKey);
 		order.setOrderNum(Key);
-		order.setOrderType(1); // 新的订单的状态
+		boolean isSucceed = outStock(order, oprPerson);
+		if(!isSucceed) {	
+			order.setOrderType(1); // 新的订单的状态
+		} else {
+		    order.setEndTime(df.format(DateUtil.getNextDay(date)).toString());
+		}
 		dao.save(order);
+		return isSucceed;
 	}
 
+	public boolean outStock(Order order, String oprPerson) throws SQLException {
+							
+		ProductStock productStock = stockDao.getById(order.getGoodsName());
+
+		if (order.getGoodsCount() <= productStock.getProductCount()) {
+//			productStock.setProductCount(productStock.getProductCount() - order.getGoodsCount()); // 减少库存
+//			stockDao.updateCount(productStock.getPsid(), productStock.getProductCount());
+			order.setOrderType(3);
+			product.changeStock(productStock.getPsid(), order.getGoodsCount(), oprPerson, 2);
+			return true;
+		} else {
+			return false;
+		}
+		
+	}
+	
+	
+	
 	@Override
-	public boolean outStock(Long orderNum) throws SQLException {
+	public boolean outStock(Long orderNum, String oprPerson) throws SQLException {
 		Order order = dao.finById(orderNum);
 
-		ProductStock productStock = stockDao.getByProductName(order.getGoodsName());
+		ProductStock productStock = stockDao.getById(order.getGoodsName());
 
-		if (order.getGoodsCount() >= productStock.getProductCount()) {
-			productStock.setProductCount(productStock.getProductCount() - order.getGoodsCount()); // 减少库存
-			stockDao.update(productStock); // 更新库存
-			updateOrderStatu(orderNum, 2); // 更改更新状态
+		if (order.getGoodsCount() <= productStock.getProductCount()) {
+//			productStock.setProductCount(productStock.getProductCount() - order.getGoodsCount()); // 减少库存
+//			stockDao.updateCount(productStock.getPsid(), productStock.getProductCount());
+			updateOrderStatu(orderNum, 3); // 更改更新状态
+			Date date = new Date();
+            String endTime = DateUtil.formatTime(DateUtil.getNextDay(date));
+            dao.updateEndTime(orderNum, endTime);
+			product.changeStock(productStock.getPsid(), order.getGoodsCount(), oprPerson, 2);
 			return true;
 		} else {
 			return false;

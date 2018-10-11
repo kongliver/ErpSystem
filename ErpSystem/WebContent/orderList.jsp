@@ -100,13 +100,26 @@
 					<td>${order.goodsCount }</td>
 					<td>${order.goodsPrice }</td>
 					<td>${order.beginTime }</td>
-					<td>${order.endTime }</td>
-					<td>${order.orderType }</td>
+					<td>
+					   <c:if test="${empty order.endTime }">待定</c:if>
+					   <c:if test="${!empty order.endTime }">${order.endTime }</c:if>
+					</td>
+					<td>
+					   <c:if test="${order.orderType == 1 }">刚提交</c:if>
+					   <c:if test="${order.orderType == 2 }">已完成入库</c:if>
+					   <c:if test="${order.orderType == 3 }">已完成出库</c:if>
+					   <c:if test="${order.orderType == 4 }">有售后问题</c:if>
+					</td>
 					<td>${order.cId }</td>
 
 					<td><a
 						href="${pageContext.request.contextPath}/CustomerSupportServlet?action=toSave&orderNum=${order.orderNum}"><img
-							src="img/read.png" alt="添加售后" title="添加售后" /></a></td>
+							src="img/read.png" alt="添加售后" title="添加售后" /></a>
+						<a
+						href="${pageContext.request.contextPath}/OrderServlet?method=outStock&orderNum=${order.orderNum}&oprPerson=${sessionScope.USER.nickName }" onclick="return confirm('是否确认出库？')"><img
+							src="img/read.png" alt="出库" title="出库" /></a>	
+							
+							</td>
 				</tr>
 			</c:forEach>
 
