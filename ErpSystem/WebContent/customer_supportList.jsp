@@ -79,7 +79,7 @@
                 </tr>
                 <c:forEach items="${pageBean.list }" var="CustomerSupport" varStatus="status">
                 <tr>
-                    <td>${status.index+1 }</td>
+                    <td>${(pageBean.currentPage - 1) * pageBean.currentCount + status.index + 1}</td>
                     <td>${CustomerSupport.orderNum }</td>
                     <td style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;width:350px;padding-top:12px;display:block;">${CustomerSupport.problem }</td>
                     <td>${CustomerSupport.handler }</td>
