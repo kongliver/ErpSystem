@@ -24,7 +24,11 @@ public class PrimaryKeyUtil {
 		SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd"); // 设置日期格式
 		String newDateStr = df.format(newDate).toString();
 
-		String dateMaxKey = maxKey.substring(0, 8); // 得到数据库订单号的日期
+		String dateMaxKey = "";
+		if(null != maxKey && !"null".equals(maxKey)) {
+			dateMaxKey = maxKey.substring(0, 8); // 得到数据库订单号的日期
+		}
+		
 
 		if (newDateStr.equals(dateMaxKey)) { // 判断当前时间是否和 最大订单号日期相同
 			Integer num = Integer.valueOf(maxKey.substring(8));

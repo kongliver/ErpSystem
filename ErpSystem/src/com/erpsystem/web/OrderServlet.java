@@ -104,8 +104,6 @@ public class OrderServlet extends HttpServlet {
 
 	private void list(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, ServletException, IOException {
-		
-		System.out.println(111);
 		String cname = request.getParameter("cname");
 		String orderNum = request.getParameter("orderNum");
 		String orderTypeStr = request.getParameter("orderType");

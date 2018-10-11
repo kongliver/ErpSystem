@@ -30,23 +30,14 @@ public class Customer {
 	/** 客户收货的地址*/
 	private String cusAddress;
 	
-	private Long cOrderNum;
+
 
 	
 	
 	
 
-	@Override
-	public String toString() {
-		return "Customer [cid=" + cid + ", cusCompany=" + cusCompany + ", cusContacts=" + cusContacts + ", cusPhone="
-				+ cusPhone + ", cusAddress=" + cusAddress + ", cOrderNum=" + cOrderNum + "]";
-	}
-	public Long getcOrderNum() {
-		return cOrderNum;
-	}
-	public void setcOrderNum(Long cOrderNum) {
-		this.cOrderNum = cOrderNum;
-	}
+
+
 	public String getCid() {
 		return cid;
 	}

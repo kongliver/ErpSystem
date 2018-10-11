@@ -71,11 +71,11 @@ public class SupplierDaoImpl implements ISupplierDao {
 	}
 
 	@Override
-	public Supplier getByCompany(String supCompany) throws SQLException {
+	public List<Supplier> getByCompany(String supCompany) throws SQLException {
 		QueryRunner qr = new QueryRunner(DruidConnection.getDataSource());
-		String sql = "select * from `supplier` where sid=?";
-		Supplier supplier = qr.query(sql, new BeanHandler<Supplier>(Supplier.class),supCompany);
-		return supplier;
+		String sql = "select * from `supplier` where supCompany like ?";
+		List<Supplier> supplierList = qr.query(sql, new BeanListHandler<Supplier>(Supplier.class),"%"+supCompany+"%");
+		return supplierList;
 	}
 
 	@Override
@@ -87,20 +87,20 @@ public class SupplierDaoImpl implements ISupplierDao {
 	}
 
 	@Override
-	public List<Supplier> getPage(Integer index, Integer currentCount) throws SQLException {
+	public List<Supplier> getPage(String supCompany, int currentCount,int index) throws SQLException {
 		QueryRunner qr = new QueryRunner(DruidConnection.getDataSource());
-		String sql = "select * from `supplier` limit ?,?";
-		List<Supplier> pageList = qr.query(sql, new BeanListHandler<Supplier>(Supplier.class),index,currentCount);
+		String sql = "select * from `supplier` where supCompany like ?  limit ?,?";
+		List<Supplier> pageList = qr.query(sql, new BeanListHandler<Supplier>(Supplier.class),"%"+supCompany+"%",index,currentCount);
 		return pageList;
 	}
 
 	
 
 	@Override
-	public Long getTotalCount() throws SQLException {
+	public Long getTotalCount(String supCompany) throws SQLException {
 		QueryRunner qr = new QueryRunner(DruidConnection.getDataSource());
-		String sql = "select count(1) from `customer_support_list`";
-		Long totalCount = (Long)qr.query(sql, new ScalarHandler<>());
+		String sql = "select count(1) from `supplier` where supCompany like ?";
+		Long totalCount = (Long)qr.query(sql, new ScalarHandler<>(),"%"+supCompany+"%");
 		return totalCount;
 	}
 

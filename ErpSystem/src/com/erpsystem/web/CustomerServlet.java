@@ -85,7 +85,6 @@ public class CustomerServlet extends HttpServlet {
 	private void list(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
 		String name = request.getParameter("name");
 		String phone = request.getParameter("phone");
-		System.out.println(111);
 		if(null == name) {
 			name = "";
 		}
@@ -107,8 +106,6 @@ public class CustomerServlet extends HttpServlet {
 	}
 	
 	private void delete(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException{
-		
-		System.out.println(11);
 		String cid = request.getParameter("cid");
 		customerService.delete(cid);
 		response.sendRedirect("CustomerServlet?method=list");

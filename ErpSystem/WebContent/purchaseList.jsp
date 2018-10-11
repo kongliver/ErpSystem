@@ -9,7 +9,7 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title>家具erp后台管理系统</title>
+    <title>鑫源丰erp后台管理系统</title>
     <link rel="stylesheet" href="css/public.css"/>
     <link rel="stylesheet" href="css/style.css"/>
     <script>
@@ -32,7 +32,7 @@
 <body>
 <!--头部-->
     <header class="publicHeader">
-        <h1>家具erp后台管理系统</h1>
+        <h1>鑫源丰erp后台管理系统</h1>
         <div class="publicHeaderR">
             <p><span>下午好！</span><span style="color: #fff21b"> Admin</span> , 欢迎你！</p>
             <a href="login.jsp">退出</a>
@@ -50,8 +50,8 @@
             <nav>
                 <ul class="list">
 	                <li id="active"><a href="${pageContext.request.contextPath }/OrderServlet?method=list">订单管理</a></li>
-	                <li><a href="providerList.jsp">供应商管理</a></li>
-	                <li><a href="<%=request.getContextPath() %>/PurchaseOrder?method=QueryAllStock">采购单管理</a></li>
+	                <li><a href="${pageContext.request.contextPath }/SupplierServlet?method=getPageBean&currentPage=1">供应商管理</a></li>
+                    <li><a href="<%=request.getContextPath() %>/PurchaseOrder?method=QueryAllStock">采购单管理</a></li>
 	                <li><a href="${path }/ProductStockServlet?action=getPageBean&currentPage=1">库存管理</a></li>
 	                <li><a href="${path }/ChangeStockListServlet?action=getPageBean&currentPage=1">库存异动</a></li>
 	                <li><a href="${path }/CustomerSupportServlet?action=getPageBean&currentPage=1">售后记录</a></li>
@@ -67,25 +67,25 @@
                 <strong>你现在所在的位置是:</strong>
                 <span>采购单管理页面</span>
             </div>
-            <div class="search" >
-            <form action="<%=request.getContextPath() %>/PurchaseOrder?method=QueryStock" method="post">
+            <div class="search" style="float:left">
+            <form style="display: inline-block;" action="<%=request.getContextPath() %>/PurchaseOrder?method=QueryStock" method="post">
                 <span>库存物品编号：</span>
                 <input type="text"  placeholder="请输入库存物品的编号" name="KuCun"/>
                 
                 <span>采购单编号：</span>
                 <input type="text" placeholder="请输入采购单的编号" name="purchaseOrder"/>
 
-                <input type="submit" style="width:275px"  value="查询"/>
+                <input type="submit" style="width:75px;height:35px"  value="查询"/>
                
               </form>  
             </div>
             
-            <div class="search">
-            <form action="<%=request.getContextPath() %>/PurchaseOrder?method=QueryAllStock" method="post">
+            <div class="search" style="float:left ">
+            <form style="display: inline-block;" action="<%=request.getContextPath() %>/PurchaseOrder?method=QueryAllStock" method="post">
           
-                <input type="submit" style="margin-left:587px; width:275px"  value="查询所有订单"/>
+                <input type="submit" style=" width:140px"  value="查询所有订单"/>
                 
-                 <a href="purchaseAdd.jsp">添加采购单</a>
+                 <a href="purchaseAdd.jsp" style="margin-left: 25px;margin-right: 25px">添加采购单</a>
               </form>  
             </div>
             
@@ -104,10 +104,8 @@
                 </tr>
                 
                 <c:if test="${not empty note }">
-                
-               
-	
-                    <td>${note.pnid }</td>
+						<td>1</td>
+                   <%--  <td>${note.pnid }</td> --%>
                     <td>${note.psid }</td>
                     <td>${note.purchaseCount }</td>
                     <td>${note.purTotalMoney }</td>
@@ -124,10 +122,13 @@
         	</c:if>
         	 
                 <c:if test="${not empty list }">
-                	<c:forEach items="${list }" var="note">
+                	<c:forEach items="${list }" var="note" varStatus="num">
                 	
                 	 <tr>
-                	<td>${note.pnid }</td>
+                	<%-- <td>${note.pnid }</td> --%>
+                	
+                	  <td>${num.index + 1 }</td>
+                	
                     <td>${note.psid }</td>
                     <td>${note.purchaseCount }</td>
                     <td>${note.purTotalMoney }</td>

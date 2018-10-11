@@ -53,13 +53,13 @@ public class PurchaseOrder extends HttpServlet {
 		doGet(request, response);
 	}
 	
-/**
- * 查询库存物品户或者某张采购单
- * @param request
- * @param response
- * @throws ServletException
- * @throws IOException
- */
+    /**
+     * 查询库存物品户或者某张采购单
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
 	protected void QueryStock(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		HttpSession session = request.getSession();
@@ -82,7 +82,6 @@ public class PurchaseOrder extends HttpServlet {
 				request.getRequestDispatcher("/purchaseList.jsp").forward(request, response);
 			}	
 		}else {
-			System.out.println("000");
 			request.getRequestDispatcher("/purchaseList.jsp").forward(request, response);
 		}
 	}
@@ -104,7 +103,6 @@ public class PurchaseOrder extends HttpServlet {
 			e.printStackTrace();
 		}
 		if(list ==null) {
-			System.out.println("kongde");
 			request.getRequestDispatcher("/purchaseList.jsp").forward(request, response);
 		}else {
 			request.setAttribute("list", list);
@@ -145,7 +143,6 @@ public class PurchaseOrder extends HttpServlet {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		System.out.println(pur);
 		response.sendRedirect(request.getContextPath()+"/PurchaseOrder?method=QueryAllStock");
 	}	
 	/**
@@ -156,11 +153,8 @@ public class PurchaseOrder extends HttpServlet {
 	 * @throws IOException
 	 */
 	protected void DeleteNote(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		System.out.println("删掉");
 		IPurchaseNoteService service = new IPurchaseNoteService();
 		String pid = request.getParameter("pid");
-		System.out.println(pid);
 		try {
 			service.deleteTables(pid);
 		} catch (SQLException e) {
@@ -181,9 +175,7 @@ public class PurchaseOrder extends HttpServlet {
 	 * @throws IOException
 	 */
 	protected void UpdateNoteID(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		String pnid = request.getParameter("pid");
-		System.out.println(pnid);
 		IPurchaseNoteService service = new IPurchaseNoteService();
 		PurchaseNote note = null;
 		try {
@@ -213,9 +205,6 @@ public class PurchaseOrder extends HttpServlet {
 			try {
 				pur.setPurchaseTime(new Date());
 				BeanUtils.populate(pur, map);
-				
-				System.out.println(pur);
-				
 			} catch (IllegalAccessException e) {
 				e.printStackTrace();
 			} catch (InvocationTargetException e) {
@@ -224,7 +213,6 @@ public class PurchaseOrder extends HttpServlet {
 			IPurchaseNoteService service = new IPurchaseNoteService();
 			try {
 				service.updateTable(pur);
-				System.out.println(pur);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}

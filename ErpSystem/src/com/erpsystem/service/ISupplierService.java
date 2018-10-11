@@ -40,7 +40,7 @@ public interface ISupplierService {
 	 * @return
 	 * @throws SQLException
 	 */
-	public Supplier getByCompany(String supCompany) throws SQLException;
+	public List<Supplier> getByCompany(String supCompany) throws SQLException;
 	
 	/**
 	 * 查询所有供应商
@@ -55,5 +55,5 @@ public interface ISupplierService {
 	 * @return 当前分页的对象
 	 * @throws SQLException
 	 */
-	public PageBean<Supplier> getPage(Integer currentCount, Integer currentPage) throws SQLException;
+	public PageBean<Supplier> getPage(String supCompany,int currentCount, int currentPage) throws SQLException;
 }

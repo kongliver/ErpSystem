@@ -9,15 +9,16 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title>家具erp后台管理系统</title>
-    <link rel="stylesheet" href="css/public.css"/>
-    <link rel="stylesheet" href="css/style.css"/>
+    <title>鑫源丰erp后台管理系统</title>
+
 </head>
 <body>
 <!--头部-->
 <header class="publicHeader">
-    <h1>家具erp后台管理系统</h1>
-
+    <h1>鑫源丰erp后台管理系统</h1>
+	<link rel="stylesheet" href="${path }/css/public.css"/>
+    <link rel="stylesheet" href="${path }/css/style.css"/>
+    <link rel="stylesheet" href="${path }/css/pageStyle.css"/>
     <div class="publicHeaderR">
         <p><span>下午好！</span><span style="color: #fff21b"> Admin</span> , 欢迎你！</p>
         <a href="login.jsp">退出</a>
@@ -35,8 +36,8 @@
         <nav>
             <ul class="list">
                 <li id="active"><a href="${pageContext.request.contextPath }/OrderServlet?method=list">订单管理</a></li>
-                <li><a href="providerList.jsp">供应商管理</a></li>
-                <li><a href="purchaseList.jsp">采购单管理</a></li>
+                <li><a href="${pageContext.request.contextPath }/SupplierServlet?method=getPageBean&currentPage=1">供应商管理</a></li>
+                <li><a href="<%=request.getContextPath() %>/PurchaseOrder?method=QueryAllStock">采购单管理</a></li>
                 <li><a href="${path }/ProductStockServlet?action=getPageBean&currentPage=1">库存管理</a></li>
                 <li><a href="${path }/ChangeStockListServlet?action=getPageBean&currentPage=1">库存异动</a></li>
                 <li><a href="${path }/CustomerSupportServlet?action=getPageBean&currentPage=1">售后记录</a></li>
@@ -53,10 +54,10 @@
             <span>供应商管理页面</span>
         </div>
         
-         <form action="${pageContext.request.contextPath }/SupplierServlet?method=list" method="post" id="submit">
+         <form action="${pageContext.request.contextPath }/SupplierServlet?method=getPageBean&currentPage=1" method="post" id="submit">
         <div class="search">
             <span>供应商名称：</span>
-            <input type="text"  name="sname"/>
+            <input type="text"  name="supCompany"/>
             <input type="button" value="查询" onclick="submitBtnClick()" />
             <input type="button" value="新增供应商"  onclick="window.location='providerAdd.jsp'"/>
             
@@ -74,7 +75,7 @@
                 <th width="30%">操作</th>
             </tr>
            
-            <c:forEach items="${supplierList }" var="supplier" varStatus="status">
+            <c:forEach items="${pageBean.list }" var="supplier" varStatus="status">
             <tr>
             
 	            <td  height="23"><span class="STYLE1">${status.index+1 }</span>
@@ -133,11 +134,27 @@
 
 
 <footer class="footer">
+	<!--分页-->
+	<div id="page" class="page_div">aaa</div>
 </footer>
 
 <script src="js/jquery.js"></script>
+<script type="text/javascript" src="js/paging.js"></script>
 <script src="js/js.js"></script>
 <script src="js/time.js"></script>
+<script type="text/javascript">
+
+var supCompany = ${"#supCompany"}.val();
+
+$("#page").paging({
+    pageNo: ${pageBean.currentPage},
+    totalPage: ${pageBean.totalPage },
+    totalSize: ${pageBean.totalCount },
+    callback: function(num) {
+        $(window).attr('location', '${path }/SupplierServlet?method=getPageBean&currentPage='+num+"&supCompany="+supCompany);
+    }
+});
+</script>
 
 </body>
 </html>

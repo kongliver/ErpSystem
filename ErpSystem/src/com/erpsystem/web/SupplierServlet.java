@@ -88,12 +88,50 @@ public class SupplierServlet extends HttpServlet {
 					e.printStackTrace();
 				}
 				break;
-				
+			case "fuzzyQuery":
+				try {
+					fuzzyQuery(request,response);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			case "getPageBean":
+				try {
+					getPageBean(request,response);
+				} catch (NumberFormatException | SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
 	}
 
 	
+
+	private void getPageBean(HttpServletRequest request, HttpServletResponse response) throws NumberFormatException, SQLException, ServletException, IOException {
+		String currentPage = request.getParameter("currentPage");
+		String supCompany = request.getParameter("supCompany");
+		if(supCompany == null) {
+			supCompany = "";
+		}
+		PageBean<Supplier> pageBean = iss.getPage(supCompany,6,Integer.valueOf(currentPage).intValue() );
+		
+		request.setAttribute("pageBean", pageBean);
+		request.setAttribute("supCompany", supCompany);
+		
+		request.getRequestDispatcher("providerList.jsp").forward(request, response);
+	}
+
+
+
+	private void fuzzyQuery(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
+		String supCompany = request.getParameter("supCompany");
+		List<Supplier> supplierList = iss.getByCompany(supCompany);
+		request.setAttribute("supplierList", supplierList);
+		request.getRequestDispatcher("providerList.jsp").forward(request, response);
+	}
+
+
 
 	private void delete(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
 		String sid = request.getParameter("sid");
@@ -108,7 +146,7 @@ public class SupplierServlet extends HttpServlet {
 		BeanUtils.populate(supplier,map);
 		supplier.setsId(id);
 		iss.edit(supplier);
-		response.sendRedirect("SupplierServlet?method=list");
+		response.sendRedirect("SupplierServlet?method=getPageBean&currentPage=1");
 	}
 
 	private void edit(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
@@ -137,13 +175,16 @@ public class SupplierServlet extends HttpServlet {
 //		request.setAttribute("pageBean", pageBean);
 //		request.getRequestDispatcher("providerList.jsp").forward(request, response);
 		
-		String sname = request.getParameter("sname");
-		if(sname == null) {
-			sname = "";
+		String supCompany = request.getParameter("supCompany");
+		if(supCompany == null) {
+			supCompany = "";
+			List<Supplier> supplierList = iss.getAllSupplier();
+			request.setAttribute("supplierList",supplierList);
+			request.getRequestDispatcher("providerList.jsp").forward(request, response);
 		}
-		ISupplierService iss = new SupplierServiceImpl();
-		List<Supplier> supplierList = iss.getAllSupplier();
+//		ISupplierService iss = new SupplierServiceImpl();
 		
+		List<Supplier> supplierList = iss.getByCompany(supCompany);
 		request.setAttribute("supplierList",supplierList);
 		request.getRequestDispatcher("providerList.jsp").forward(request, response);
 		
@@ -165,7 +206,7 @@ public class SupplierServlet extends HttpServlet {
 		try {
 			iss.addSupplier(supplier);
 //			this.list(request, response);
-			response.sendRedirect("SupplierServlet?method=list");
+			response.sendRedirect("SupplierServlet?method=getPageBean&currentPage=1");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

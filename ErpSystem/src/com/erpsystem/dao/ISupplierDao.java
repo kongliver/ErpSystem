@@ -40,7 +40,7 @@ public interface ISupplierDao {
 	 * 根据公司名称查询供应商
 	 * @throws SQLException
 	 */
-	public Supplier getByCompany(String supCompany) throws SQLException;
+	public List<Supplier> getByCompany(String supCompany) throws SQLException;
 	/**
 	 * 查询所有供应商
 	 * @return
@@ -54,13 +54,13 @@ public interface ISupplierDao {
 	 * @return
 	 * @throws SQLException 
 	 */
-	public List<Supplier> getPage(Integer index, Integer currentCount) throws SQLException;
+	public List<Supplier> getPage(String supCompany, int currentCount,int index) throws SQLException;
 	
 	/**
 	 * 获取总共由多少条记录
 	 * @return 返回总记录条数
 	 * @throws SQLException
 	 */
-	public Long getTotalCount() throws SQLException;
+	public Long getTotalCount(String supCompany) throws SQLException;
 	
 }

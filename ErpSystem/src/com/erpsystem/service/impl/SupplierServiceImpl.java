@@ -47,7 +47,7 @@ public class SupplierServiceImpl implements ISupplierService {
 		return supplierDao.getById(sId);
 	}
 	@Override
-	public Supplier getByCompany(String supCompany) throws SQLException {
+	public List<Supplier> getByCompany(String supCompany) throws SQLException {
 		// TODO Auto-generated method stub
 		return supplierDao.getByCompany(supCompany);
 	}
@@ -57,14 +57,14 @@ public class SupplierServiceImpl implements ISupplierService {
 		return supplierList;
 	}
 	@Override
-	public PageBean<Supplier> getPage(Integer currentCount, Integer currentPage) throws SQLException {
+	public PageBean<Supplier> getPage(String supCompany,int currentCount, int currentPage) throws SQLException {
 		PageBean<Supplier> pageBean = new PageBean<Supplier>();
 		//设置一页显示多少条
 		pageBean.setCurrentCount(currentCount);
 		//设置当前页码
 		pageBean.setCurrentPage(currentPage);
 		//获取共有多少条记录
-		Long totalCount = supplierDao.getTotalCount();
+		Long totalCount = supplierDao.getTotalCount(supCompany);
 		pageBean.setTotalCount(totalCount.intValue());
 		//获取总页数
 		double totalPage = Math.ceil(1.0 * pageBean.getTotalCount() / pageBean.getCurrentCount());
@@ -73,7 +73,7 @@ public class SupplierServiceImpl implements ISupplierService {
 		// 当前页查询的角标
 	    int index = (currentPage - 1) * currentCount;
 		
-	    List<Supplier> pageData = supplierDao.getPage(index, currentCount);
+	    List<Supplier> pageData = supplierDao.getPage(supCompany,currentCount,index);
 		pageBean.setList(pageData);
 		
 		return pageBean;
