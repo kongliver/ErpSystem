@@ -10,7 +10,7 @@
 <html>
 <head lang="en">
 <meta charset="UTF-8">
-<title>家具erp后台管理系统</title>
+<title>鑫源丰erp后台管理系统</title>
 <link rel="stylesheet" href="css/public.css" />
 <link rel="stylesheet" href="css/style.css" />
 <link rel="stylesheet" href="${path }/css/pageStyle.css"/>
@@ -18,7 +18,7 @@
 <body>
 	<!--头部-->
 	<header class="publicHeader">
-	<h1>家具erp后台管理系统</h1>
+	<h1>鑫源丰erp后台管理系统</h1>
 	<div class="publicHeaderR">
 		<p>
 			<span>下午好！</span><span style="color: #fff21b"> Admin</span> , 欢迎你！
@@ -39,8 +39,8 @@
 		<ul class="list">
 			<li id="active"><a
 				href="${pageContext.request.contextPath }/OrderServlet?method=list">订单管理</a></li>
-			<li><a href="providerList.jsp">供应商管理</a></li>
-			<li><a href="purchaseList.jsp">采购单管理</a></li>
+			<li><a href="${pageContext.request.contextPath }/SupplierServlet?method=getPageBean&currentPage=1">供应商管理</a></li>
+            <li><a href="<%=request.getContextPath() %>/PurchaseOrder?method=QueryAllStock">采购单管理</a></li>
 			<li><a
 				href="${path }/ProductStockServlet?action=getPageBean&currentPage=1">库存管理</a></li>
 			<li><a

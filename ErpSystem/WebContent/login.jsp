@@ -4,13 +4,13 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title>系统登录 - 家具erp后台管理系统</title>
+    <title>系统登录 - 鑫源丰erp后台管理系统</title>
     <link rel="stylesheet" href="css/style.css"/>
 </head>
 <body class="login_bg">
     <section class="loginBox">
         <header class="loginHeader">
-            <h1>家具erp后台管理系统</h1>
+            <h1>鑫源丰erp后台管理系统</h1>
         </header>
         <section class="loginCont">
             <form class="loginForm" action="index.jsp">

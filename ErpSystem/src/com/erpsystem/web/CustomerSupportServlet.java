@@ -47,11 +47,7 @@ public class CustomerSupportServlet extends BaseServlet {
 		}
 		try {
 			List<CustomerSupport> cusSupList = cusSupSer.fuzzyQuery(orderNum, goodsName, cusCompany);
-			for (CustomerSupport customerSupport : cusSupList) {
-				System.out.println("fuzzyQuery:"+customerSupport);
-			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return "customer_supportList.jsp";
@@ -81,8 +77,6 @@ public class CustomerSupportServlet extends BaseServlet {
 		try {
 			PageBean<CustomerSupport> pageBean = cusSupSer.getPageBean(Integer.valueOf(currentPage).intValue(), 6, orderNum, goodsName, cusCompany);
 			List<CustomerSupport> list = pageBean.getList();
-			System.out.println(list);
-			
 			request.setAttribute("pageBean", pageBean);
 			request.setAttribute("orderNum", orderNum);
 			request.setAttribute("goodsName", goodsName);
@@ -102,11 +96,9 @@ public class CustomerSupportServlet extends BaseServlet {
 	 */
 	protected String getOne(HttpServletRequest request, HttpServletResponse response){
 		String csId = request.getParameter("csId");
-		System.out.println("更多csId："+csId);
 		try {
 			Map<String, Object> cusSupMap = cusSupSer.getMoreCusSupById(csId);
 			request.setAttribute("cusSupMap", cusSupMap);
-			System.out.println("更多详情："+cusSupMap);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -122,7 +114,6 @@ public class CustomerSupportServlet extends BaseServlet {
 	 */
 	protected String deleteOne(HttpServletRequest request, HttpServletResponse response){
 		String csId = request.getParameter("csId");
-		System.out.println("delete_csId:"+csId);
 		try {
 			cusSupSer.deleteCusSup(csId);
 		} catch (SQLException e) {
