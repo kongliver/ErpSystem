@@ -14,11 +14,11 @@ public class JdbcUtil2 {
 		Connection conn = null;
 		Properties prop = new Properties();
 		InputStream input = JdbcUtil2.class.getClassLoader()
-				.getResourceAsStream("jdbc.properties");
+				.getResourceAsStream("db.properties");
 		prop.load(input);
-		String driverName = prop.getProperty("driverClass");
+		String driverName = prop.getProperty("driverClassName");
 		String url = prop.getProperty("url");
-		String userName = prop.getProperty("userName");
+		String userName = prop.getProperty("username");
 		String password = prop.getProperty("password");
 		Class.forName(driverName);
 		conn = DriverManager.getConnection(url, userName, password);
