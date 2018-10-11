@@ -94,6 +94,14 @@ public class OrderServlet extends HttpServlet {
 				}
 				break;
 				
+			case "outStock":
+				try {
+					outStock(request, response);
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				break;
+				
 			default:
 				break;
 			}
@@ -144,9 +152,13 @@ public class OrderServlet extends HttpServlet {
 		Order order = new Order();
 		BeanUtils.populate(order, map);
 		
-		orderService.insertOrder(order);
-		
-		response.sendRedirect("OrderServlet?method=list");
+		boolean isSucceed = orderService.insertOrder(order);
+		if(!isSucceed) {
+			response.sendRedirect("outUnsuccessful.jsp");
+		}else {
+			response.sendRedirect("OrderServlet?method=list");
+		}
+	
 		
 		
 	}
@@ -174,5 +186,18 @@ public class OrderServlet extends HttpServlet {
 		
 	}
 	
-	
+
+	private void outStock(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
+		String orderNumLong = request.getParameter("orderNum");
+		Long orderNum = 0L;
+		if(null != orderNumLong) {
+			orderNum = Long.valueOf(orderNumLong);
+		}
+		boolean isSucceed = orderService.outStock(orderNum);
+		if(!isSucceed) {
+			response.sendRedirect("outUnsuccessful.jsp");
+		}else {
+			response.sendRedirect("OrderServlet?method=list");
+		}	
+	}
 }

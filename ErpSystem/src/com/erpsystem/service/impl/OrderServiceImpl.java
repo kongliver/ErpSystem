@@ -16,6 +16,7 @@ import com.erpsystem.domain.Order;
 import com.erpsystem.domain.PageBean;
 import com.erpsystem.domain.ProductStock;
 import com.erpsystem.service.IOrderService;
+import com.erpsystem.service.IProductStockService;
 import com.erpsystem.utils.PrimaryKeyUtil;
 
 /**
@@ -31,6 +32,8 @@ public class OrderServiceImpl implements IOrderService {
 	IProductStockDao stockDao = new ProductStockDaoImpl();
 
 	ICustomerDao customerDao = new CustomerDaoImpl();
+	
+	IProductStockService product = new ProductStockServiceImpl();
 
 	@Override
 	public PageBean<Order> findAll(String cname, String orderNum, Integer orderType, Integer currentCount,
@@ -113,7 +116,7 @@ public class OrderServiceImpl implements IOrderService {
 	}
 
 	@Override
-	public void insertOrder(Order order) throws SQLException {
+	public boolean insertOrder(Order order) throws SQLException {
 		Date date = new Date();
 		String maxKey = dao.findMaxKey();
 
@@ -123,20 +126,43 @@ public class OrderServiceImpl implements IOrderService {
 
 		Long Key = PrimaryKeyUtil.getOrderPrimarKey(date, maxKey);
 		order.setOrderNum(Key);
-		order.setOrderType(1); // 新的订单的状态
+		boolean isSucceed = outStock(order);
+		if(!isSucceed) {	
+			order.setOrderType(1); // 新的订单的状态
+		}
 		dao.save(order);
+		return isSucceed;
 	}
 
+	public boolean outStock(Order order) throws SQLException {
+							
+		ProductStock productStock = stockDao.getById(order.getGoodsName());
+
+		if (order.getGoodsCount() <= productStock.getProductCount()) {
+			productStock.setProductCount(productStock.getProductCount() - order.getGoodsCount()); // 减少库存
+			stockDao.updateCount(productStock.getPsid(), productStock.getProductCount());
+			order.setOrderType(3);
+			product.changeStock(productStock.getPsid(), order.getGoodsCount(), null, 2);
+			return true;
+		} else {
+			return false;
+		}
+		
+	}
+	
+	
+	
 	@Override
 	public boolean outStock(Long orderNum) throws SQLException {
 		Order order = dao.finById(orderNum);
 
-		ProductStock productStock = stockDao.getByProductName(order.getGoodsName());
+		ProductStock productStock = stockDao.getById(order.getGoodsName());
 
-		if (order.getGoodsCount() >= productStock.getProductCount()) {
+		if (order.getGoodsCount() <= productStock.getProductCount()) {
 			productStock.setProductCount(productStock.getProductCount() - order.getGoodsCount()); // 减少库存
-			stockDao.update(productStock); // 更新库存
-			updateOrderStatu(orderNum, 2); // 更改更新状态
+			stockDao.updateCount(productStock.getPsid(), productStock.getProductCount());
+			updateOrderStatu(orderNum, 3); // 更改更新状态
+			product.changeStock(productStock.getPsid(), order.getGoodsCount(), null, 2);
 			return true;
 		} else {
 			return false;

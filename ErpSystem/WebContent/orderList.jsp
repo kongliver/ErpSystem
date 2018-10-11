@@ -106,7 +106,12 @@
 
 					<td><a
 						href="${pageContext.request.contextPath}/CustomerSupportServlet?action=toSave&orderNum=${order.orderNum}"><img
-							src="img/read.png" alt="添加售后" title="添加售后" /></a></td>
+							src="img/read.png" alt="添加售后" title="添加售后" /></a>
+						<a
+						href="${pageContext.request.contextPath}/OrderServlet?method=outStock&orderNum=${order.orderNum}"><img
+							src="img/read.png" alt="出库" title="出库" /></a>	
+							
+							</td>
 				</tr>
 			</c:forEach>
 

@@ -29,9 +29,9 @@ public class OrderDaoImpl implements IOrderDao {
 
 		QueryRunner qr = new QueryRunner(DruidConnection.getDataSource());
 
-		String sql = "select count(1) from `order` where cid in (select c.cid from `customer` c where c.cusCompany like ?) and orderNum != ? or orderNum = ?";
+		String sql = "select count(1) from `order` where cid in (select c.cid from `customer` c where c.cusCompany like ?) and  orderNum  like ?";
 
-		Long count = (Long) qr.query(sql, new ScalarHandler<>(), "%" + cname + "%", orderNum, orderNum);
+		Long count = (Long) qr.query(sql, new ScalarHandler<>(), "%" + cname + "%", "%" + orderNum + "%");
 
 		return count.intValue();
 
@@ -43,9 +43,9 @@ public class OrderDaoImpl implements IOrderDao {
 
 		QueryRunner qr = new QueryRunner(DruidConnection.getDataSource());
 
-		String sql = "select count(*) from `order` where cid in (select c.cid from `customer` c where c.cusCompany like ?) and orderNum != ? or orderNum = ? and orderType = ?";
+		String sql = "select count(*) from `order` where cid in (select c.cid from `customer` c where c.cusCompany like ?) and orderNum like ? and orderType = ?";
 
-		Long count = (Long) qr.query(sql, new ScalarHandler<>(), "%" + cname + "%", orderNum, orderNum, orderType);
+		Long count = (Long) qr.query(sql, new ScalarHandler<>(), "%" + cname + "%", "%" + orderNum + "%",  orderType);
 
 		return count.intValue();
 
