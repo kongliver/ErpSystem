@@ -19,7 +19,7 @@ public interface ICustomerDao {
 	 * 查询数据总条数
 	 * @return
 	 */
-	Integer findCount() throws SQLException ;
+	Integer findCount(String unmae, String phone) throws SQLException ;
 
 	/**
 	 * 查询页码需要的数据

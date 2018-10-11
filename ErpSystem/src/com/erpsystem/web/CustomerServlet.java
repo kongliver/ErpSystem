@@ -83,11 +83,11 @@ public class CustomerServlet extends HttpServlet {
 	}
 
 	private void list(HttpServletRequest request, HttpServletResponse response) throws SQLException, ServletException, IOException {
-		String unmae = request.getParameter("unmae");
+		String name = request.getParameter("name");
 		String phone = request.getParameter("phone");
-		
-		if(null == unmae) {
-			unmae = "";
+		System.out.println(111);
+		if(null == name) {
+			name = "";
 		}
 		if(null == phone) {
 			phone = "";
@@ -98,10 +98,10 @@ public class CustomerServlet extends HttpServlet {
 		if(null != currentPage && currentPage.length() != 0) {
 			currentPageInt = Integer.valueOf(currentPage);
 		}
-		PageBean<Customer> pageBean = customerService.findAll(unmae, phone, currentPageInt);
+		PageBean<Customer> pageBean = customerService.findAll(name, phone, currentPageInt);
 		
 		request.setAttribute("pageBean", pageBean);
-		request.setAttribute("unmae", unmae);
+		request.setAttribute("name", name);
 		request.setAttribute("phone", phone);
 		request.getRequestDispatcher("customerList.jsp").forward(request, response);
 	}
