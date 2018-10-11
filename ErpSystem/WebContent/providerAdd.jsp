@@ -57,23 +57,23 @@
                 <!--div的class 为error是验证错误，ok是验证成功-->
                 
                 <div>
-                    <label for="providerName">公司名称：</label>
-                    <input type="text" name="supCompany" id="providerName" value=${supplier.supCompany }>
-                    <span >*</span>
+                    <label for="supCompany">公司名称：</label>
+                    <input type="text" name="supCompany" id="supCompany" value=${supplier.supCompany }>
+                    <span id="providerName" >*</span>
                 </div>
                 <div>
-                    <label for="people">联系人：</label>
-                    <input type="text" name="supContacts" id="people" value=${supplier.supContacts }>
-                    <span>*</span>
+                    <label for="supContacts">联系人：</label>
+                    <input type="text" name="supContacts" id="supContacts" value=${supplier.supContacts }>
+                    <span id="people">*</span>
 
                 </div>
                 <div>
-                    <label for="phone">联系电话：</label>
-                    <input type="text" name="supPhone" id="phone" value=${supplier.supPhone }>
-                    <span>*</span>
+                    <label for="supPhone">联系电话：</label>
+                    <input type="text" name="supPhone" id="supPhone" value=${supplier.supPhone }>
+                    <span id="phone">*</span>
                 </div>
                 <div>
-                    <label for="address">公司地址：</label>
+                    <label for="supAddress">公司地址：</label>
                     <input type="text" name="supAddress" id="address" value=${supplier.supAddress }>
                     <span></span>
                 </div>
@@ -82,7 +82,7 @@
                  <div class="providerAddBtn">
                     <!--<a href="#">保存</a>-->
                     <!--<a href="billList.jsp">返回</a>-->
-                    <input type="button" value="提交" onclick="submitBtnClick()" />
+                    <input type="button" value="提交" onclick="putin()" />
                     <input type="button" value="返回" onclick="history.back(-1)"/>
                 </div>
                 
@@ -96,6 +96,34 @@
 <footer class="footer">
 </footer>
 <script src="js/time.js"></script>
+<script src="jquery.js" type="text/javascript" charset="utf-8"></script>
+<script>
+function putin(){
+	var supCompany = document.getElementById("supCompany").value;
+	var supContacts = document.getElementById("supContacts").value;
+	var supPhone = document.getElementById("supPhone").value;
+	var isPass = true;
+	if(supCompany == ''){
+		document.getElementById("providerName").innerText="*请输入公司名称";
+		isPass = false;
+	}
+	if(supContacts == ''){
+		document.getElementById("people").innerText="*请输入联系人";
+		isPass = false;
+	}
+	if(supPhone == ''){
+		document.getElementById("phone").innerText="*请输入联系人电话";
+		isPass = false;
+	}
+	if(isPass){
+		
+		document.getElementById("submit").submit();
+	}else{
+		return false;
+	}
+}
+
+</script>
 
 </body>
 </html>

@@ -206,7 +206,7 @@ public class SupplierServlet extends HttpServlet {
 		try {
 			iss.addSupplier(supplier);
 //			this.list(request, response);
-			response.sendRedirect("SupplierServlet?method=list");
+			response.sendRedirect("SupplierServlet?method=getPageBean&currentPage=1");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
