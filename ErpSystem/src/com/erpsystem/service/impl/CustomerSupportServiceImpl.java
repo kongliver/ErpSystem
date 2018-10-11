@@ -27,13 +27,13 @@ public class CustomerSupportServiceImpl implements ICustomerSupportService {
 		conn.setAutoCommit(false);
 		
 		Order order = orderService.findById(cusSup.getOrderNum());
-		System.out.println("order是："+order);
+//		System.out.println("order是："+order);
 		if(order == null) {
 			conn.rollback();
 			throw new RuntimeException("该订单不存在！");
 		}
 		csDao.saveCusSup(cusSup);
-		orderService.updateOrderStatu(cusSup.getOrderNum(), 3);
+		orderService.updateOrderStatu(cusSup.getOrderNum(), 4);
 		
 		conn.commit();
 	}

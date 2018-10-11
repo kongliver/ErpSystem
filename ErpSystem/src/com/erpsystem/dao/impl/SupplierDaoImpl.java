@@ -89,7 +89,7 @@ public class SupplierDaoImpl implements ISupplierDao {
 	@Override
 	public List<Supplier> getPage(String supCompany, int currentCount,int index) throws SQLException {
 		QueryRunner qr = new QueryRunner(DruidConnection.getDataSource());
-		String sql = "select * from `supplier` where supCompany like ?  limit ?,?";
+		String sql = "select * from `supplier` where supCompany like ?  limit ?, ?";
 		List<Supplier> pageList = qr.query(sql, new BeanListHandler<Supplier>(Supplier.class),"%"+supCompany+"%",index,currentCount);
 		return pageList;
 	}

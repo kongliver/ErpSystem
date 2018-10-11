@@ -26,7 +26,6 @@ import com.erpsystem.service.impl.OrderServiceImpl;
 import com.erpsystem.service.impl.ProductStockServiceImpl;
 
 import net.sf.json.JSONArray;
-import net.sf.json.JsonConfig;
 
 /**
  * Servlet implementation class OrderServlet
@@ -134,7 +133,7 @@ public class OrderServlet extends HttpServlet {
 			currentPageInt = Integer.valueOf(currentPage);
 		}
 		
-		PageBean<Order> pageBean = orderService.findAll(cname, orderNum, orderType, 10, currentPageInt);
+		PageBean<Order> pageBean = orderService.findAll(cname, orderNum, orderType, 6, currentPageInt);
 		
 		request.setAttribute("pageBean", pageBean);
 		request.setAttribute("cname", cname);
@@ -147,12 +146,12 @@ public class OrderServlet extends HttpServlet {
 	
 	private void save(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, ServletException, IOException, IllegalAccessException, InvocationTargetException {
-		
+		String oprPerson = request.getParameter("oprPerson");
 		Map<String, String[]> map = request.getParameterMap();
 		Order order = new Order();
 		BeanUtils.populate(order, map);
 		
-		boolean isSucceed = orderService.insertOrder(order);
+		boolean isSucceed = orderService.insertOrder(order, oprPerson);
 		if(!isSucceed) {
 			response.sendRedirect("outUnsuccessful.jsp");
 		}else {
@@ -189,11 +188,12 @@ public class OrderServlet extends HttpServlet {
 
 	private void outStock(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
 		String orderNumLong = request.getParameter("orderNum");
+		String oprPerson = request.getParameter("oprPerson");
 		Long orderNum = 0L;
 		if(null != orderNumLong) {
 			orderNum = Long.valueOf(orderNumLong);
 		}
-		boolean isSucceed = orderService.outStock(orderNum);
+		boolean isSucceed = orderService.outStock(orderNum, oprPerson);
 		if(!isSucceed) {
 			response.sendRedirect("outUnsuccessful.jsp");
 		}else {

@@ -10,15 +10,14 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>鑫源丰erp后台管理系统</title>
-
+    <link rel="stylesheet" href="${path }/css/public.css"/>
+    <link rel="stylesheet" href="${path }/css/style.css"/>
+    <link rel="stylesheet" href="${path }/css/pageStyle.css"/>
 </head>
 <body>
 <!--头部-->
 <header class="publicHeader">
     <h1>鑫源丰erp后台管理系统</h1>
-	<link rel="stylesheet" href="${path }/css/public.css"/>
-    <link rel="stylesheet" href="${path }/css/style.css"/>
-    <link rel="stylesheet" href="${path }/css/pageStyle.css"/>
     <div class="publicHeaderR">
         <p><span>下午好！</span><span style="color: #fff21b"> ${sessionScope.USER.nickName}</span> , 欢迎你！</p>
         <a href="login.jsp">退出</a>
@@ -134,20 +133,20 @@
 
 
 <footer class="footer">
-	<!--分页-->
-	<div id="page" class="page_div">aaa</div>
-</footer>
+        <!--分页-->
+        <div id="page" class="page_div">aaa</div>
+    </footer>
 
-<script src="js/jquery.js"></script>
-<script type="text/javascript" src="js/paging.js"></script>
-<script src="js/js.js"></script>
-<script src="js/time.js"></script>
+<script src="${path }/js/jquery.js"></script>
+<script type="text/javascript" src="${path }/js/paging.js"></script>
+<script src="${path }/js/js.js"></script>
+<script src="${path }/js/time.js"></script>
 <script type="text/javascript">
 
 var supCompany = ${"#supCompany"}.val();
 
 $("#page").paging({
-    pageNo: ${pageBean.currentPage},
+	pageNo: ${pageBean.currentPage },
     totalPage: ${pageBean.totalPage },
     totalSize: ${pageBean.totalCount },
     callback: function(num) {

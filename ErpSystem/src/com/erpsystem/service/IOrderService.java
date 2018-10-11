@@ -40,17 +40,17 @@ public interface IOrderService {
 	 * @param order
 	 * @throws SQLException
 	 */
-	public boolean insertOrder(Order order) throws SQLException;
+	public boolean insertOrder(Order order, String oprPerson) throws SQLException;
 	
 	/**
 	 * 根据订单id完成出库的服务
 	 * @param orderNum 订单id 
 	 * @throws SQLException
 	 */
-	public boolean outStock(Long orderNum) throws SQLException;
+	public boolean outStock(Long orderNum, String oprPerson) throws SQLException;
 	
 	
-	public boolean outStock(Order order) throws SQLException;
+	public boolean outStock(Order order, String oprPerson) throws SQLException;
 	/**
 	 * 根据传入的订单号，修改订单状态
 	 * @param orderNum  订单id 

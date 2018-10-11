@@ -36,23 +36,19 @@ public class CustomerSupportDaoImpl implements ICustomerSupportDao {
 	@Override
 	public void saveCusSup(CustomerSupport cusSupport) throws SQLException {
 		String sql = "insert into `customer_support_list` values(?,?,?,?,?)";
-		
 		qr.update(conn,sql,CommonUtil.getUUID(),cusSupport.getOrderNum(),cusSupport.getProblem(),cusSupport.getHandler(),DateUtil.formatTime(new Date()));
-		System.out.println("添加售后记录成功");
 	}
 
 	@Override
 	public void deleteCusSup(String csId) throws SQLException {
 		String sql = "delete from `customer_support_list` where csId=?";
 		qr.update(sql,csId);
-		System.out.println("删除售后记录成功");
 	}
 
 	@Override
 	public void updateCusSup(CustomerSupport cusSupport) throws SQLException {
 		String sql = "update `customer_support_list` set orderNum=?,problem=?,handler=?,handlerTime=? where csId=?";
 		qr.update(sql,cusSupport.getOrderNum(),cusSupport.getProblem(),cusSupport.getHandler(),new Date(),cusSupport.getCsId());
-		System.out.println("修改售后记录成功");
 	}
 
 	@Override
@@ -76,7 +72,6 @@ public class CustomerSupportDaoImpl implements ICustomerSupportDao {
 				" on o.orderNum=cs.orderNum and c.cid=o.cid" + 
 				" where cs.orderNum like ? and o.goodsName like ? and c.cusCompany like ?";
 		List<CustomerSupport> cusList = qr.query(sql, new BeanListHandler<CustomerSupport>(CustomerSupport.class),"%"+orderNum+"%","%"+goodsName+"%","%"+cusCompany+"%");
-		System.out.println("售后模糊查询成功");
 		return cusList;
 	}
 
@@ -100,7 +95,6 @@ public class CustomerSupportDaoImpl implements ICustomerSupportDao {
 				" on o.orderNum=cs.orderNum and c.cid=o.cid" + 
 				" where cs.orderNum like ? and o.goodsName like ? and c.cusCompany like ?";
 		Long totalCount = (Long)qr.query(sql, new ScalarHandler<>(),"%"+orderNum+"%","%"+goodsName+"%","%"+cusCompany+"%");
-		System.out.println("totalCount是："+totalCount);
 		return totalCount;
 	}
 
