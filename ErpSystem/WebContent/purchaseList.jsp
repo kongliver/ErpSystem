@@ -34,7 +34,7 @@
     <header class="publicHeader">
         <h1>鑫源丰erp后台管理系统</h1>
         <div class="publicHeaderR">
-            <p><span>下午好！</span><span style="color: #fff21b"> Admin</span> , 欢迎你！</p>
+            <p><span>下午好！</span><span style="color: #fff21b"> ${sessionScope.USER.nickName}</span> , 欢迎你！</p>
             <a href="login.jsp">退出</a>
         </div>
     </header>
@@ -56,7 +56,7 @@
 	                <li><a href="${path }/ChangeStockListServlet?action=getPageBean&currentPage=1">库存异动</a></li>
 	                <li><a href="${path }/CustomerSupportServlet?action=getPageBean&currentPage=1">售后记录</a></li>
 	                <li><a href="${pageContext.request.contextPath }/CustomerServlet?method=list">客户管理</a></li>
-	                <li><a href="userList.jsp">用户管理</a></li>
+	                <li><a href="userAction?action=query">用户管理</a></li>
 	                <li><a href="password.jsp">密码修改</a></li>
 	                <li><a href="login.jsp">退出系统</a></li>
                 </ul>

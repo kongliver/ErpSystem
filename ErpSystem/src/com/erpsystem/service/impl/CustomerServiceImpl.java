@@ -25,7 +25,7 @@ public class CustomerServiceImpl implements ICustomerSerivce{
 	public PageBean<Customer> findAll(String unmae, String phone, Integer currentPage) throws SQLException {
 		PageBean<Customer> pageBean = new PageBean<>();
 		
-		pageBean.setCurrentCount(10);
+		pageBean.setCurrentCount(5);
 		
 		pageBean.setCurrentPage(currentPage);
 
@@ -35,21 +35,21 @@ public class CustomerServiceImpl implements ICustomerSerivce{
 		
 		pageBean.setTotalCount(totalCount);
 		
-		Integer totalPage =(int)Math.ceil(totalCount * 1.0 / 10);
+		Integer totalPage =(int)Math.ceil(totalCount * 1.0 / 5);
 		
 		pageBean.setTotalPage(totalPage);
 		
-		Integer index = (currentPage - 1) * 10;     //当前页 - 1 * 一页的条数  = 当前从多少条查询
+		Integer index = (currentPage - 1) * 5;     //当前页 - 1 * 一页的条数  = 当前从多少条查询
 		List<Customer> pageList = null ;
 		
 		if(!"".equals(phone.trim()) && !"".equals(unmae.trim())) {
-			 pageList = dao.findPage(index, 10, unmae, phone);
+			 pageList = dao.findPage(index, 5, unmae, phone);
 		}else if("".equals(phone.trim()) && "".equals(unmae.trim())){
-			pageList = dao.findPage(index, 10);
+			pageList = dao.findPage(index, 5);
 		}else if(!"".equals(phone.trim()) && "".equals(unmae.trim())) {
-			 pageList = dao.findPage(index, 10, phone);
+			 pageList = dao.findPage(index, 5, phone);
 		}else if("".equals(phone.trim()) && !"".equals(unmae.trim())) {
-			pageList = dao.findPageByName(index, 10, unmae);
+			pageList = dao.findPageByName(index, 5, unmae);
 		}
 		pageBean.setList(pageList);
 		return pageBean;

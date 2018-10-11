@@ -56,6 +56,7 @@
           	<input type="hidden" name="action" value="update" />
         <div class="providerAdd">
           		<input type="hidden" name="uId" value="${user.uId }">
+          		<input type="hidden" name="password" value="${user.password }">
                 <!--div的class 为error是验证错误，ok是验证成功-->
                 <div>
                     <label for="userName">用户名称：</label>
