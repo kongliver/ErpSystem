@@ -126,7 +126,7 @@ public class UserDaoImpl implements UserDao{
 			user.setPassword(rs.getString("password"));
 			user.setPhone(rs.getString("phone"));
 			user.setUserTyep(rs.getInt("userType"));
-			
+			userList.add(user);
 		}
 		JdbcUtil2.close(conn, pst, rs);
 		return userList;

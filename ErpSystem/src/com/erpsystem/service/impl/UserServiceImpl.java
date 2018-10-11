@@ -69,7 +69,9 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public List<User> querByNickName(String nickName) throws ClassNotFoundException, IOException, SQLException {
-		
+		if (nickName == null) {
+			nickName="";
+		}
 		return userDao.querByNickName(nickName);
 	}
 

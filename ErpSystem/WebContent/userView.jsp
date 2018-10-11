@@ -19,7 +19,7 @@
     <h1>鑫源丰erp后台管理系统</h1>
 
     <div class="publicHeaderR">
-        <p><span>下午好！</span><span style="color: #fff21b"> Admin</span> , 欢迎你！</p>
+        <p><span>下午好！</span><span style="color: #fff21b"> ${sessionScope.USER.nickName}</span> , 欢迎你！</p>
         <a href="login.jsp">退出</a>
     </div>
 </header>
@@ -41,7 +41,7 @@
                 <li><a href="${path }/ChangeStockListServlet?action=getPageBean&currentPage=1">库存异动</a></li>
                 <li><a href="${path }/CustomerSupportServlet?action=getPageBean&currentPage=1">售后记录</a></li>
                 <li><a href="${pageContext.request.contextPath }/CustomerServlet?method=list">客户管理</a></li>
-                <li><a href="userList.jsp">用户管理</a></li>
+                <li><a href="userAction?action=query">用户管理</a></li>
                 <li><a href="password.jsp">密码修改</a></li>
                 <li><a href="login.jsp">退出系统</a></li>
             </ul>
@@ -53,15 +53,31 @@
             <span>用户管理页面 >> 用户信息查看页面</span>
         </div>
         <div class="providerView">
-            <p><strong>用户编号：</strong><span>hanlu</span></p>
-            <p><strong>用户名称：</strong><span>韩露</span></p>
-            <p><strong>用户性别：</strong><span>女</span></p>
-            <p><strong>出生日期：</strong><span>2011年2月1日</span></p>
-            <p><strong>用户电话：</strong><span>12345678906</span></p>
-            <p><strong>用户地址：</strong><span>北极</span></p>
-            <p><strong>用户类别：</strong><span>经理</span></p>
+            <p><strong>用户编号：</strong><span>${user.uId }<input type="hidden" id="${user.uId }" /></span></p>
+            <p><strong>用户名称：</strong><span>${user.nickName }</span></p>
+            <p><strong>账户：</strong><span>${user.userName }</span></p>
+            <p><strong>密码：</strong><span>${user.password }</span></p>
+            <p><strong>用户电话：</strong><span>${user.phone }</span></p>
+            <p><strong>用户类别：</strong>
+            <span>
+            	<c:choose>
+            		<c:when test="${user.userTyep eq 0}">
+            			管理员
+            		</c:when>
+            	</c:choose>	
+            	<c:choose>
+            		<c:when test="${user.userTyep eq 1}">
+            			经理
+            		</c:when>
+            	</c:choose>
+            	<c:choose>
+            		<c:when test="${user.userTyep eq 2 }">
+            			普通用户
+            		</c:when>
+            	</c:choose>
+            </span></p>
 
-            <a href="userList.jsp">返回</a>
+            <a href="#" onclick="history.back(-1)">返回</a>
         </div>
     </div>
 </section>

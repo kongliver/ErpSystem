@@ -18,7 +18,7 @@
     <header class="publicHeader">
         <h1>鑫源丰erp后台管理系统</h1>
         <div class="publicHeaderR">
-            <p><span>下午好！</span><span style="color: #fff21b"> Admin</span> , 欢迎你！</p>
+            <p><span>下午好！</span><span style="color: #fff21b"> ${sessionScope.USER.nickName}</span> , 欢迎你！</p>
             <a href="login.jsp">退出</a>
         </div>
     </header>
@@ -51,30 +51,32 @@
                 <strong>你现在所在的位置是:</strong>
                 <span>密码修改页面</span>
             </div>
+            <form method="post" action="userAction?action=reset">
+              
             <div class="providerAdd">
-                <form action="#">
+                
+          			
+                
                     <!--div的class 为error是验证错误，ok是验证成功-->
-                    <div class="">
-                        <label for="oldPassword">旧密码：</label>
-                        <input type="password" name="oldPassword" id="oldPassword" required/>
-                        <span>*请输入原密码</span>
-                    </div>
+                    	
+                    <input  type="hidden" id="uId" name="uId" value="${USER.uId}"/>
+					  <%-- <input  type="hidden" id="password" name="password" value="${USER.password}"/> --%>
+                    
                     <div>
                         <label for="newPassword">新密码：</label>
-                        <input type="password" name="newPassword" id="newPassword" required/>
+                       <input type="text" name="newPwd" id="newPwd""/>
                         <span >*请输入新密码</span>
                     </div>
-                    <div>
-                        <label for="reNewPassword">确认新密码：</label>
-                        <input type="password" name="reNewPassword" id="reNewPassword" required/>
-                        <span >*请输入新确认密码，保证和新密码一致</span>
-                    </div>
+                    
                     <div class="providerAddBtn">
                         <!--<a href="#">保存</a>-->
-                        <input type="button" value="保存" onclick="history.back(-1)"/>
+                       <!--  <input type="button" value="保存" onclick="history.back(-1)"/> -->
+                       <input type="submit" value="保存" />
                     </div>
-                </form>
-            </div>
+               
+                  
+        </div>
+         </form>
         </div>
     </section>
     <footer class="footer">

@@ -18,7 +18,7 @@
     <header class="publicHeader">
         <h1>鑫源丰erp后台管理系统</h1>
         <div class="publicHeaderR">
-            <p><span>下午好！</span><span style="color: #fff21b"> Admin</span> , 欢迎你！</p>
+            <p><span>下午好！</span><span style="color: #fff21b"> ${sessionScope.USER.nickName}</span> , 欢迎你！</p>
             <a href="login.jsp">退出</a>
         </div>
     </header>
@@ -40,7 +40,7 @@
 	                <li><a href="${path }/ChangeStockListServlet?action=getPageBean&currentPage=1">库存异动</a></li>
 	                <li><a href="${path }/CustomerSupportServlet?action=getPageBean&currentPage=1">售后记录</a></li>
 	                <li><a href="${pageContext.request.contextPath }/CustomerServlet?method=list">客户管理</a></li>
-	                <li><a href="userList.jsp">用户管理</a></li>
+	                <li><a href="userAction?action=query">用户管理</a></li>
 	                <li><a href="password.jsp">密码修改</a></li>
 	                <li><a href="login.jsp">退出系统</a></li>
                 </ul>
@@ -51,50 +51,65 @@
                 <strong>你现在所在的位置是:</strong>
                 <span>用户管理页面</span>
             </div>
+            <form action="userAction?action=query" method="post">
             <div class="search">
+                
+               
                 <span>用户名：</span>
-                <input type="text" placeholder="请输入用户名"/>
-                <input type="button" value="查询"/>
+                <input name="action" value="query" type="hidden" />
+                <input type="text" placeholder="请输入用户名" name="name"/>
+                <input type="submit" value="查询"/>
+                
                 <a href="userAdd.jsp">添加用户</a>
             </div>
             <!--用户-->
             <table class="providerTable" cellpadding="0" cellspacing="0">
                 <tr class="firstTr">
-                    <th width="10%">用户编码</th>
+                    <th width="10%">编号</th>
                     <th width="20%">用户名称</th>
-                    <th width="10%">性别</th>
-                    <th width="10%">年龄</th>
+                    <th width="10%">账户</th>
+                    <th width="10%">密码</th>
                     <th width="10%">电话</th>
                     <th width="10%">用户类型</th>
                     <th width="30%">操作</th>
                 </tr>
+                
+                <c:forEach items="${list }" var="user" varStatus="status">
                 <tr>
-                    <td>hanlu</td>
-                    <td>韩露</td>
-                    <td>女</td>
-                    <td>20</td>
-                    <td>15918230478</td>
-                    <td>经理</td>
+                    <td>${user.uId}</td>
+                    <td>${user.nickName }</td>
+                    <td>${user.userName }</td>
+                    <td>${user.password }</td>
+                    <td>${user.phone }</td>
+                    
                     <td>
-                        <a href="userView.jsp"><img src="img/read.png" alt="查看" title="查看"/></a>
-                        <a href="userUpdate.jsp"><img src="img/xiugai.png" alt="修改" title="修改"/></a>
-                        <a href="#" class="removeUser"><img src="img/schu.png" alt="删除" title="删除"/></a>
+						<c:choose>
+							<c:when test="${user.userTyep eq 0 }">
+								管理员
+							</c:when>
+							
+						</c:choose>
+						<c:choose>
+							<c:when test="${user.userTyep eq 1 }">
+								经理
+							</c:when>
+						</c:choose>
+						<c:choose>
+							<c:when test="${user.userTyep eq 2 }">
+								普通用户
+							</c:when>
+						</c:choose>
+					</td>
+                    <td>
+                        <a href="userAction?action=detaul&amp;uid=${user.uId }"><img src="img/read.png" alt="查看" title="查看"/></a>
+                        <a href="userAction?action=toUpdate&amp;uid=${user.uId }"><img src="img/xiugai.png" alt="修改" title="修改"/></a>
+                        <a href="userAction?action=delete&amp;uid=${user.uId }" class="removeUser"><img src="img/schu.png" alt="删除" title="删除"/></a>
                     </td>
                 </tr>
-                <tr>
-                    <td>PRO-CODE—001</td>
-                    <td>测试供应商001</td>
-                    <td>韩露</td>
-                    <td>15918230478</td>
-                    <td>15918230478</td>
-                    <td>2015-11-12</td>
-                    <td>
-                        <a href="userView.jsp"><img src="img/read.png" alt="查看" title="查看"/></a>
-                        <a href="userUpdate.jsp"><img src="img/xiugai.png" alt="修改" title="修改"/></a>
-                        <a href="#" class="removeUser"><img src="img/schu.png" alt="删除" title="删除"/></a>
-                    </td>
-                </tr>
+                </c:forEach>
+              
             </table>
+			 </form>
 
         </div>
     </section>
@@ -105,9 +120,7 @@
     <div class="removerChid">
         <h2>提示</h2>
         <div class="removeMain">
-            <p>你确定要删除该用户吗？</p>
-            <a href="#" id="yes">确定</a>
-            <a href="#" id="no">取消</a>
+            
         </div>
     </div>
 </div>

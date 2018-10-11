@@ -3,4 +3,12 @@
   <welcome-file-list>
     <welcome-file>login.jsp</welcome-file>
   </welcome-file-list>
+  <servlet>
+  	<servlet-name>userServlet</servlet-name>
+  	<servlet-class>com.erpsystem.web.UserServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>userServlet</servlet-name>
+  	<url-pattern>/userAction</url-pattern>
+  </servlet-mapping>
 </web-app>
