@@ -31,7 +31,7 @@ public class CustomerServiceImpl implements ICustomerSerivce{
 
 		
 		//封装总条数
-		Integer totalCount = dao.findCount();
+		Integer totalCount = dao.findCount(unmae, phone);
 		
 		pageBean.setTotalCount(totalCount);
 		
