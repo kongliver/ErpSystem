@@ -25,7 +25,7 @@ public class CustomerDaoImpl implements ICustomerDao{
 	@Override
 	public Integer findCount() throws SQLException {
 		QueryRunner qr = new QueryRunner(DruidConnection.getDataSource());
-		String sql = "select count(*) from `customer`" ;
+		String sql = "select count(*) from `customer`";
 		Long count = (Long)qr.query(sql, new ScalarHandler<>());
 		return count.intValue();
 	}

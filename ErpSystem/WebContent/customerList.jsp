@@ -1,19 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<%
-    String path = request.getContextPath();
-    pageContext.setAttribute("path", path);
-%>
 <html>
 <head lang="en">
 <meta charset="UTF-8">
 <title>家具erp后台管理系统</title>
 <link rel="stylesheet" href="css/public.css" />
 <link rel="stylesheet" href="css/style.css" />
-<link rel="stylesheet" href="${path }/css/pageStyle.css"/>
+<link rel="stylesheet" href="${path }/css/pageStyle.css" />
 </head>
 <body>
 	<!--头部-->
@@ -51,18 +46,22 @@
 		</nav>
 	</div>
 	<div class="right" >
-	
 		<div class="location">
 			<strong>你现在所在的位置是:</strong> <span>客户管理页面</span>
 		</div>
 
+
+		<form
+			action="${pageContext.request.contextPath }/CustomerServlet?method=list"
+			method="post">
+			
 			<div class="search">
 
-				<span>公司名：</span> <input type="text" name="unmae"  value="${unmae }" id="unmae"/> 
+				<span>公司名：</span> <input type="text" name="unmae"  value="${unmae }"/> 
 				<span>联系电话：</span> 
-				<input type="text"  name="phone" value="${phone }" id="phone"/> 
+				<input type="text"  name="phone" value="${phone }"/> 
 				
-				<input type="button" value="查询" onclick="submitQuery()"/> 
+				<input type="submit" value="查询" /> 
 				
 				<input type="button" value="新增客户" onclick="save()" />
 			</div>
@@ -92,50 +91,35 @@
                         <a href="${pageContext.request.contextPath}/CustomerServlet?method=delete&cid=${customer.cid}" ><img src="img/schu.png" alt="删除" title="删除"/></a>
                     </td>
                     
-		         	</tr>
+		                 <!--点击删除按钮后弹出的页面-->
+					
+						
+					</tr>
 
 				</c:forEach>
 
+				<tr>
+
+				</tr>
 			</table>
+			
+
+		</form>
+		
 	</div>
-</section>
 
-	<footer class="footer">
-		<!--分页-->
-		<div id="page" class="page_div">aaa</div>
-	</footer>
+	<script src="js/jquery.js"></script>
+	<script src="js/js.js"></script>
+	<script src="js/time.js"></script>
 
-<script src="js/jquery.js"></script>
-<script type="text/javascript" src="js/paging.js"></script>
-<script src="js/js.js"></script>
-<script src="js/time.js"></script>
-
-<script type="text/javascript">
-
-function submitQuery(){
-	alert(1);
-	var uname = $("#uname").val();
-	var phone = $("#phone").val();
-	window.location='CustomerServlet?method=list&uname=' + uname + "&phone=" + phone;
-}
-
-var uname = $("#uname").val();
-var phone = $("#phone").val();
-
-
+	<script type="text/javascript">
 $("#page").paging({
     pageNo: ${pageBean.currentPage },
     totalPage: ${pageBean.totalPage },
     totalSize: ${pageBean.totalCount },
     callback: function(num) {
-        $(window).attr('location', '${path }/CustomerServlet?method=list&currentPage=' + num + "&uname=" + uname + "&phone=" + phone);
-        
+        $(window).attr('location', '${path }/CustomerServletmethod=list?&currentPage=' + num);
     }
 });
-
-</script>
-
-
-
 </body>
 </html>
