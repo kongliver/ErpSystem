@@ -103,7 +103,7 @@ public class UserDaoImpl implements UserDao{
 	}
 	
 	/**
-	 * 通过用户名查询用户的业务逻辑
+	 * 通过账户查询用户的业务逻辑
 	 * @throws SQLException 
 	 * @throws IOException 
 	 * @throws ClassNotFoundException 
@@ -126,6 +126,7 @@ public class UserDaoImpl implements UserDao{
 			user.setPassword(rs.getString("password"));
 			user.setPhone(rs.getString("phone"));
 			user.setUserTyep(rs.getInt("userType"));
+			userList.add(user);
 			
 		}
 		JdbcUtil2.close(conn, pst, rs);

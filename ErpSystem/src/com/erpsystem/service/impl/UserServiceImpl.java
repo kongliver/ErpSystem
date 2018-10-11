@@ -1,11 +1,8 @@
 package com.erpsystem.service.impl;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Properties;
-
 import com.erpsystem.dao.UserDao;
 import com.erpsystem.dao.impl.UserDaoImpl;
 import com.erpsystem.domain.User;
@@ -69,7 +66,9 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public List<User> querByNickName(String nickName) throws ClassNotFoundException, IOException, SQLException {
-		
+		if (nickName == null) {
+			nickName="";
+		}
 		return userDao.querByNickName(nickName);
 	}
 
