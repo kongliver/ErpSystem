@@ -250,7 +250,7 @@ input[type='reset']:active, input[type='reset']:focus, .providerView a:hover, .p
     line-height: 30px;
     border-radius: 4px;
     outline: none;
-    padding-left: 10px;
+    /* padding-left: 10px; */
     border: 1px solid #4987c0;
     box-shadow: 1px 1px 1px #99afc4;
 }

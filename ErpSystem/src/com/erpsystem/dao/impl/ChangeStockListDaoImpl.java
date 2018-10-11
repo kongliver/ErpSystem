@@ -69,17 +69,18 @@ public class ChangeStockListDaoImpl implements IChangeStockListDao {
     }
 
     @Override
-    public Integer getCount() throws SQLException {
+    public Long getCount(String psid, String oprType, String oprTime) throws SQLException {
         QueryRunner qr = JdbcUtil.getQueryRunner();
-        String sql = "select count(*) from change_stock_list";
-        return qr.query(sql, new ScalarHandler<>());
+        String sql = "select count(*) from change_stock_list where psid like ? and oprType like ? and oprTime like ?";
+        return (Long)qr.query(sql, new ScalarHandler<>(), "%" + psid + "%", "%" + oprType + "%", "%" + oprTime + "%");
     }
 
     @Override
-    public List<ChangeStockList> getPageData(int index, int pageCount) throws SQLException {
+    public List<ChangeStockList> getPageData(int index, int pageCount, String psid, String oprType, String oprTime) throws SQLException {
         QueryRunner qr = JdbcUtil.getQueryRunner();
-        String sql = "select * from change_stock_list limit ?, ?";
-        return qr.query(sql, new BeanListHandler<ChangeStockList>(ChangeStockList.class), index, pageCount);
+        String sql = "select * from change_stock_list "
+                + "where psid like ? and oprType like ? and oprTime like ? limit ?, ?";
+        return qr.query(sql, new BeanListHandler<ChangeStockList>(ChangeStockList.class), "%" + psid + "%", "%" + oprType + "%", "%" + oprTime + "%", index, pageCount);
     }
 
 }

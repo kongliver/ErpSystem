@@ -78,7 +78,7 @@ public interface IProductStockDao {
      * 查询总条数
      * @return
      */
-    Long getCount() throws SQLException;
+    Long getCount(String psid, String productType) throws SQLException;
     
     /**
      * 获取分页信息
@@ -86,5 +86,5 @@ public interface IProductStockDao {
      * @param pageCount 一页显示行数
      * @return 当页的所有库存品
      */
-    List<ProductStock> getPageData(int index, int pageCount) throws SQLException;
+    List<ProductStock> getPageData(int index, int pageCount, String psid, String productType) throws SQLException;
 }

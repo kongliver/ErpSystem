@@ -42,16 +42,16 @@
         <h2 class="leftH2"><span class="span1"></span>功能列表 <span></span></h2>
         <nav>
             <ul class="list">
-                <li id="active"><a href="${path }/billList.jsp">订单管理</a></li>
-                <li><a href="${path }/providerList.jsp">供应商管理</a></li>
-                <li><a href="${path }/purchaseList.jsp">采购单管理</a></li>
-                <li><a href="${path }/productList.jsp">库存管理</a></li>
-                <li><a href="${path }/change_stockList.jsp">库存异动</a></li>
+                <li id="active"><a href="${pageContext.request.contextPath }/OrderServlet?method=list">订单管理</a></li>
+                <li><a href="providerList.jsp">供应商管理</a></li>
+                <li><a href="purchaseList.jsp">采购单管理</a></li>
+                <li><a href="${path }/ProductStockServlet?action=getPageBean&currentPage=1">库存管理</a></li>
+                <li><a href="${path }/ChangeStockListServlet?action=getPageBean&currentPage=1">库存异动</a></li>
                 <li><a href="${path }/CustomerSupportServlet?action=getPageBean&currentPage=1">售后记录</a></li>
-                <li><a href="${path }/customerList.jsp">客户管理</a></li>
-                <li><a href="${path }/userList.jsp">用户管理</a></li>
-                <li><a href="${path }/password.jsp">密码修改</a></li>
-                <li><a href="${path }/login.jsp">退出系统</a></li>
+                <li><a href="${pageContext.request.contextPath }/CustomerServlet?method=list">客户管理</a></li>
+                <li><a href="userList.jsp">用户管理</a></li>
+                <li><a href="password.jsp">密码修改</a></li>
+                <li><a href="login.jsp">退出系统</a></li>
             </ul>
         </nav>
     </div>
