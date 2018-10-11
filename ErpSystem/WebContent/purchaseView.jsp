@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%
+    String path = request.getContextPath();
+    pageContext.setAttribute("path", path);
+%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head lang="en">
@@ -29,13 +34,13 @@
         <h2 class="leftH2"><span class="span1"></span>功能列表 <span></span></h2>
         <nav>
             <ul class="list">
-                <li id="active"><a href="billList.jsp">订单管理</a></li>
+                <li id="active"><a href="${pageContext.request.contextPath }/OrderServlet?method=list">订单管理</a></li>
                 <li><a href="providerList.jsp">供应商管理</a></li>
                 <li><a href="purchaseList.jsp">采购单管理</a></li>
-                <li><a href="productList.jsp">库存管理</a></li>
-                <li><a href="change_stockList.jsp">库存异动</a></li>
-                <li><a href="customer_supportList.jsp">售后记录</a></li>
-                <li><a href="customerList.jsp">客户管理</a></li>
+                <li><a href="${path }/ProductStockServlet?action=getPageBean&currentPage=1">库存管理</a></li>
+                <li><a href="${path }/ChangeStockListServlet?action=getPageBean&currentPage=1">库存异动</a></li>
+                <li><a href="${path }/CustomerSupportServlet?action=getPageBean&currentPage=1">售后记录</a></li>
+                <li><a href="${pageContext.request.contextPath }/CustomerServlet?method=list">客户管理</a></li>
                 <li><a href="userList.jsp">用户管理</a></li>
                 <li><a href="password.jsp">密码修改</a></li>
                 <li><a href="login.jsp">退出系统</a></li>

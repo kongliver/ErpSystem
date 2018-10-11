@@ -49,6 +49,13 @@ public interface IProductStockService {
     ProductStock getById(String psid) throws SQLException;
     
     /**
+     * 通过库存品名字查询
+     * @param productName 要查询的库存品名字
+     * @return
+     */
+    ProductStock getByProductName(String productName) throws RuntimeException, SQLException;
+    
+    /**
      * 通过库存品类别获取库存品
      * @param productType 要查询的库存品类别
      * @return 查询到的库存品集合
@@ -68,5 +75,5 @@ public interface IProductStockService {
      * @param currentPage 当前页码
      * @return 封装好的分页对象
      */
-    PageBean<ProductStock> getPageBean(int currentPage) throws SQLException;
+    PageBean<ProductStock> getPageBean(int currentPage, String psid, String productType) throws SQLException;
 }

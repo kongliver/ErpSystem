@@ -53,7 +53,7 @@ public interface IChangeStockListDao {
      * 查询总条数
      * @return
      */
-    Integer getCount() throws SQLException;
+    Long getCount(String psid, String oprType, String oprTime) throws SQLException;
     
     /**
      * 获取分页商品
@@ -61,5 +61,5 @@ public interface IChangeStockListDao {
      * @param pageCount 一页显示行数
      * @return 当页的所有商品
      */
-    List<ChangeStockList> getPageData(int index, int pageCount) throws SQLException;
+    List<ChangeStockList> getPageData(int index, int pageCount, String psid, String oprType, String oprTime) throws SQLException;
 }

@@ -27,7 +27,7 @@ public class CustomerSupportServiceImpl implements ICustomerSupportService {
 		conn.setAutoCommit(false);
 		
 		Order order = orderService.findById(cusSup.getOrderNum());
-		
+		System.out.println("order是："+order);
 		if(order == null) {
 			conn.rollback();
 			throw new RuntimeException("该订单不存在！");
@@ -67,14 +67,14 @@ public class CustomerSupportServiceImpl implements ICustomerSupportService {
 	}
 
 	@Override
-	public PageBean<CustomerSupport> getPageBean(int currentPage,int currentCount) throws SQLException {
+	public PageBean<CustomerSupport> getPageBean(int currentPage,int currentCount,String orderNum, String goodsName, String cusCompany) throws SQLException {
 		PageBean<CustomerSupport> pageBean = new PageBean<CustomerSupport>();
 		//设置一页显示多少条
 		pageBean.setCurrentCount(currentCount);
 		//设置当前页码
 		pageBean.setCurrentPage(currentPage);
 		//获取共有多少条记录
-		Long totalCount = cusSupDao.getTotalCount();
+		Long totalCount = cusSupDao.getTotalCount(orderNum,goodsName,cusCompany);
 		pageBean.setTotalCount(totalCount.intValue());
 		//获取总页数
 		double totalPage = Math.ceil(1.0 * pageBean.getTotalCount() / pageBean.getCurrentCount());
@@ -83,7 +83,7 @@ public class CustomerSupportServiceImpl implements ICustomerSupportService {
 		// 当前页查询的角标
 	    int index = (currentPage - 1) * currentCount;
 		
-	    List<CustomerSupport> pageData = cusSupDao.getPageData(index, currentCount);
+	    List<CustomerSupport> pageData = cusSupDao.getPageData(index, currentCount, orderNum, goodsName, cusCompany);
 		pageBean.setList(pageData);
 		
 		return pageBean;

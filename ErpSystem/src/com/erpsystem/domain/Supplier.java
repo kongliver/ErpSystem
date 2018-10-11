@@ -13,7 +13,7 @@ public class Supplier {
 	/**
 	 * 编号
 	 */
-	private String sId;		
+	private String sid;		
 	/**
 	 * 公司名称
 	 */
@@ -34,14 +34,14 @@ public class Supplier {
 	
 	@Override
 	public String toString() {
-		return "Supplier [sId=" + sId + ", supCompany=" + supCompany + ", supAddress=" + supAddress + ", supContacts="
+		return "Supplier [sId=" + sid + ", supCompany=" + supCompany + ", supAddress=" + supAddress + ", supContacts="
 				+ supContacts + ", supPhone=" + supPhone + "]";
 	}
 	public String getsId() {
-		return sId;
+		return sid;
 	}
-	public void setsId(String sId) {
-		this.sId = sId;
+	public void setsId(String sid) {
+		this.sid = sid;
 	}
 	public String getSupCompany() {
 		return supCompany;

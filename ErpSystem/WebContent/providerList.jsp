@@ -1,5 +1,10 @@
 ﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%
+    String path = request.getContextPath();
+    pageContext.setAttribute("path", path);
+%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head lang="en">
@@ -29,13 +34,13 @@
         <h2 class="leftH2"><span class="span1"></span>功能列表 <span></span></h2>
         <nav>
             <ul class="list">
-                <li id="active"><a href="billList.jsp">订单管理</a></li>
+                <li id="active"><a href="${pageContext.request.contextPath }/OrderServlet?method=list">订单管理</a></li>
                 <li><a href="providerList.jsp">供应商管理</a></li>
                 <li><a href="purchaseList.jsp">采购单管理</a></li>
-                <li><a href="productList.jsp">库存管理</a></li>
-                <li><a href="change_stockList.jsp">库存异动</a></li>
-                <li><a href="customer_supportList.jsp">售后记录</a></li>
-                <li><a href="customerList.jsp">客户管理</a></li>
+                <li><a href="${path }/ProductStockServlet?action=getPageBean&currentPage=1">库存管理</a></li>
+                <li><a href="${path }/ChangeStockListServlet?action=getPageBean&currentPage=1">库存异动</a></li>
+                <li><a href="${path }/CustomerSupportServlet?action=getPageBean&currentPage=1">售后记录</a></li>
+                <li><a href="${pageContext.request.contextPath }/CustomerServlet?method=list">客户管理</a></li>
                 <li><a href="userList.jsp">用户管理</a></li>
                 <li><a href="password.jsp">密码修改</a></li>
                 <li><a href="login.jsp">退出系统</a></li>
@@ -47,12 +52,16 @@
             <strong>你现在所在的位置是:</strong>
             <span>供应商管理页面</span>
         </div>
+        
+         <form action="${pageContext.request.contextPath }/SupplierServlet?method=list" method="post" id="submit">
         <div class="search">
             <span>供应商名称：</span>
-            <input type="text" placeholder="请输入供应商的名称"/>
-            <input type="button" value="查询"/>
-            <a href="providerAdd.jsp">添加供应商</a>
+            <input type="text"  name="sname"/>
+            <input type="button" value="查询" onclick="submitBtnClick()" />
+            <input type="button" value="新增供应商"  onclick="window.location='providerAdd.jsp'"/>
+            
         </div>
+        
         <!--供应商操作表格-->
         <table class="providerTable" cellpadding="0" cellspacing="0">
             <tr class="firstTr">
@@ -64,37 +73,63 @@
                 
                 <th width="30%">操作</th>
             </tr>
+           
+            <c:forEach items="${supplierList }" var="supplier" varStatus="status">
             <tr>
-                <td>PRO-CODE—001</td>
+            
+	            <td  height="23"><span class="STYLE1">${status.index+1 }</span>
+	            </td>
+	            <%-- <td><span class="STYLE1"><a href="SupplierServlet?method=list&sid=${supplier.sId }">${supplier.sId }</a>
+				</span>
+				</td> --%>
+				<td><span class="STYLE1">${supplier.supCompany }</span>
+				</td>
+				<td><span class="STYLE1">${supplier.supContacts }</span>
+				</td>
+				<td><span class="STYLE1">${supplier.supPhone }</span>
+				</td>
+				<td><span class="STYLE1">${supplier.supAddress }</span>
+				</td>
+				
+            
+            
+               <!--  <td>PRO-CODE—001</td>
                 <td>测试供应商001</td>
                 <td>韩露</td>
                 <td>15918230478</td>
-                <td>四川成都</td>
+                <td>四川成都</td> -->
                
                 <td>
                     <a href="providerView.jsp"><img src="img/read.png" alt="查看" title="查看"/></a>
-                    <a href="providerUpdate.jsp"><img src="img/xiugai.png" alt="修改" title="修改"/></a>
-                    <a href="#" class="removeProvider"><img src="img/schu.png" alt="删除" title="删除"/></a>
+                    <a href="${pageContext.request.contextPath}/SupplierServlet?method=edit&sid=${supplier.sId }"><img src="img/xiugai.png" alt="修改" title="修改"/></a>
+                    <a class="removeBill" href="${pageContext.request.contextPath}/SupplierServlet?method=delete&sid=${supplier.sId }"
+                 onclick="return confirm('是否确认删除？')" value="${supplier.sId }">
+                 <img src="img/schu.png" alt="删除" title="删除"/></a>
                 </td>
+                
+                <!--点击删除按钮后弹出的页面-->
+                
+                
+					<%-- <div class="zhezhao"></div>
+					<div class="remove" id="removeProv">
+					   <div class="removerChid">
+					       <h2>提示</h2>
+					       <div class="removeMain" >
+					           <p>你确定要删除该供应商吗？</p>
+					           <a href="${pageContext.request.contextPath}/SupplierServlet?method=delete&sid=1" id="yes">确定</a>
+					           <a href="#" id="no">取消</a>
+					       </div>
+					   </div>
+					</div> --%>
+                
             </tr>
-            
+            </c:forEach>
         </table>
-
+	</form>
     </div>
 </section>
 
-<!--点击删除按钮后弹出的页面-->
-<div class="zhezhao"></div>
-<div class="remove" id="removeProv">
-   <div class="removerChid">
-       <h2>提示</h2>
-       <div class="removeMain" >
-           <p>你确定要删除该供应商吗？</p>
-           <a href="#" id="yes">确定</a>
-           <a href="#" id="no">取消</a>
-       </div>
-   </div>
-</div>
+
 
 
 <footer class="footer">

@@ -1,4 +1,4 @@
-﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%
@@ -50,24 +50,52 @@
     <div class="right">
         <div class="location">
             <strong>你现在所在的位置是:</strong>
-            <span>用户管理页面 >> 用户信息查看页面</span>
+            <span>库存管理页面 >> 库存修改页面</span>
         </div>
-        <div class="providerView">
-            <p><strong>用户编号：</strong><span>hanlu</span></p>
-            <p><strong>用户名称：</strong><span>韩露</span></p>
-            <p><strong>用户性别：</strong><span>女</span></p>
-            <p><strong>出生日期：</strong><span>2011年2月1日</span></p>
-            <p><strong>用户电话：</strong><span>12345678906</span></p>
-            <p><strong>用户地址：</strong><span>北极</span></p>
-            <p><strong>用户类别：</strong><span>经理</span></p>
+        <div class="providerAdd">
+            <form action="${path }/ProductStockServlet?action=getByProductName" method="post">
+                <div class="">
+                    <label for="providerId">要入库的物品名称：</label>
+                    <input type="text" name="productName" id="providerId" />
+                    <span>
+                        <c:if test="${!empty error }">${error }</c:if>
+                    </span>
+                </div>
+                <div class="providerAddBtn">
+                    <input type="submit" value="提交" style="padding: 0px" />
+                </div>
+            </form>
+            <form action="${path }/ProductStockServlet?action=intoStock" method="post">
+                <input type="hidden" name="psid" value="${productStock.psid }">
+                <!--div的class 为error是验证错误，ok是验证成功-->
+                <div>
+                    <label for="billCom">物品库存数量：</label>
+                    <input type="text" name="productCount" id="billCom" value="${productStock.productCount }" readonly="readonly" required/>
+                </div>
+                <div>
+                    <label for="intoCount">成品入库数量：</label>
+                    <input type="text" name="changeCount" id="intoCount" required/>
+                    <span>*请输入入库数量</span>
+                </div>
+                <div>
+                    <label for="oprPerson">操作人：</label>
+                    <input type="text" name="oprPerson" id="oprPerson" required/>
+                    <span>*请输入入库人</span>
+                </div>
+                <div class="providerAddBtn">
+                    <!--<a href="#">保存</a>-->
+                    <!--<a href="billList.jsp">返回</a>-->
+                    <input type="submit" value="入库" style="padding: 0px" />
+                    <input type="button" value="返回" onclick="history.back(-1)"/>
+                </div>
+            </form>
+        </div>
 
-            <a href="userList.jsp">返回</a>
-        </div>
     </div>
 </section>
 <footer class="footer">
 </footer>
-<script src="js/time.js"></script>
-
+<script type="text/javascript" src="${path }/js/jquery.js"></script>
+<script src="${path }/js/time.js"></script>
 </body>
 </html>

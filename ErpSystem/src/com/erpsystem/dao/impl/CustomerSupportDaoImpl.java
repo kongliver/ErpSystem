@@ -15,6 +15,7 @@ import org.apache.commons.dbutils.handlers.ScalarHandler;
 import com.erpsystem.dao.ICustomerSupportDao;
 import com.erpsystem.domain.CustomerSupport;
 import com.erpsystem.utils.CommonUtil;
+import com.erpsystem.utils.DateUtil;
 import com.erpsystem.utils.JdbcUtil;
 /**
  * 
@@ -36,7 +37,7 @@ public class CustomerSupportDaoImpl implements ICustomerSupportDao {
 	public void saveCusSup(CustomerSupport cusSupport) throws SQLException {
 		String sql = "insert into `customer_support_list` values(?,?,?,?,?)";
 		
-		qr.update(conn,sql,CommonUtil.getUUID(),cusSupport.getOrderNum(),cusSupport.getProblem(),cusSupport.getHandler(),new Date());
+		qr.update(conn,sql,CommonUtil.getUUID(),cusSupport.getOrderNum(),cusSupport.getProblem(),cusSupport.getHandler(),DateUtil.formatTime(new Date()));
 		System.out.println("添加售后记录成功");
 	}
 
@@ -80,16 +81,26 @@ public class CustomerSupportDaoImpl implements ICustomerSupportDao {
 	}
 
 	@Override
-	public List<CustomerSupport> getPageData(int index, int currentCount) throws SQLException {
-		String sql = "select * from `customer_support_list` limit ?,?";
-		List<CustomerSupport> pageList = qr.query(sql, new BeanListHandler<CustomerSupport>(CustomerSupport.class),index,currentCount);
+	public List<CustomerSupport> getPageData(int index, int currentCount, String orderNum, String goodsName, String cusCompany) throws SQLException {
+		//String sql = "select * from `customer_support_list` limit ?,?";
+		String sql = "select cs.*" + 
+				" from customer_support_list cs inner join `order` o inner join customer c" + 
+				" on o.orderNum=cs.orderNum and c.cid=o.cid" + 
+				" where cs.orderNum like ? and o.goodsName like ? and c.cusCompany like ?" + 
+				" limit ?,?";
+		List<CustomerSupport> pageList = qr.query(sql, new BeanListHandler<CustomerSupport>(CustomerSupport.class),"%"+orderNum+"%","%"+goodsName+"%","%"+cusCompany+"%",index,currentCount);
 		return pageList;
 	}
 
 	@Override
-	public Long getTotalCount() throws SQLException {
-		String sql = "select count(1) from `customer_support_list`";
-		Long totalCount = (Long)qr.query(sql, new ScalarHandler<>());
+	public Long getTotalCount(String orderNum, String goodsName, String cusCompany) throws SQLException {
+		//String sql = "select count(1) from `customer_support_list`";
+		String sql = "select count(1)" + 
+				" from customer_support_list cs inner join `order` o inner join customer c" + 
+				" on o.orderNum=cs.orderNum and c.cid=o.cid" + 
+				" where cs.orderNum like ? and o.goodsName like ? and c.cusCompany like ?";
+		Long totalCount = (Long)qr.query(sql, new ScalarHandler<>(),"%"+orderNum+"%","%"+goodsName+"%","%"+cusCompany+"%");
+		System.out.println("totalCount是："+totalCount);
 		return totalCount;
 	}
 
