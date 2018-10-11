@@ -25,7 +25,7 @@ public class PrimaryKeyUtil {
 		String newDateStr = df.format(newDate).toString();
 
 		String dateMaxKey = "";
-		if(null != maxKey) {
+		if(null != maxKey && !"null".equals(maxKey)) {
 			dateMaxKey = maxKey.substring(0, 8); // 得到数据库订单号的日期
 		}
 		
