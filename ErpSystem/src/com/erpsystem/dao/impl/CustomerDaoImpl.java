@@ -89,8 +89,8 @@ public class CustomerDaoImpl implements ICustomerDao{
 	@Override
 	public void save(Customer customer) throws SQLException {
 		QueryRunner qr = new QueryRunner(DruidConnection.getDataSource());
-		String sql = "insert into `customer` values(?,?,?,?,?,?)";
-		Object[] obj = new Object[] {customer.getCid(), customer.getCusCompany(), customer.getCusContacts(), customer.getCusPhone(), customer.getCusAddress(), customer.getcOrderNum()};
+		String sql = "insert into `customer` values(?,?,?,?,?)";
+		Object[] obj = new Object[] {customer.getCid(), customer.getCusCompany(), customer.getCusContacts(), customer.getCusPhone(), customer.getCusAddress()};
 		qr.update(sql, obj);
 	}
 

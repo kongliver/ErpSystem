@@ -76,7 +76,7 @@
 			</select> <input type="button" value="查询" onclick="submitQuery()" /> 
 			
 			
-			<a href="${pageContext.request.contextPath}/orderAdd.jsp">添加订单</a>
+			<a href="${pageContext.request.contextPath}/orderAdd.jsp" style="margin-top: 10px">添加订单</a>
 		</div>
 		<!--账单表格 样式和供应商公用-->
 		<table class="providerTable" cellpadding="0" cellspacing="0">
@@ -107,11 +107,6 @@
 					<td><a
 						href="${pageContext.request.contextPath}/CustomerSupportServlet?action=toSave&orderNum=${order.orderNum}"><img
 							src="img/read.png" alt="添加售后" title="添加售后" /></a></td>
-
-
-
-
-
 				</tr>
 			</c:forEach>
 
