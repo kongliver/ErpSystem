@@ -146,7 +146,7 @@ public class SupplierServlet extends HttpServlet {
 		BeanUtils.populate(supplier,map);
 		supplier.setsId(id);
 		iss.edit(supplier);
-		response.sendRedirect("SupplierServlet?method=list");
+		response.sendRedirect("SupplierServlet?method=getPageBean&currentPage=1");
 	}
 
 	private void edit(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
@@ -206,7 +206,7 @@ public class SupplierServlet extends HttpServlet {
 		try {
 			iss.addSupplier(supplier);
 //			this.list(request, response);
-			response.sendRedirect("SupplierServlet?method=list");
+			response.sendRedirect("SupplierServlet?method=getPageBean&currentPage=1");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
