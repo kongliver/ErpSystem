@@ -67,23 +67,23 @@
                 <strong>你现在所在的位置是:</strong>
                 <span>采购单管理页面</span>
             </div>
-            <div class="search" >
-            <form action="<%=request.getContextPath() %>/PurchaseOrder?method=QueryStock" method="post">
+            <div class="search" style="float:left">
+            <form style="display: inline-block;" action="<%=request.getContextPath() %>/PurchaseOrder?method=QueryStock" method="post">
                 <span>库存物品编号：</span>
                 <input type="text"  placeholder="请输入库存物品的编号" name="KuCun"/>
                 
                 <span>采购单编号：</span>
                 <input type="text" placeholder="请输入采购单的编号" name="purchaseOrder"/>
 
-                <input type="submit" style="width:275px"  value="查询"/>
+                <input type="submit" style="width:75px;height:35px"  value="查询"/>
                
               </form>  
             </div>
             
-            <div class="search">
-            <form action="<%=request.getContextPath() %>/PurchaseOrder?method=QueryAllStock" method="post">
+            <div class="search" style="float:left ">
+            <form style="display: inline-block;" action="<%=request.getContextPath() %>/PurchaseOrder?method=QueryAllStock" method="post">
           
-                <input type="submit" style="margin-left:587px; width:275px"  value="查询所有订单"/>
+                <input type="submit" style=" width:140px"  value="查询所有订单"/>
                 
                  <a href="purchaseAdd.jsp">添加采购单</a>
               </form>  
@@ -104,10 +104,8 @@
                 </tr>
                 
                 <c:if test="${not empty note }">
-                
-               
-	
-                    <td>${note.pnid }</td>
+						<td>1</td>
+                   <%--  <td>${note.pnid }</td> --%>
                     <td>${note.psid }</td>
                     <td>${note.purchaseCount }</td>
                     <td>${note.purTotalMoney }</td>
@@ -124,10 +122,13 @@
         	</c:if>
         	 
                 <c:if test="${not empty list }">
-                	<c:forEach items="${list }" var="note">
+                	<c:forEach items="${list }" var="note" varStatus="num">
                 	
                 	 <tr>
-                	<td>${note.pnid }</td>
+                	<%-- <td>${note.pnid }</td> --%>
+                	
+                	  <td>${num.index + 1 }</td>
+                	
                     <td>${note.psid }</td>
                     <td>${note.purchaseCount }</td>
                     <td>${note.purTotalMoney }</td>
