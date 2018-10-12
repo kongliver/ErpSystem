@@ -136,7 +136,7 @@ public class SupplierServlet extends HttpServlet {
 	private void delete(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
 		String sid = request.getParameter("sid");
 		iss.delete(sid);
-		response.sendRedirect("SupplierServlet?method=list");
+		response.sendRedirect("SupplierServlet?method=getPageBean&currentPage=1");
 	}
 	
 	private void update(HttpServletRequest request, HttpServletResponse response) throws IllegalAccessException, InvocationTargetException, SQLException, IOException {
