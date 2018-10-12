@@ -151,6 +151,15 @@ li{
 .list li:nth-child(5){
     background: url("../img/tc.png") 0  center no-repeat;
 }
+.list li:nth-child(6){
+    background: url("../img/2.jpg") 0  center no-repeat;
+}
+.list li:nth-child(7){
+    background: url("../img/3.jpg") 0  center no-repeat;
+}
+.list li:nth-child(8){
+    background: url("../img/1.jpg") 0  center no-repeat;
+}
 .list li:hover{
     background-color: #acd5f5;
     border-radius: 4px;
