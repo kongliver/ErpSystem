@@ -10,9 +10,9 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>鑫源丰erp后台管理系统</title>
-    <link rel="stylesheet" href="${path }/css/public.css"/>
-    <link rel="stylesheet" href="${path }/css/style.css"/>
-    <link rel="stylesheet" href="${path }/css/pageStyle.css"/>
+<link rel="stylesheet" href="css/public.css" />
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="${path }/css/pageStyle.css"/> 
 </head>
 <body>
 <!--头部-->
@@ -28,6 +28,7 @@
     <span id="time">2015年1月1日 11:11  星期一</span>
     <a href="#">温馨提示：为了能正常浏览，请使用高版本浏览器！（IE10+）</a>
 </section>
+
 <!--主体内容-->
 <section class="publicMian ">
     <div class="left">
@@ -53,11 +54,11 @@
             <span>供应商管理页面</span>
         </div>
         
-         <form action="${pageContext.request.contextPath }/SupplierServlet?method=getPageBean&currentPage=1" method="post" id="submit">
+       <form action="${pageContext.request.contextPath }/SupplierServlet?method=getPageBean&currentPage=1" method="post" id="submit">
         <div class="search">
             <span>供应商名称：</span>
-            <input type="text"  name="supCompany"/>
-            <input type="button" value="查询" onclick="submitBtnClick()" />
+            <input type="text"  name="supCompany" id="supCompany"/>
+            <input type="button" value="查询" onclick="submitBtnClick()"/>
             <input type="button" value="新增供应商"  onclick="window.location='providerAdd.jsp'"/>
             
         </div>
@@ -127,23 +128,34 @@
         </table>
 	</form>
     </div>
+    
 </section>
 
 
 
 
-<footer class="footer">
-        <!--分页-->
-        <div id="page" class="page_div">aaa</div>
-    </footer>
 
-<script src="${path }/js/jquery.js"></script>
-<script type="text/javascript" src="${path }/js/paging.js"></script>
-<script src="${path }/js/js.js"></script>
-<script src="${path }/js/time.js"></script>
+	<footer class="footer"> <!--分页-->
+	<div id="page" class="page_div">aaa</div>
+	</footer>
+
+	<script src="js/jquery.js"></script>
+
+	<script type="text/javascript" src="js/paging.js"></script>
+
+	<script src="js/js.js"></script>
+
+	<script src="js/time.js"></script>
+	
+	
 <script type="text/javascript">
 
-var supCompany = ${"#supCompany"}.val();
+$(function(){
+	
+	var supCompany = $("#supCompany").val(); 
+	
+});
+var supCompany = $("#supCompany").val(); 
 
 $("#page").paging({
 	pageNo: ${pageBean.currentPage },
@@ -154,6 +166,5 @@ $("#page").paging({
     }
 });
 </script>
-
 </body>
 </html>

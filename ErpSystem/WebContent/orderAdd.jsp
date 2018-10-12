@@ -12,7 +12,7 @@
     <title>鑫源丰erp后台管理系统</title>
     <link rel="stylesheet" href="css/public.css"/>
     <link rel="stylesheet" href="css/style.css"/>
-    <script type="text/javascript" src="${pageContext.request.contextPath }/js/jquery.js"></script>>
+    <script type="text/javascript" src="${pageContext.request.contextPath }/js/jquery.js"></script>
     
     <script type="text/javascript">
     $(function(){
