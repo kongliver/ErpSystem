@@ -101,7 +101,6 @@
                 <td>四川成都</td> -->
                
                 <td>
-                    <a href="providerView.jsp"><img src="img/read.png" alt="查看" title="查看"/></a>
                     <a href="${pageContext.request.contextPath}/SupplierServlet?method=edit&sid=${supplier.sId }"><img src="img/xiugai.png" alt="修改" title="修改"/></a>
                     <a class="removeBill" href="${pageContext.request.contextPath}/SupplierServlet?method=delete&sid=${supplier.sId }"
                  onclick="return confirm('是否确认删除？')" value="${supplier.sId }">
