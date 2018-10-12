@@ -161,7 +161,7 @@ public class OrderServiceImpl implements IOrderService {
 
 		ProductStock productStock = stockDao.getById(order.getGoodsName());
 
-		if (order.getGoodsCount() <= productStock.getProductCount()) {
+		if (order.getGoodsCount() <= productStock.getProductCount() && 3 != order.getOrderType()) {
 //			productStock.setProductCount(productStock.getProductCount() - order.getGoodsCount()); // 减少库存
 //			stockDao.updateCount(productStock.getPsid(), productStock.getProductCount());
 			updateOrderStatu(orderNum, 3); // 更改更新状态
